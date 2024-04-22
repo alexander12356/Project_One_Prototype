@@ -41,3 +41,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: World
+    uniqueID: 1454379307
+    locked: 0
+  - name: Cities
+    uniqueID: 3252670161
+    locked: 0
+  - name: Squads
+    uniqueID: 1170508831
+    locked: 0
+  - name: WorldTexts
+    uniqueID: 3496214685
+    locked: 0
