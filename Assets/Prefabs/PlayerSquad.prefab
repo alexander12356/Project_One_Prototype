@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5900757895361047357}
+  - component: {fileID: 2745206840635667677}
   m_Layer: 0
   m_Name: PlayerSquad
   m_TagString: Untagged
@@ -33,6 +34,19 @@ Transform:
   - {fileID: 1056908885467617207}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2745206840635667677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318559907397133121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73d2f2e437924c4b96dc26debc6fb8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveSpeed: 5
 --- !u!1 &2528713877102515351
 GameObject:
   m_ObjectHideFlags: 0
