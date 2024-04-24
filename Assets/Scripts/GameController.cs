@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
 	public bool IsSquadsStops = false;
+	public bool IsLocalBattle = false;
 
 	public static GameController Instance;
 
@@ -16,6 +17,7 @@ public class GameController : MonoBehaviour
 
 	public void StartLocalBattle(GameObject squad)
 	{
+		IsLocalBattle = true;
 		BattleSquad = squad;
 		IsSquadsStops = true;
 		SceneManager.LoadSceneAsync("LocalBattle", LoadSceneMode.Additive);
@@ -24,6 +26,7 @@ public class GameController : MonoBehaviour
 
 	public void CompleteLocalBattle()
 	{
+		IsLocalBattle = false;
 		Destroy(BattleSquad);
 		BattleSquad = null;
 		IsSquadsStops = false;

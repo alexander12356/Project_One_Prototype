@@ -12,9 +12,18 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
+		if (GameController.Instance.IsLocalBattle)
+		{
+			return;
+		}
+		
 		var horizontal = Input.GetAxis("Horizontal");
 		var vertical = Input.GetAxis("Vertical");
-		transform.position += new Vector3(horizontal, vertical, 0f) * MoveSpeed * Time.deltaTime;
+		var movement = new Vector3(horizontal, vertical, 0f);
+
+		GameController.Instance.IsSquadsStops = movement == Vector3.zero;
+		
+		transform.position += movement * MoveSpeed * Time.deltaTime;
 
 		PositionInstance = transform.position;
 	}
