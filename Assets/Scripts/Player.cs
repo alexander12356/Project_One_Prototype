@@ -26,6 +26,6 @@ public class Player : MonoBehaviour
 			return;
 		}
 
-		GameController.Instance.StartLocalBattle();
+		GameController.Instance.StartLocalBattle(other.gameObject);
 	}
 }

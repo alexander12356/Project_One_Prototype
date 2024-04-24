@@ -54,3 +54,6 @@ TagManager:
   - name: WorldTexts
     uniqueID: 3496214685
     locked: 0
+  - name: LocalBattle
+    uniqueID: 223889715
+    locked: 0
