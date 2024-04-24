@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour
 {
 	public bool IsSquadsStops = false;
-	public bool IsLocalBattle = false;
+	public bool IsWorldControl = false;
 
 	public static GameController Instance;
 
@@ -17,7 +18,7 @@ public class GameController : MonoBehaviour
 
 	public void StartLocalBattle(GameObject squad)
 	{
-		IsLocalBattle = true;
+		IsWorldControl = false;
 		BattleSquad = squad;
 		IsSquadsStops = true;
 		SceneManager.LoadSceneAsync("LocalBattle", LoadSceneMode.Additive);
@@ -26,11 +27,22 @@ public class GameController : MonoBehaviour
 
 	public void CompleteLocalBattle()
 	{
-		IsLocalBattle = false;
+		IsWorldControl = true;
 		Destroy(BattleSquad);
 		BattleSquad = null;
 		IsSquadsStops = false;
 		SceneManager.UnloadSceneAsync("LocalBattle");
 		WindowController.Instance.SetWorldUi();
+	}
+
+	public void OpenSquadManagementWindow()
+	{
+		IsWorldControl = false;
+		SquadManagementWindow.Instance.Open();
+	}
+
+	public void ReturnFromSquadManagementWindow()
+	{
+		IsWorldControl = true;
 	}
 }

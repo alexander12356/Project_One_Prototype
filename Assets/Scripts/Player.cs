@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
 	void Update()
 	{
-		if (GameController.Instance.IsLocalBattle)
+		if (!GameController.Instance.IsWorldControl)
 		{
 			return;
 		}
