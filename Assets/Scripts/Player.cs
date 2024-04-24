@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -18,5 +17,15 @@ public class Player : MonoBehaviour
 		transform.position += new Vector3(horizontal, vertical, 0f) * MoveSpeed * Time.deltaTime;
 
 		PositionInstance = transform.position;
+	}
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (!other.CompareTag("Enemy"))
+		{
+			return;
+		}
+
+		GameController.Instance.StartLocalBattle();
 	}
 }
