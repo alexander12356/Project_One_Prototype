@@ -419,6 +419,8 @@ MonoBehaviour:
   _xSpawnDelta: 1.2
   PlayerSquadObjects: []
   EnemySquadObjects: []
+  BeforeTurnDelay: 2
+  AnimationDelay: 1.5
 --- !u!1 &2146842632
 GameObject:
   m_ObjectHideFlags: 0

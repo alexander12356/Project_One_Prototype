@@ -1507,7 +1507,7 @@ MonoBehaviour:
     BS: 3
     S: 4
     T: 4
-    W: 5
+    W: 1
     A: 1
     D: 1
     Sv: 3
@@ -1516,7 +1516,7 @@ MonoBehaviour:
     BS: 4
     S: 3
     T: 3
-    W: 3
+    W: 1
     A: 1
     D: 1
     Sv: 5

@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour
 
 		WindowController.Instance.SetLocalBattleUi();
 		LocalBattleController.Instance.SetEnemySquad(BattleSquad.GetLocalSquadData());
+		LocalBattleController.Instance.StartBattle();
 	}
 
 	public void CompleteLocalBattle()

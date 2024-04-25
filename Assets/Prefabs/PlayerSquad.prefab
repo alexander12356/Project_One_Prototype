@@ -137,23 +137,19 @@ MonoBehaviour:
   Squad:
   - Guid: 5bb7b62f-4ce7-41b1-bb96-f25bd7af38df
     Id: BaseLineMech
-    Toughness: 4
+    Wound: 1
   - Guid: c3610741-d6c1-4b98-87b8-01cab4ef4b04
     Id: BaseLineMech
-    Toughness: 4
+    Wound: 1
   - Guid: d318e53d-c5db-401c-8f24-861f847ad142
     Id: BaseLineMech
-    Toughness: 4
+    Wound: 1
   - Guid: 88ed8639-66be-4012-93c4-0620b1335e7f
     Id: BaseLineMech
-    Toughness: 4
+    Wound: 1
   - Guid: 94db3b1b-fc22-46da-a67e-284d2eb6b3e0
     Id: BaseLineMech
-    Toughness: 4
-  Reserve:
-  - Guid: 99082831-5901-41fa-afd1-e6f03518284e
-    Id: BaseLineMech
-    Toughness: 4
+    Wound: 1
 --- !u!1 &2528713877102515351
 GameObject:
   m_ObjectHideFlags: 0

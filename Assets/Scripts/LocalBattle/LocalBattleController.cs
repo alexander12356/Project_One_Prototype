@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LocalBattleController : MonoBehaviour
@@ -13,6 +15,9 @@ public class LocalBattleController : MonoBehaviour
 	public List<SquadObject> EnemySquadObjects;
 
 	public static LocalBattleController Instance;
+
+	public float BeforeTurnDelay;
+	public float AnimationDelay;
 
 	private void Awake()
 	{
@@ -44,5 +49,70 @@ public class LocalBattleController : MonoBehaviour
 	public void SetEnemySquad(List<PlayerData.SquadLocalData> enemySquadData)
 	{
 		EnemySquadObjects = CreateSquad(enemySquadData, EnemySquadsHolder, false);
+	}
+
+	public void StartBattle()
+	{
+		StartCoroutine(StartBattleCoroutine());
+	}
+
+	private IEnumerator StartBattleCoroutine()
+	{
+		var attackerSquads = PlayerSquadObjects;
+		var defenderSquads = EnemySquadObjects;
+		var isBattleEnd = false;
+
+		while (!isBattleEnd)
+		{
+			yield return new WaitForSeconds(BeforeTurnDelay);
+
+			int j = 0;
+			for (int i = 0; i < attackerSquads.Count; i++)
+			{
+				if (attackerSquads[i].IsDead())
+				{
+					continue;
+				}
+
+				if (i < defenderSquads.Count)
+				{
+					attackerSquads[i].Attack(defenderSquads[i]);
+				}
+				else
+				{
+					if (j >= defenderSquads.Count)
+					{
+						j = 0;
+					}
+					attackerSquads[i].Attack(defenderSquads[j]);
+					j++;
+				}
+			}
+
+			yield return new WaitForSeconds(AnimationDelay);
+
+			var defenderDead = true;
+
+			for (int i = defenderSquads.Count - 1; i >= 0; i--)
+			{
+				if (defenderSquads[i].IsDead())
+				{
+					Destroy(defenderSquads[i].gameObject);
+					defenderSquads.Remove(defenderSquads[i]);
+				}
+				else
+				{
+					defenderDead = false;
+				}
+			}
+
+			isBattleEnd = defenderDead;
+
+			if (!isBattleEnd)
+			{
+				(attackerSquads, defenderSquads) = (defenderSquads, attackerSquads);
+			}
+		}
+		GameController.Instance.CompleteLocalBattle();
 	}
 }

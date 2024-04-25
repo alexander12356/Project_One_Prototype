@@ -177,13 +177,13 @@ MonoBehaviour:
   Squad:
   - Guid: 4a8a0d5fa5eb8e7b-a12057309f1f4575
     Id: RestoredLineMech
-    Toughness: 3
+    Wound: 1
   - Guid: dd491f5c236890fa-59a72a76d03617d9
     Id: RestoredLineMech
-    Toughness: 3
+    Wound: 1
   - Guid: b21c788982c41010-1781e99cf53a336f
     Id: RestoredLineMech
-    Toughness: 3
+    Wound: 1
 --- !u!1 &2363109716739991120
 GameObject:
   m_ObjectHideFlags: 0

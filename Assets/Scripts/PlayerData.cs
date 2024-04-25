@@ -11,7 +11,7 @@ public class PlayerData : MonoBehaviour
 	{
 		public string Guid;
 		public string Id;
-		public int Toughness;
+		[FormerlySerializedAs("Toughness")] public int Wound;
 
 		public void SetGuid(string newGuid)
 		{
