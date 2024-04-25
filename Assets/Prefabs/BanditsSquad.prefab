@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2195572101974120798}
   - component: {fileID: 1336678597423967876}
   - component: {fileID: 7357900361146968285}
+  - component: {fileID: 7883884444311348170}
   m_Layer: 7
   m_Name: BanditsSquad
   m_TagString: Enemy
@@ -161,6 +162,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7883884444311348170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874958637982210084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c63b102bd2743b47a470cdcf0a12f5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Squad:
+  - Guid: 4a8a0d5fa5eb8e7b-a12057309f1f4575
+    Id: RestoredLineMech
+    Toughness: 3
+  - Guid: dd491f5c236890fa-59a72a76d03617d9
+    Id: RestoredLineMech
+    Toughness: 3
+  - Guid: b21c788982c41010-1781e99cf53a336f
+    Id: RestoredLineMech
+    Toughness: 3
 --- !u!1 &2363109716739991120
 GameObject:
   m_ObjectHideFlags: 0

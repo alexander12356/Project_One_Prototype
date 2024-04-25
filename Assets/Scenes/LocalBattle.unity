@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 136867513}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 7.77, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -414,9 +414,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSquadsHolder: {fileID: 2146842633}
+  EnemySquadsHolder: {fileID: 136867514}
   SquadObjectPrefab: {fileID: 7731019277085339689, guid: ae2a08b75317a2c4b99ac9aa55510b94, type: 3}
   _xSpawnDelta: 1.2
-  SquadObjects: []
+  PlayerSquadObjects: []
+  EnemySquadObjects: []
 --- !u!1 &2146842632
 GameObject:
   m_ObjectHideFlags: 0
