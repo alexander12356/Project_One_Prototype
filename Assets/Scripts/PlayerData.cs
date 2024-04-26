@@ -7,11 +7,12 @@ using UnityEngine.Serialization;
 public class PlayerData : MonoBehaviour
 {
 	[Serializable]
-	public struct SquadLocalData
+	public class SquadLocalData
 	{
 		public string Guid;
 		public string Id;
 		[FormerlySerializedAs("Toughness")] public int Wound;
+		public int Exp;
 
 		public void SetGuid(string newGuid)
 		{

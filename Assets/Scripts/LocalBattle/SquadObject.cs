@@ -16,6 +16,7 @@ public class SquadObject : MonoBehaviour
 	public GameObject MissAnimationPrefab;
 	public float AnimationLifeTime;
 	public float SpawnTimeRandom;
+	public int GettedExp;
 
 	[FormerlySerializedAs("_squadLocalData")]
 	public PlayerData.SquadLocalData SquadLocalData;
@@ -67,7 +68,14 @@ public class SquadObject : MonoBehaviour
 				if (!isSave)
 				{
 					enemySquadObject.ShowWoundAnimation();
-					enemySquadObject.Wound(attackerBalance.D);
+					if (!enemySquadObject.IsDead())
+					{
+						enemySquadObject.Wound(attackerBalance.D);
+						if (enemySquadObject.IsDead())
+						{
+							GettedExp += BalanceController.Instance.GetExpFrom(enemySquadObject.SquadLocalData.Id);
+						}
+					}
 				}
 				else
 				{

@@ -1,9 +1,52 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using DefaultNamespace;
+using UnityEngine;
 
 public class LocalBattleUi : MonoBehaviour
 {
-	public void Win()
+	public static LocalBattleUi Instance;
+	public SquadLevelUp SquadLevelUpPrefab;
+	public Transform LevelUpHolder;
+	public GameObject WinUi;
+	public GameObject LoseUi;
+
+	private void Awake()
 	{
+		Instance = this;
+	}
+
+	public void ShowWinWindow(List<SquadObject> playerSquadObjects)
+	{
+		WinUi.SetActive(true);
+		foreach (var squadObject in playerSquadObjects)
+		{
+			var levelUp = Instantiate(SquadLevelUpPrefab, LevelUpHolder);
+			var maxExp = BalanceController.Instance.ExpForLevelUp(squadObject.SquadLocalData.Id);
+			levelUp.SetExp(squadObject.SquadLocalData.Exp, squadObject.GettedExp, maxExp);
+			levelUp.SetIcon(BalanceController.Instance.GetSquadGlobalData(squadObject.SquadLocalData.Id).Icon);
+			squadObject.SquadLocalData.Exp += squadObject.GettedExp;
+			if (squadObject.SquadLocalData.Exp >= maxExp)
+			{
+				levelUp.SetLevelUp(true);
+			}
+		}
+	}
+
+	public void ShowLoseWindow()
+	{
+		LoseUi.SetActive(true);
+	}
+
+	public void Close()
+	{
+		for (int i = 0; i < LevelUpHolder.childCount; i++)
+		{
+			var child = LevelUpHolder.GetChild(i);
+			Destroy(child.gameObject);
+		}
+		WinUi.SetActive(false);
+		LoseUi.SetActive(false);
+
 		GameController.Instance.CompleteLocalBattle();
 	}
 }

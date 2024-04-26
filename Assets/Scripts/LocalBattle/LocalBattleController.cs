@@ -18,6 +18,7 @@ public class LocalBattleController : MonoBehaviour
 
 	public float BeforeTurnDelay;
 	public float AnimationDelay;
+	public float BeforeResultDelay;
 
 	private void Awake()
 	{
@@ -113,6 +114,26 @@ public class LocalBattleController : MonoBehaviour
 				(attackerSquads, defenderSquads) = (defenderSquads, attackerSquads);
 			}
 		}
-		GameController.Instance.CompleteLocalBattle();
+
+		yield return new WaitForSeconds(BeforeResultDelay);
+
+		if (attackerSquads == PlayerSquadObjects)
+		{
+			Win();
+		}
+		else
+		{
+			Lose();
+		}
+	}
+
+	private void Win()
+	{
+		LocalBattleUi.Instance.ShowWinWindow(PlayerSquadObjects);
+	}
+
+	private void Lose()
+	{
+		LocalBattleUi.Instance.ShowLoseWindow();
 	}
 }

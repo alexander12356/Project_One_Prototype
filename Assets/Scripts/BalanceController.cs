@@ -21,7 +21,23 @@ namespace DefaultNamespace
 			public int Sv;
 		}
 
+		[Serializable]
+		public struct GettedExp
+		{
+			public string Id;
+			public int Exp;
+		}
+		
+		[Serializable]
+		public struct LevelUp
+		{
+			public string Id;
+			public int Exp;
+		}
+
 		public List<SquadGlobalData> Balances;
+		public List<GettedExp> GettedExps;
+		public List<LevelUp> LevelUps;
 
 		public static BalanceController Instance;
 
@@ -33,6 +49,16 @@ namespace DefaultNamespace
 		public SquadGlobalData GetSquadGlobalData(string id)
 		{
 			return Balances.FirstOrDefault(x => x.Id == id);
+		}
+
+		public int GetExpFrom(string id)
+		{
+			return GettedExps.FirstOrDefault(x => x.Id == id).Exp;
+		}
+
+		public int ExpForLevelUp(string id)
+		{
+			return LevelUps.FirstOrDefault(x => x.Id == id).Exp;
 		}
 	}
 }
