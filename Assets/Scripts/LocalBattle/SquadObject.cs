@@ -15,8 +15,10 @@ public class SquadObject : MonoBehaviour
 	public GameObject WoundAnimationPrefab;
 	public GameObject MissAnimationPrefab;
 	public float AnimationLifeTime;
+	public float SpawnTimeRandom;
 
-	[FormerlySerializedAs("_squadLocalData")] public PlayerData.SquadLocalData SquadLocalData;
+	[FormerlySerializedAs("_squadLocalData")]
+	public PlayerData.SquadLocalData SquadLocalData;
 
 	public void SetData(PlayerData.SquadLocalData squadData)
 	{
@@ -110,12 +112,21 @@ public class SquadObject : MonoBehaviour
 
 	private void CreateEffect(GameObject prefab, bool withRandom = true)
 	{
-		var effect = Instantiate(prefab, AnimationHolder);
-		if (withRandom)
+		StartCoroutine(CreateEffectCoroutine());
+
+		IEnumerator CreateEffectCoroutine()
 		{
-			effect.transform.localPosition = Random.insideUnitCircle * 0.2f; 
+			var spawnTime = Random.Range(0f, SpawnTimeRandom);
+			yield return new WaitForSeconds(spawnTime);
+
+			var effect = Instantiate(prefab, AnimationHolder);
+			if (withRandom)
+			{
+				effect.transform.localPosition = Random.insideUnitCircle * 0.2f;
+			}
+
+			Destroy(effect, AnimationLifeTime);
 		}
-		Destroy(effect, AnimationLifeTime);
 	}
 
 	private void Wound(int attackerBalanceD)

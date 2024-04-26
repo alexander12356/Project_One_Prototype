@@ -53,6 +53,7 @@ MonoBehaviour:
   WoundAnimationPrefab: {fileID: 9112659653928649774, guid: 7f3449080b83df94a98bf884fc3a52a8, type: 3}
   MissAnimationPrefab: {fileID: 1896292266644618923, guid: 8697418458dac894cb97345f91a296b2, type: 3}
   AnimationLifeTime: 3
+  SpawnTimeRandom: 0.4
   SquadLocalData:
     Guid: 
     Id: 
