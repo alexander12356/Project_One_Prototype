@@ -20,8 +20,12 @@ public class SquadStatsUi : MonoBehaviour
 	public TMP_Text D;
 	public string SvFormat;
 	public TMP_Text Sv;
+	public Image XpBar;
+	public GameObject LevelUp;
 
-	public void SetStats(BalanceController.SquadGlobalData globalData)
+	private PlayerData.SquadLocalData _squadLocalData;
+
+	public void SetStats(BalanceController.SquadGlobalData globalData, PlayerData.SquadLocalData squadLocalData)
 	{
 		Icon.sprite = globalData.Icon;
 		Bs.text = string.Format(BsFormat, globalData.BS);
@@ -31,10 +35,25 @@ public class SquadStatsUi : MonoBehaviour
 		A.text = string.Format(AFormat, globalData.A);
 		D.text = string.Format(DFormat, globalData.D);
 		Sv.text = string.Format(SvFormat, globalData.Sv);
+
+		var maxXp = BalanceController.Instance.ExpForLevelUp(squadLocalData.Id);
+		XpBar.fillAmount = (float)squadLocalData.Exp / maxXp;
+
+		if (squadLocalData.IsLevelUp)
+		{
+			LevelUp.gameObject.SetActive(true);
+		}
+
+		_squadLocalData = squadLocalData;
 	}
 
 	public void SetToughness(int squadToughness)
 	{
 		T.text = string.Format(TFormat, squadToughness);
+	}
+
+	public void OpenSquadImprovmentWindow()
+	{
+		SquadImprovmentUi.Instance.Open(_squadLocalData);
 	}
 }

@@ -13,6 +13,7 @@ public class PlayerData : MonoBehaviour
 		public string Id;
 		[FormerlySerializedAs("Toughness")] public int Wound;
 		public int Exp;
+		public bool IsLevelUp;
 
 		public void SetGuid(string newGuid)
 		{

@@ -28,6 +28,7 @@ public class LocalBattleUi : MonoBehaviour
 			if (squadObject.SquadLocalData.Exp >= maxExp)
 			{
 				levelUp.SetLevelUp(true);
+				squadObject.SquadLocalData.IsLevelUp = true;
 			}
 		}
 	}
