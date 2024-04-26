@@ -31,8 +31,9 @@ public class SquadImprovmentUi : MonoBehaviour
 	public List<ImprovmentView> ImprovmentViews;
 
 	private PlayerData.SquadLocalData _squadLocalData;
-	private bool _isLevelUp;
 	private ImprovmentList _improvmentList;
+	private bool _isInit = false;
+	private string _newId;
 
 	private void Awake()
 	{
@@ -41,6 +42,8 @@ public class SquadImprovmentUi : MonoBehaviour
 
 	public void Open(PlayerData.SquadLocalData squadLocalData)
 	{
+		_isInit = false;
+		
 		CanvasGroup.alpha = 1f;
 		CanvasGroup.blocksRaycasts = true;
 
@@ -66,11 +69,13 @@ public class SquadImprovmentUi : MonoBehaviour
 				ImprovmentViews.FirstOrDefault(x => x.Id == nextId).Toggle.interactable = true;
 			}
 		}
+
+		_isInit = true;
 	}
 
 	public void Accept()
 	{
-		if (!_isLevelUp)
+		if (string.IsNullOrEmpty(_newId))
 		{
 			return;
 		}
@@ -97,13 +102,14 @@ public class SquadImprovmentUi : MonoBehaviour
 		CanvasGroup.blocksRaycasts = false;
 	}
 
-	public void LevelUp(bool value)
+	public void LevelUp(string id)
 	{
-		foreach (var nextId in _improvmentList.NextIds)
+		var value = ImprovmentViews.FirstOrDefault(x => x.Id == id).Toggle.isOn;
+		if (value)
 		{
-			ImprovmentViews.FirstOrDefault(x => x.Id == nextId).Toggle.isOn = false;
+			_newId = id;
+			return;
 		}
-
-		_isLevelUp = value;
+		_newId = string.Empty;
 	}
 }

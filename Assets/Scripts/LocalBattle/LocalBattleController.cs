@@ -117,6 +117,15 @@ public class LocalBattleController : MonoBehaviour
 
 		yield return new WaitForSeconds(BeforeResultDelay);
 
+		for (int i = PlayerData.Instance.Squad.Count - 1; i >= 0; i--)
+		{
+			var squadId = PlayerData.Instance.Squad[i].Id;
+			if (!PlayerSquadObjects.Exists(x => x.SquadLocalData.Id == squadId))
+			{
+				PlayerData.Instance.Squad.RemoveAt(i);
+			}
+		}
+
 		if (attackerSquads == PlayerSquadObjects)
 		{
 			Win();
