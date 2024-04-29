@@ -1,3 +1,4 @@
+using DefaultNamespace;
 using EventBusSystem;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
 	{
 		PositionInstance = transform.position;
 		EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));
 	}
 
 	void Update()
@@ -80,5 +82,21 @@ public class Player : MonoBehaviour
 		PlayerData.Instance.Supplies = playerSupplies;
 		EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
 		EventBus.RaiseEvent<IWorldUi>(x => x.ShowEatedSupplies(squadNeedSupplies));
+	}
+
+	public void Pay()
+	{
+		var playerMoneys = PlayerData.Instance.Moneys;
+		var squadNeedMoneys = 0;
+		foreach (var squad in PlayerData.Instance.Squad)
+		{
+			var needMoneys = BalanceController.Instance.GetNeedMoneys(squad.Id);
+			squadNeedMoneys += needMoneys;
+		}
+
+		playerMoneys = Mathf.Max(0, playerMoneys - squadNeedMoneys);
+		PlayerData.Instance.Moneys = playerMoneys;
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowPayedMoneys(squadNeedMoneys));
 	}
 }

@@ -77,6 +77,7 @@ public class GameController : MonoBehaviour, IGameController
 		if (_prevEatedDay != _currentDateTime.Day)
 		{
 			Player.Instance.Eat();
+			Player.Instance.Pay();
 			_prevEatedDay = _currentDateTime.Day;
 		}
 	}

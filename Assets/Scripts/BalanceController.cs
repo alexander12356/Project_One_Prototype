@@ -19,6 +19,7 @@ namespace DefaultNamespace
 			public int A;
 			public int D;
 			public int Sv;
+			public int NeedMoney;
 		}
 
 		[Serializable]
@@ -59,6 +60,11 @@ namespace DefaultNamespace
 		public int ExpForLevelUp(string id)
 		{
 			return LevelUps.FirstOrDefault(x => x.Id == id).Exp;
+		}
+
+		public int GetNeedMoneys(string squadId)
+		{
+			return Balances.FirstOrDefault(x => x.Id == squadId).NeedMoney;
 		}
 	}
 }

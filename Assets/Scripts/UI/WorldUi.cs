@@ -15,7 +15,10 @@ public class WorldUi : MonoBehaviour, IWorldUi
 	public Image NightEffect;
 	public string SuppliesTextFormat;
 	public TMP_Text SuppliesText;
-	public TMP_Text EatedSuppliesText;
+	public TMP_Text MoneysText;
+	public SubtractionEffect SubtractionEffectPrefab;
+	public Transform _moneysEffectHolder;
+	public Transform _suppliesEffectHolder;
 
 	private void Awake()
 	{
@@ -87,11 +90,20 @@ public class WorldUi : MonoBehaviour, IWorldUi
 
 	public void ShowEatedSupplies(int squadNeedSupplies)
 	{
-		EatedSuppliesText.text = $"-{squadNeedSupplies}";
-		EatedSuppliesText.alpha = 1f;
-		EatedSuppliesText.transform.localPosition = Vector3.zero;
-		EatedSuppliesText.transform.DOLocalMoveY(50, 0.5f);
-		EatedSuppliesText.DOFade(0, 1.5f);
+		var effect = Instantiate(SubtractionEffectPrefab, _suppliesEffectHolder);
+		effect.SetValue(squadNeedSupplies);
+
+	}
+
+	public void ShowMoneys(int instanceMoneys)
+	{
+		MoneysText.text = $"${instanceMoneys}";
+	}
+
+	public void ShowPayedMoneys(int squadNeedMoneys)
+	{
+		var effect = Instantiate(SubtractionEffectPrefab, _moneysEffectHolder);
+		effect.SetValue(squadNeedMoneys);
 	}
 }
 
@@ -103,4 +115,6 @@ public interface IWorldUi : IGlobalSubscriber
 	void SetNight(bool p0);
 	void ShowSupplies(int instanceSupplies);
 	void ShowEatedSupplies(int squadNeedSupplies);
+	void ShowMoneys(int instanceMoneys);
+	void ShowPayedMoneys(int squadNeedMoneys);
 }

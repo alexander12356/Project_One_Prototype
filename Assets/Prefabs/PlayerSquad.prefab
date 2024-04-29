@@ -139,28 +139,34 @@ MonoBehaviour:
     Id: BaseLineMech
     Wound: 1
     Exp: 0
+    NeedMoneys: 0
     IsLevelUp: 0
   - Guid: c3610741-d6c1-4b98-87b8-01cab4ef4b04
     Id: BaseLineMech
     Wound: 1
     Exp: 0
+    NeedMoneys: 0
     IsLevelUp: 0
   - Guid: d318e53d-c5db-401c-8f24-861f847ad142
     Id: BaseLineMech
     Wound: 1
     Exp: 0
+    NeedMoneys: 0
     IsLevelUp: 0
   - Guid: 88ed8639-66be-4012-93c4-0620b1335e7f
     Id: BaseLineMech
     Wound: 1
     Exp: 0
+    NeedMoneys: 0
     IsLevelUp: 0
   - Guid: 94db3b1b-fc22-46da-a67e-284d2eb6b3e0
     Id: BaseLineMech
     Wound: 1
     Exp: 0
+    NeedMoneys: 0
     IsLevelUp: 0
   Supplies: 20
+  Moneys: 2000
 --- !u!1 &2528713877102515351
 GameObject:
   m_ObjectHideFlags: 0

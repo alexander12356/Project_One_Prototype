@@ -24,6 +24,7 @@ public class PlayerData : MonoBehaviour
 
 	public static PlayerData Instance;
 	public int Supplies;
+	public int Moneys;
 
 	public void Awake()
 	{
