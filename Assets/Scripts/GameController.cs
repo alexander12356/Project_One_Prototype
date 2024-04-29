@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using EventBusSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
-public class GameController : MonoBehaviour
+public class GameController : MonoBehaviour, IGameController
 {
 	public bool IsSquadsStops = false;
 	public bool IsWorldControl = false;
@@ -15,6 +16,12 @@ public class GameController : MonoBehaviour
 	private void Awake()
 	{
 		Instance = this;
+		EventBus.Subscribe(this);
+	}
+
+	private void OnDestroy()
+	{
+		EventBus.Unsubscribe(this);
 	}
 
 	public void StartLocalBattle(GameObject squad)
@@ -22,6 +29,7 @@ public class GameController : MonoBehaviour
 		IsWorldControl = false;
 		BattleSquad = squad.GetComponent<EnemySquad>();
 		IsSquadsStops = true;
+		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
 		var op = SceneManager.LoadSceneAsync("LocalBattle", LoadSceneMode.Additive);
 		StartCoroutine(ShowLocalBattleCoroutine(op));
 	}
@@ -41,6 +49,7 @@ public class GameController : MonoBehaviour
 	public void CompleteLocalBattle()
 	{
 		IsWorldControl = true;
+		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(false));
 		Destroy(BattleSquad.gameObject);
 		BattleSquad = null;
 		IsSquadsStops = false;
@@ -58,4 +67,14 @@ public class GameController : MonoBehaviour
 	{
 		IsWorldControl = true;
 	}
+
+	public void SetPause(bool value)
+	{
+		IsSquadsStops = value;
+	}
+}
+
+public interface IGameController : IGlobalSubscriber
+{
+	void SetPause(bool value);
 }

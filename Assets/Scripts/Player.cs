@@ -1,9 +1,12 @@
+using EventBusSystem;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
 	public float MoveSpeed;
 	public static Vector3 PositionInstance { get; private set; }
+
+	private bool _isPrevMove = false;
 
 	private void Start()
 	{
@@ -21,11 +24,17 @@ public class Player : MonoBehaviour
 		var vertical = Input.GetAxis("Vertical");
 		var movement = new Vector3(horizontal, vertical, 0f);
 
-		GameController.Instance.IsSquadsStops = movement == Vector3.zero;
-		
-		transform.position += movement * MoveSpeed * Time.deltaTime;
+		var isMoving = movement != Vector3.zero;
+		if (isMoving != _isPrevMove)
+		{
+			GameController.Instance.IsSquadsStops = !isMoving;
+			EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(!isMoving));
+		}
 
+		transform.position += movement * MoveSpeed * Time.deltaTime;
 		PositionInstance = transform.position;
+
+		_isPrevMove = isMoving;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
