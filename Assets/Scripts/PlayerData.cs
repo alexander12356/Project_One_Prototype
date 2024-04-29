@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,6 +23,7 @@ public class PlayerData : MonoBehaviour
 	public List<SquadLocalData> Squad;
 
 	public static PlayerData Instance;
+	public int Supplies;
 
 	public void Awake()
 	{

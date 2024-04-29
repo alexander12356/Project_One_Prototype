@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour, IGameController
 	private DateTime _currentDateTime;
 	private TimeSpan _deltaTimeSpan;
 	private float _timer;
+	private int _prevEatedDay;
 
 	private void Awake()
 	{
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour, IGameController
 	{
 		_currentDateTime = DateTime.ParseExact(StartTime, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
 		_deltaTimeSpan = TimeSpan.Parse(TimerDeltaTime);
+		_prevEatedDay = _currentDateTime.Day;
 	}
 
 	private void OnDestroy()
@@ -70,6 +72,12 @@ public class GameController : MonoBehaviour, IGameController
 		{
 			EventBus.RaiseEvent<IWorldUi>(x => x.SetNight(false));
 			IsNight = false;
+		}
+
+		if (_prevEatedDay != _currentDateTime.Day)
+		{
+			Player.Instance.Eat();
+			_prevEatedDay = _currentDateTime.Day;
 		}
 	}
 

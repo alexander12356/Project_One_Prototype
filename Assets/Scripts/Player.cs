@@ -1,4 +1,3 @@
-using System;
 using EventBusSystem;
 using UnityEngine;
 
@@ -20,6 +19,7 @@ public class Player : MonoBehaviour
 	private void Start()
 	{
 		PositionInstance = transform.position;
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
 	}
 
 	void Update()
@@ -70,5 +70,15 @@ public class Player : MonoBehaviour
 	public void SetVisible(bool value)
 	{
 		Renderer.SetActive(value);
+	}
+
+	public void Eat()
+	{
+		var playerSupplies = PlayerData.Instance.Supplies;
+		var squadNeedSupplies = PlayerData.Instance.Squad.Count;
+		playerSupplies = Mathf.Max(0, playerSupplies - squadNeedSupplies);
+		PlayerData.Instance.Supplies = playerSupplies;
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowEatedSupplies(squadNeedSupplies));
 	}
 }

@@ -13,6 +13,9 @@ public class WorldUi : MonoBehaviour, IWorldUi
 	public TMP_Text _dateTimeText;
 	public bool IsNight;
 	public Image NightEffect;
+	public string SuppliesTextFormat;
+	public TMP_Text SuppliesText;
+	public TMP_Text EatedSuppliesText;
 
 	private void Awake()
 	{
@@ -76,6 +79,20 @@ public class WorldUi : MonoBehaviour, IWorldUi
 			NightEffect.DOFade(0f, 1f);
 		}
 	}
+
+	public void ShowSupplies(int instanceSupplies)
+	{
+		SuppliesText.text = string.Format(SuppliesTextFormat, instanceSupplies);
+	}
+
+	public void ShowEatedSupplies(int squadNeedSupplies)
+	{
+		EatedSuppliesText.text = $"-{squadNeedSupplies}";
+		EatedSuppliesText.alpha = 1f;
+		EatedSuppliesText.transform.localPosition = Vector3.zero;
+		EatedSuppliesText.transform.DOLocalMoveY(50, 0.5f);
+		EatedSuppliesText.DOFade(0, 1.5f);
+	}
 }
 
 public interface IWorldUi : IGlobalSubscriber
@@ -84,4 +101,6 @@ public interface IWorldUi : IGlobalSubscriber
 	void OpenCityUi(GameObject city);
 	void SetDateTime(DateTime currentTimeSpan);
 	void SetNight(bool p0);
+	void ShowSupplies(int instanceSupplies);
+	void ShowEatedSupplies(int squadNeedSupplies);
 }

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5900757895361047357}
-  - component: {fileID: 2745206840635667677}
   - component: {fileID: 1588347544010737}
   - component: {fileID: 5401109984416842879}
+  - component: {fileID: 2745206840635667677}
   - component: {fileID: 1662878353535190135}
   m_Layer: 7
   m_Name: PlayerSquad
@@ -36,20 +36,6 @@ Transform:
   - {fileID: 6036055572648944534}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2745206840635667677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1318559907397133121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d73d2f2e437924c4b96dc26debc6fb8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MoveSpeed: 5
-  Renderer: {fileID: 2528713877102515351}
 --- !u!61 &1588347544010737
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -122,6 +108,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2745206840635667677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318559907397133121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73d2f2e437924c4b96dc26debc6fb8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveSpeed: 5
+  Renderer: {fileID: 2528713877102515351}
 --- !u!114 &1662878353535190135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +160,7 @@ MonoBehaviour:
     Wound: 1
     Exp: 0
     IsLevelUp: 0
+  Supplies: 20
 --- !u!1 &2528713877102515351
 GameObject:
   m_ObjectHideFlags: 0
