@@ -26,7 +26,6 @@ public class SquadManagementWindow : MonoBehaviour
 		{
 			var statsUi = Instantiate(SquadStatsUiPrefab, SquadsHolder);
 			statsUi.SetStats(BalanceController.Instance.GetSquadGlobalData(squad.Id), squad);
-			statsUi.SetToughness(squad.Wound);
 		}
 	}
 

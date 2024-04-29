@@ -47,11 +47,6 @@ public class SquadStatsUi : MonoBehaviour
 		_squadLocalData = squadLocalData;
 	}
 
-	public void SetToughness(int squadToughness)
-	{
-		T.text = string.Format(TFormat, squadToughness);
-	}
-
 	public void OpenSquadImprovmentWindow()
 	{
 		SquadImprovmentUi.Instance.Open(_squadLocalData);

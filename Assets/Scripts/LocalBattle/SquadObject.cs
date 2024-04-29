@@ -32,64 +32,67 @@ public class SquadObject : MonoBehaviour
 		var attackerBalance = BalanceController.Instance.GetSquadGlobalData(SquadLocalData.Id);
 		var defenderBalance = BalanceController.Instance.GetSquadGlobalData(enemySquadObject.SquadLocalData.Id);
 
-		ShowAttackAnimation();
-
-		var isHit = Roll(attackerBalance.BS);
-		if (isHit)
+		for (var i = 0; i < attackerBalance.A; i++)
 		{
-			var targetRoll = 6;
-			if (attackerBalance.S / 2 > defenderBalance.T)
-			{
-				targetRoll = 2;
-			}
-			else if (attackerBalance.S > defenderBalance.T)
-			{
-				targetRoll = 3;
-			}
-			else if (attackerBalance.S == defenderBalance.T)
-			{
-				targetRoll = 4;
-			}
-			else if (attackerBalance.S / 2 < defenderBalance.T)
-			{
-				targetRoll = 6;
-			}
-			else
-			{
-				targetRoll = 5;
-			}
+			ShowAttackAnimation();
 
-			var isWound = Roll(targetRoll);
-
-			if (isWound)
+			var isHit = Roll(attackerBalance.BS);
+			if (isHit)
 			{
-				var isSave = Roll(defenderBalance.Sv);
-
-				if (!isSave)
+				var targetRoll = 6;
+				if (attackerBalance.S / 2 > defenderBalance.T)
 				{
-					enemySquadObject.ShowWoundAnimation();
-					if (!enemySquadObject.IsDead())
+					targetRoll = 2;
+				}
+				else if (attackerBalance.S > defenderBalance.T)
+				{
+					targetRoll = 3;
+				}
+				else if (attackerBalance.S == defenderBalance.T)
+				{
+					targetRoll = 4;
+				}
+				else if (attackerBalance.S / 2 < defenderBalance.T)
+				{
+					targetRoll = 6;
+				}
+				else
+				{
+					targetRoll = 5;
+				}
+
+				var isWound = Roll(targetRoll);
+
+				if (isWound)
+				{
+					var isSave = Roll(defenderBalance.Sv);
+
+					if (!isSave)
 					{
-						enemySquadObject.Wound(attackerBalance.D);
-						if (enemySquadObject.IsDead())
+						enemySquadObject.ShowWoundAnimation();
+						if (!enemySquadObject.IsDead())
 						{
-							GettedExp += BalanceController.Instance.GetExpFrom(enemySquadObject.SquadLocalData.Id);
+							enemySquadObject.Wound(attackerBalance.D);
+							if (enemySquadObject.IsDead())
+							{
+								GettedExp += BalanceController.Instance.GetExpFrom(enemySquadObject.SquadLocalData.Id);
+							}
 						}
+					}
+					else
+					{
+						enemySquadObject.ShowSaveDefenseAnimation();
 					}
 				}
 				else
 				{
-					enemySquadObject.ShowSaveDefenseAnimation();
+					enemySquadObject.ShowToughnessDefenseAnimation();
 				}
 			}
 			else
 			{
-				enemySquadObject.ShowToughnessDefenseAnimation();
+				enemySquadObject.ShowMissAnimation();
 			}
-		}
-		else
-		{
-			enemySquadObject.ShowMissAnimation();
 		}
 	}
 
@@ -115,7 +118,7 @@ public class SquadObject : MonoBehaviour
 
 	private void ShowAttackAnimation()
 	{
-		CreateEffect(AttackAnimationPrefab, false);
+		CreateEffect(AttackAnimationPrefab);
 	}
 
 	private void CreateEffect(GameObject prefab, bool withRandom = true)
