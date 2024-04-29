@@ -9,7 +9,7 @@ namespace NodeCanvas.Tasks.Conditions
 	{
 		protected override bool OnCheck()
 		{
-			return GameController.Instance.IsSquadsStops;
+			return GameController.Instance.IsPause;
 		}
 	}
 }

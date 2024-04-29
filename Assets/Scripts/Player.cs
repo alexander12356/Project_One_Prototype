@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
 		var isMoving = movement != Vector3.zero;
 		if (isMoving != _isPrevMove)
 		{
-			GameController.Instance.IsSquadsStops = !isMoving;
+			GameController.Instance.IsPause = !isMoving;
 			EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(!isMoving));
 		}
 

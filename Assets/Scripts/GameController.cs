@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using EventBusSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour, IGameController
 {
-	public bool IsSquadsStops = false;
+	[FormerlySerializedAs("IsSquadsStops")] public bool IsPause = false;
 	public bool IsWorldControl = false;
+	public string StartTime;
+	public string TimerDeltaTime;
+	public float TimerEndValue;
 
 	public static GameController Instance;
 
 	private EnemySquad BattleSquad;
+	private DateTime _currentDateTime;
+	private TimeSpan _deltaTimeSpan;
+	private float _timer;
 
 	private void Awake()
 	{
@@ -19,9 +27,37 @@ public class GameController : MonoBehaviour, IGameController
 		EventBus.Subscribe(this);
 	}
 
+	private void Start()
+	{
+		_currentDateTime = DateTime.ParseExact(StartTime, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+		_deltaTimeSpan = TimeSpan.Parse(TimerDeltaTime);
+	}
+
 	private void OnDestroy()
 	{
 		EventBus.Unsubscribe(this);
+	}
+
+	private void Update()
+	{
+		if (IsPause)
+		{
+			return;
+		}
+
+		_timer += Time.deltaTime;
+
+		if (_timer >= TimerEndValue)
+		{
+			_timer = 0f;
+		}
+		else
+		{
+			var coef = Time.deltaTime / TimerEndValue;
+			var seconds = _deltaTimeSpan.TotalSeconds * coef;
+			_currentDateTime = _currentDateTime.Add(TimeSpan.FromSeconds(seconds));
+			EventBus.RaiseEvent<IWorldUi>(x => x.SetDateTime(_currentDateTime));
+		}
 	}
 
 	public void StartLocalBattle(GameObject squad)
@@ -29,7 +65,7 @@ public class GameController : MonoBehaviour, IGameController
 		IsWorldControl = false;
 		BattleSquad = squad.GetComponent<EnemySquad>();
 
-		IsSquadsStops = true;
+		IsPause = true;
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
 
 		var op = SceneManager.LoadSceneAsync("LocalBattle", LoadSceneMode.Additive);
@@ -57,7 +93,7 @@ public class GameController : MonoBehaviour, IGameController
 		WindowController.Instance.SetWorldUi();
 
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(false));
-		IsSquadsStops = false;
+		IsPause = false;
 	}
 
 	public void OpenSquadManagementWindow()
@@ -73,7 +109,7 @@ public class GameController : MonoBehaviour, IGameController
 
 	public void SetPause(bool value)
 	{
-		IsSquadsStops = value;
+		IsPause = value;
 	}
 
 	public void StartCity(GameObject city)
@@ -81,7 +117,7 @@ public class GameController : MonoBehaviour, IGameController
 		IsWorldControl = false;
 		EventBus.RaiseEvent<IWorldUi>(x => x.OpenCityUi(city));
 
-		IsSquadsStops = true;
+		IsPause = true;
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
 
 		Player.Instance.SetVisible(false);
