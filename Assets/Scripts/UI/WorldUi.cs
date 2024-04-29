@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using EventBusSystem;
 using TMPro;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class WorldUi : MonoBehaviour, IWorldUi
 	public Toggle _pauseToggle;
 	public Toggle _resumeToggle;
 	public TMP_Text _dateTimeText;
+	public bool IsNight;
+	public Image NightEffect;
 
 	private void Awake()
 	{
@@ -55,6 +58,24 @@ public class WorldUi : MonoBehaviour, IWorldUi
 	{
 		_dateTimeText.text = currentTimeSpan.ToString("yyyy-MM-dd HH:mm");
 	}
+
+	public void SetNight(bool value)
+	{
+		if (IsNight == value)
+		{
+			return;
+		}
+		
+		IsNight = value;
+		if (IsNight)
+		{
+			NightEffect.DOFade(0.5f, 1f);
+		}
+		else
+		{
+			NightEffect.DOFade(0f, 1f);
+		}
+	}
 }
 
 public interface IWorldUi : IGlobalSubscriber
@@ -62,4 +83,5 @@ public interface IWorldUi : IGlobalSubscriber
 	void SetPause(bool value);
 	void OpenCityUi(GameObject city);
 	void SetDateTime(DateTime currentTimeSpan);
+	void SetNight(bool p0);
 }

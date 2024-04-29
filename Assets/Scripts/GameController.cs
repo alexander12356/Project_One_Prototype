@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour, IGameController
 	public string StartTime;
 	public string TimerDeltaTime;
 	public float TimerEndValue;
+	public bool IsNight;
 
 	public static GameController Instance;
 
@@ -57,6 +58,18 @@ public class GameController : MonoBehaviour, IGameController
 			var seconds = _deltaTimeSpan.TotalSeconds * coef;
 			_currentDateTime = _currentDateTime.Add(TimeSpan.FromSeconds(seconds));
 			EventBus.RaiseEvent<IWorldUi>(x => x.SetDateTime(_currentDateTime));
+		}
+
+		if (_currentDateTime.Hour >= 21)
+		{
+			EventBus.RaiseEvent<IWorldUi>(x => x.SetNight(true));
+			IsNight = true;
+		}
+
+		if (_currentDateTime.Hour is >= 9 and < 21)
+		{
+			EventBus.RaiseEvent<IWorldUi>(x => x.SetNight(false));
+			IsNight = false;
 		}
 	}
 
