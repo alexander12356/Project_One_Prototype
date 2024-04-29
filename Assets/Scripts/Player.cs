@@ -1,3 +1,4 @@
+using System;
 using EventBusSystem;
 using UnityEngine;
 
@@ -6,7 +7,15 @@ public class Player : MonoBehaviour
 	public float MoveSpeed;
 	public static Vector3 PositionInstance { get; private set; }
 
+	public static Player Instance;
+	public GameObject Renderer;
+
 	private bool _isPrevMove = false;
+
+	private void Awake()
+	{
+		Instance = this;
+	}
 
 	private void Start()
 	{
@@ -39,11 +48,27 @@ public class Player : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (!other.CompareTag("Enemy"))
+		if (other.CompareTag("Enemy"))
 		{
+			GameController.Instance.StartLocalBattle(other.gameObject);
 			return;
 		}
 
-		GameController.Instance.StartLocalBattle(other.gameObject);
+
+		if (other.CompareTag("City"))
+		{
+			GameController.Instance.StartCity(other.gameObject);
+			return;
+		}
+	}
+
+	public void SetPosition(Vector3 newPosition)
+	{
+		transform.position = newPosition;
+	}
+
+	public void SetVisible(bool value)
+	{
+		Renderer.SetActive(value);
 	}
 }

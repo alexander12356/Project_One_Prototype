@@ -28,8 +28,10 @@ public class GameController : MonoBehaviour, IGameController
 	{
 		IsWorldControl = false;
 		BattleSquad = squad.GetComponent<EnemySquad>();
+
 		IsSquadsStops = true;
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
+
 		var op = SceneManager.LoadSceneAsync("LocalBattle", LoadSceneMode.Additive);
 		StartCoroutine(ShowLocalBattleCoroutine(op));
 	}
@@ -49,12 +51,13 @@ public class GameController : MonoBehaviour, IGameController
 	public void CompleteLocalBattle()
 	{
 		IsWorldControl = true;
-		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(false));
 		Destroy(BattleSquad.gameObject);
 		BattleSquad = null;
-		IsSquadsStops = false;
 		SceneManager.UnloadSceneAsync("LocalBattle");
 		WindowController.Instance.SetWorldUi();
+
+		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(false));
+		IsSquadsStops = false;
 	}
 
 	public void OpenSquadManagementWindow()
@@ -72,9 +75,30 @@ public class GameController : MonoBehaviour, IGameController
 	{
 		IsSquadsStops = value;
 	}
+
+	public void StartCity(GameObject city)
+	{
+		IsWorldControl = false;
+		EventBus.RaiseEvent<IWorldUi>(x => x.OpenCityUi(city));
+
+		IsSquadsStops = true;
+		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
+
+		Player.Instance.SetVisible(false);
+		Player.Instance.SetPosition(city.GetComponent<City>().EnterPosition);
+	}
+
+	public void CloseCity(City city)
+	{
+		IsWorldControl = true;
+
+		Player.Instance.SetVisible(true);
+		Player.Instance.SetPosition(city.ExitPosition);
+	}
 }
 
 public interface IGameController : IGlobalSubscriber
 {
 	void SetPause(bool value);
+	void CloseCity(City city);
 }

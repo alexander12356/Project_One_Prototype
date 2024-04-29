@@ -36,6 +36,12 @@ public class WorldUi : MonoBehaviour, IWorldUi
 		}
 	}
 
+	public void OpenCityUi(GameObject cityObject)
+	{
+		var city = cityObject.GetComponent<City>();
+		EventBus.RaiseEvent<ICityUI>(x => x.Show(city));
+	}
+
 	public void HandlePause(bool value)
 	{
 		EventBus.RaiseEvent<IGameController>(x => x.SetPause(value));
@@ -46,4 +52,5 @@ public class WorldUi : MonoBehaviour, IWorldUi
 public interface IWorldUi : IGlobalSubscriber
 {
 	void SetPause(bool value);
+	void OpenCityUi(GameObject city);
 }
