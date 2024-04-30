@@ -8,6 +8,7 @@ public class CityUi : MonoBehaviour, ICityUI
 	public CanvasGroup CanvasGroup;
 	public TMP_Text Caption;
 	public StoreUi StoreUi;
+	public HireSquadsUi HireSquadsUi;
 
 	private City _city;
 
@@ -35,11 +36,17 @@ public class CityUi : MonoBehaviour, ICityUI
 		StoreUi.Open(_city);
 	}
 
+	public void OpenSquads()
+	{
+		HireSquadsUi.Open(_city);
+	}
+
 	public void Close()
 	{
 		CanvasGroup.blocksRaycasts = false;
 		CanvasGroup.alpha = 0f;
 		EventBus.RaiseEvent<IGameController>(x => x.CloseCity(_city));
+		HireSquadsUi.Close();
 	}
 }
 

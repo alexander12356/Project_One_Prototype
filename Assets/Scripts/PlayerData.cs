@@ -31,6 +31,18 @@ public class PlayerData : MonoBehaviour
 		Instance = this;
 	}
 
+	public void AddNewSquad(string squadId)
+	{
+		Squad.Add(new SquadLocalData
+		{
+			Guid = Guid.NewGuid().ToString(),
+			Id = squadId,
+			Exp = 0,
+			IsLevelUp = false,
+			Wound = 1
+		});
+	}
+
 	[ContextMenu("Init")]
 	public void SetGuids()
 	{

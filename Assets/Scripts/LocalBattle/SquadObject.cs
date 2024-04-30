@@ -25,6 +25,7 @@ public class SquadObject : MonoBehaviour
 	{
 		Icon.sprite = BalanceController.Instance.GetSquadGlobalData(squadData.Id).Icon;
 		SquadLocalData = squadData;
+		SquadLocalData.Wound = BalanceController.Instance.GetSquadGlobalData(squadData.Id).W;
 	}
 
 	public void Attack(SquadObject enemySquadObject)
