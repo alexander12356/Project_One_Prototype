@@ -7,6 +7,7 @@ public class CityUi : MonoBehaviour, ICityUI
 {
 	public CanvasGroup CanvasGroup;
 	public TMP_Text Caption;
+	public StoreUi StoreUi;
 
 	private City _city;
 
@@ -27,6 +28,11 @@ public class CityUi : MonoBehaviour, ICityUI
 		CanvasGroup.blocksRaycasts = true;
 		CanvasGroup.alpha = 1f;
 		Caption.text = city.CityName;
+	}
+
+	public void OpenStore()
+	{
+		StoreUi.Open(_city);
 	}
 
 	public void Close()

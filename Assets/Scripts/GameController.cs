@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour, IGameController
 	public static GameController Instance;
 
 	private EnemySquad BattleSquad;
-	private DateTime _currentDateTime;
+	public DateTime CurrentDateTime;
 	private TimeSpan _deltaTimeSpan;
 	private float _timer;
 	private int _prevEatedDay;
@@ -31,9 +31,9 @@ public class GameController : MonoBehaviour, IGameController
 
 	private void Start()
 	{
-		_currentDateTime = DateTime.ParseExact(StartTime, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
+		CurrentDateTime = DateTime.ParseExact(StartTime, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture);
 		_deltaTimeSpan = TimeSpan.Parse(TimerDeltaTime);
-		_prevEatedDay = _currentDateTime.Day;
+		_prevEatedDay = CurrentDateTime.Day;
 	}
 
 	private void OnDestroy()
@@ -58,27 +58,27 @@ public class GameController : MonoBehaviour, IGameController
 		{
 			var coef = Time.deltaTime / TimerEndValue;
 			var seconds = _deltaTimeSpan.TotalSeconds * coef;
-			_currentDateTime = _currentDateTime.Add(TimeSpan.FromSeconds(seconds));
-			EventBus.RaiseEvent<IWorldUi>(x => x.SetDateTime(_currentDateTime));
+			CurrentDateTime = CurrentDateTime.Add(TimeSpan.FromSeconds(seconds));
+			EventBus.RaiseEvent<IWorldUi>(x => x.SetDateTime(CurrentDateTime));
 		}
 
-		if (_currentDateTime.Hour >= 21)
+		if (CurrentDateTime.Hour >= 21)
 		{
 			EventBus.RaiseEvent<IWorldUi>(x => x.SetNight(true));
 			IsNight = true;
 		}
 
-		if (_currentDateTime.Hour is >= 9 and < 21)
+		if (CurrentDateTime.Hour is >= 9 and < 21)
 		{
 			EventBus.RaiseEvent<IWorldUi>(x => x.SetNight(false));
 			IsNight = false;
 		}
 
-		if (_prevEatedDay != _currentDateTime.Day)
+		if (_prevEatedDay != CurrentDateTime.Day)
 		{
 			Player.Instance.Eat();
 			Player.Instance.Pay();
-			_prevEatedDay = _currentDateTime.Day;
+			_prevEatedDay = CurrentDateTime.Day;
 		}
 	}
 
