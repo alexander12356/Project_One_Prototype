@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 109da61dbadb4c719ba58b86fd70d34c, type: 3}
+  m_Name: MechBalance
+  m_EditorClassIdentifier: 
+  Balances:
+  - ModelType: 1
+    Icon: {fileID: 21300000, guid: 006aa332f4bcca44fbf351ba7c241fe4, type: 3}
+    Id: RestoredLineMech
+    BS: 4
+    S: 3
+    T: 3
+    W: 1
+    A: 1
+    D: 1
+    Sv: 5
+    NeedMoney: 50
+  - ModelType: 2
+    Icon: {fileID: 21300000, guid: a18c3a07bb0952c42953f6b06e6d3b2b, type: 3}
+    Id: BaseLineMech
+    BS: 3
+    S: 4
+    T: 4
+    W: 1
+    A: 1
+    D: 1
+    Sv: 3
+    NeedMoney: 100
+  - ModelType: 3
+    Icon: {fileID: 21300000, guid: 89cb40b1ff04a5c4baa966594301acf8, type: 3}
+    Id: VeteranLineMech
+    BS: 3
+    S: 4
+    T: 4
+    W: 2
+    A: 1
+    D: 1
+    Sv: 3
+    NeedMoney: 150
+  - ModelType: 4
+    Icon: {fileID: 21300000, guid: 5549867522a079d4f92124d01a3c04b4, type: 3}
+    Id: BaseHeavySupportMech
+    BS: 4
+    S: 5
+    T: 4
+    W: 2
+    A: 3
+    D: 2
+    Sv: 3
+    NeedMoney: 200
+  - ModelType: 5
+    Icon: {fileID: 21300000, guid: 6c864c6a045b7ba4e91ec63aae8fb798, type: 3}
+    Id: VeteranHeavySupportMech
+    BS: 4
+    S: 5
+    T: 6
+    W: 3
+    A: 3
+    D: 2
+    Sv: 3
+    NeedMoney: 250
+  - ModelType: 6
+    Icon: {fileID: 21300000, guid: 9ac9f56c60b39864a99dd82c96c93ac1, type: 3}
+    Id: BaseTerminatorMech
+    BS: 3
+    S: 4
+    T: 4
+    W: 2
+    A: 1
+    D: 1
+    Sv: 2
+    NeedMoney: 200
+  - ModelType: 7
+    Icon: {fileID: 21300000, guid: 7a4b9f63bcf148345870d68587730144, type: 3}
+    Id: VeteranTerminatorMech
+    BS: 3
+    S: 7
+    T: 4
+    W: 2
+    A: 1
+    D: 1
+    Sv: 2
+    NeedMoney: 250
+  - ModelType: 8
+    Icon: {fileID: 21300000, guid: 4528adb28d85232409bc6f31605e00fa, type: 3}
+    Id: RestoredChampionMech
+    BS: 3
+    S: 4
+    T: 3
+    W: 1
+    A: 1
+    D: 1
+    Sv: 3
+    NeedMoney: 200
+  - ModelType: 9
+    Icon: {fileID: 21300000, guid: bd8a80317275a3b41808e9597f9b5f4c, type: 3}
+    Id: BaseChampionMech
+    BS: 3
+    S: 5
+    T: 3
+    W: 1
+    A: 2
+    D: 2
+    Sv: 3
+    NeedMoney: 250
+  - ModelType: 10
+    Icon: {fileID: 21300000, guid: d95ee9209312d93469084b71e35e4273, type: 3}
+    Id: VeteranChampionMech
+    BS: 2
+    S: 4
+    T: 6
+    W: 3
+    A: 2
+    D: 2
+    Sv: 2
+    NeedMoney: 300

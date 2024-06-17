@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LocalBattle3d;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -10,6 +11,7 @@ namespace DefaultNamespace
 		[Serializable]
 		public struct SquadGlobalData
 		{
+			public ModelType ModelType;
 			public Sprite Icon;
 			public string Id;
 			public int BS;
