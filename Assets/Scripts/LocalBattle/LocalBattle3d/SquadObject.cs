@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace LocalBattle3d
 {
@@ -6,6 +7,7 @@ namespace LocalBattle3d
 	{
 		public ModelObject ModelPrefab;
 		private ModelType[,] modelsHolders = new ModelType[4, 25];
+		public List<ModelObject> ModelList;
 
 		public void SetData(SquadGlobalData squadGlobalData)
 		{
@@ -26,6 +28,8 @@ namespace LocalBattle3d
 				}
 			}
 
+			ModelList = new List<ModelObject>();
+
 			for (var i = 0; i < 4; i++)
 			{
 				for (var j = 0; j < 25; j++)
@@ -38,6 +42,7 @@ namespace LocalBattle3d
 					var modelObject = Instantiate(ModelPrefab, transform);
 					modelObject.SetPosition(j * LocalBattleControllerData.Instance.ColumnOffset, i * LocalBattleControllerData.Instance.RowOffset);
 					modelObject.SetType(modelsHolders[i, j]);
+					ModelList.Add(modelObject);
 				}
 			}
 		}
