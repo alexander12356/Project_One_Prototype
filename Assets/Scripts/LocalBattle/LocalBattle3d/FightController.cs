@@ -9,9 +9,11 @@ namespace LocalBattle3d
 		public float BeforeTurnDelay;
 		public float AnimationDelay;
 		public float BeforeResultDelay;
+		public FreeFlyCamera FreeFlyCamera;
 
 		public IEnumerator StartBattleCoroutine(ArmyObject playerArmy, ArmyObject enemyArmy)
 		{
+			FreeFlyCamera.Activate(true);
 			while (!IsFightEnd())
 			{
 				yield return new WaitForSeconds(BeforeTurnDelay);
@@ -28,6 +30,10 @@ namespace LocalBattle3d
 			}
 
 			yield return new WaitForSeconds(BeforeResultDelay);
+
+			FreeFlyCamera.Activate(false);
+			FreeFlyCamera.ReturnToInitPosition();
+
 			yield break;
 
 			bool IsArmyDestroyed(ArmyObject armyObject)

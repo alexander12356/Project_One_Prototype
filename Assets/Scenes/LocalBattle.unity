@@ -638,6 +638,7 @@ MonoBehaviour:
   BeforeTurnDelay: 1
   AnimationDelay: 1.5
   BeforeResultDelay: 0
+  FreeFlyCamera: {fileID: 1615339416}
 --- !u!1 &893260874
 GameObject:
   m_ObjectHideFlags: 0
@@ -1140,6 +1141,7 @@ GameObject:
   - component: {fileID: 1615339413}
   - component: {fileID: 1615339412}
   - component: {fileID: 1615339415}
+  - component: {fileID: 1615339416}
   m_Layer: 0
   m_Name: Camera_LocalBattle
   m_TagString: Untagged
@@ -1265,6 +1267,32 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615339411}
   m_Enabled: 1
+--- !u!114 &1615339416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615339411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 436275a13d4459746955fc6db5953473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _active: 0
+  _enableRotation: 1
+  _mouseSense: 1.8
+  _enableTranslation: 1
+  _translationSpeed: 55
+  _enableMovement: 1
+  _movementSpeed: 10
+  _boostedSpeed: 50
+  _boostSpeed: 304
+  _moveUp: 101
+  _moveDown: 113
+  _enableSpeedAcceleration: 1
+  _speedAccelerationFactor: 1.5
+  _initPositonButton: 114
 --- !u!1 &1687628006
 GameObject:
   m_ObjectHideFlags: 0
