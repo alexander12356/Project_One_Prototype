@@ -27,6 +27,7 @@ namespace DefaultNamespace
 		[Serializable]
 		public struct GettedExp
 		{
+			public ModelType ModelType;
 			public string Id;
 			public int Exp;
 		}

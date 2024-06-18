@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,21 +9,17 @@ namespace LocalBattle3d
 	{
 		public ArmyObject PlayerArmyObject;
 		public ArmyObject EnemyArmyObject;
+		public FightController FightController;
 
-		public void StartBattle(ArmyGlobalData playerGlobalArmy, ArmyGlobalData enemyGlobalArmy)
+		public void Init(ArmyGlobalData playerGlobalArmy, ArmyGlobalData enemyGlobalArmy)
 		{
 			CreateArmy(playerGlobalArmy, PlayerArmyObject);
 			CreateArmy(enemyGlobalArmy, EnemyArmyObject);
-			/*
-			StartCoroutine(StartBattleCoroutine(playerLocalArmy, enemyLocalArmy));
+		}
 
-			IEnumerator StartBattleCoroutine(ArmyObject playerArmy, ArmyObject enemyArmy)
-			{
-				yield return WaitStartFightCoroutine();
-				yield return StartFightsCoroutine(playerArmy, enemyArmy);
-				CheckResult();
-			}
-			*/
+		public void StartBattle()
+		{
+			StartCoroutine(FightController.StartBattleCoroutine(PlayerArmyObject, EnemyArmyObject));
 		}
 
 		private void CreateArmy(ArmyGlobalData armyGlobalData, ArmyObject armyObject)

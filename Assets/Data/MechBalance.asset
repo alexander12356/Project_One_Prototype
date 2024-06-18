@@ -123,3 +123,34 @@ MonoBehaviour:
     D: 2
     Sv: 2
     NeedMoney: 300
+  GettedExps:
+  - ModelType: 1
+    Id: RestoredLineMech
+    Exp: 60
+  - ModelType: 2
+    Id: BaseLineMech
+    Exp: 120
+  - ModelType: 3
+    Id: VeteranLineMech
+    Exp: 180
+  - ModelType: 4
+    Id: BaseHeavySupportMech
+    Exp: 240
+  - ModelType: 5
+    Id: VeteranHeavySupportMech
+    Exp: 300
+  - ModelType: 6
+    Id: BaseTerminatorMech
+    Exp: 240
+  - ModelType: 7
+    Id: VeteranTerminatorMech
+    Exp: 300
+  - ModelType: 8
+    Id: RestoredChampionMech
+    Exp: 240
+  - ModelType: 9
+    Id: BaseChampionMech
+    Exp: 300
+  - ModelType: 10
+    Id: VeteranChampionMech
+    Exp: 500

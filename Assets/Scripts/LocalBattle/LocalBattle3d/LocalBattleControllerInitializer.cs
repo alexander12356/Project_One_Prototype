@@ -21,7 +21,7 @@ namespace LocalBattle3d
 			{
 				SquadList = EnemyArmy
 			};
-			LocalBattleController3d.StartBattle(playerGlobalArmyData, enemyGlobalArmyData);
+			LocalBattleController3d.Init(playerGlobalArmyData, enemyGlobalArmyData);
 		}
 	}
 }

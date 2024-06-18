@@ -118,6 +118,7 @@ Transform:
   m_Children:
   - {fileID: 437707216416799000}
   - {fileID: 1312315712279693152}
+  - {fileID: 2406320371056431421}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4580295524395536234
@@ -211,6 +212,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MechBalance: {fileID: 11400000, guid: 921fe45a9d4473248bdf62c383d3bc74, type: 2}
   Icon: {fileID: 574253666983799258}
+  AnimationHolder: {fileID: 2406320371056431421}
+  AttackAnimationPrefab: {fileID: 5165241954638114851, guid: f328b562ea75c444d81d801e18a6e296, type: 3}
+  ToughnessDefendAnimationPrefab: {fileID: 2982012053123583978, guid: 2b6ddffd73b542944927f24ee05a12ff, type: 3}
+  SaveDefendAnimationPrefab: {fileID: 5606071545857473631, guid: c66e4e05c4892054ab212ebd7bdc10af, type: 3}
+  WoundAnimationPrefab: {fileID: 9112659653928649774, guid: 7f3449080b83df94a98bf884fc3a52a8, type: 3}
+  MissAnimationPrefab: {fileID: 1896292266644618923, guid: 8697418458dac894cb97345f91a296b2, type: 3}
+  AnimationLifeTime: 3
+  SpawnTimeRandom: 0.4
+  GettedExp: 0
+  ModelType: 0
 --- !u!1 &4664245889344876174
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,3 +305,34 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7071270659172106645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2406320371056431421}
+  m_Layer: 0
+  m_Name: AnimationHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2406320371056431421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7071270659172106645}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.173, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2340191275901444717}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

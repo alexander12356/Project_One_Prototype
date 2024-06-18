@@ -18,9 +18,9 @@ namespace LocalBattle3d
 		public float AnimationLifeTime;
 		public float SpawnTimeRandom;
 		public int GettedExp;
-		public PlayerData.SquadLocalData SquadLocalData;
-		
-		private ModelType ModelType;
+		public ModelType ModelType;
+
+		private int W;
 
 		public void SetPosition(float columnOffset, float rowOffset)
 		{
@@ -29,91 +29,54 @@ namespace LocalBattle3d
 
 		public void SetType(ModelType modelType)
 		{
+			ModelType = modelType;
 			var balance = MechBalance.Balances.FirstOrDefault(x => x.ModelType == modelType);
 			Icon.sprite = balance.Icon;
+			W = balance.W;
 		}
 
-		/*
 		public void Attack(ModelObject defenderModel)
 		{
-			var attackerBalance = MechBalance.GetMechBalance(SquadLocalData.Id);
-			var defenderBalance = BalanceController.Instance.GetSquadGlobalData(enemySquadObject.SquadLocalData.Id);
+			var attackerBalance = MechBalance.GetMechBalance(ModelType);
+			var defenderBalance = MechBalance.GetMechBalance(defenderModel.ModelType);
 
 			for (var i = 0; i < attackerBalance.A; i++)
 			{
 				ShowAttackAnimation();
 
-				var isHit = Roll(attackerBalance.BS);
-				if (isHit)
+				var isHit = BattleRollHelper.Roll(attackerBalance.BS);
+				if (!isHit)
 				{
-					var targetRoll = 6;
-					if (attackerBalance.S / 2 > defenderBalance.T)
-					{
-						targetRoll = 2;
-					}
-					else if (attackerBalance.S > defenderBalance.T)
-					{
-						targetRoll = 3;
-					}
-					else if (attackerBalance.S == defenderBalance.T)
-					{
-						targetRoll = 4;
-					}
-					else if (attackerBalance.S / 2 < defenderBalance.T)
-					{
-						targetRoll = 6;
-					}
-					else
-					{
-						targetRoll = 5;
-					}
-
-					var isWound = Roll(targetRoll);
-
-					if (isWound)
-					{
-						var isSave = Roll(defenderBalance.Sv);
-
-						if (!isSave)
-						{
-							enemySquadObject.ShowWoundAnimation();
-							if (!enemySquadObject.IsDead())
-							{
-								enemySquadObject.Wound(attackerBalance.D);
-								if (enemySquadObject.IsDead())
-								{
-									GettedExp += BalanceController.Instance.GetExpFrom(enemySquadObject.SquadLocalData.Id);
-								}
-							}
-						}
-						else
-						{
-							enemySquadObject.ShowSaveDefenseAnimation();
-						}
-					}
-					else
-					{
-						enemySquadObject.ShowToughnessDefenseAnimation();
-					}
+					defenderModel.ShowMissAnimation();
+					return;
 				}
-				else
+
+				var isWound = BattleRollHelper.WoundRoll(attackerBalance.S, defenderBalance.T);
+				if (!isWound)
 				{
-					enemySquadObject.ShowMissAnimation();
+					defenderModel.ShowToughnessDefenseAnimation();
+					return;
+				}
+
+				var isSave = BattleRollHelper.Roll(defenderBalance.Sv);
+				if (isSave)
+				{
+					defenderModel.ShowSaveDefenseAnimation();
+					return;
+				}
+
+				defenderModel.ShowWoundAnimation();
+				if (!defenderModel.IsDead())
+				{
+					defenderModel.Wound(attackerBalance.D);
+				}
+
+				if (defenderModel.IsDead())
+				{
+					GettedExp += MechBalance.GetExpFrom(defenderModel.ModelType);
 				}
 			}
 		}
-
-		public void SetData(PlayerData.SquadLocalData squadData)
-		{
-			Icon.sprite = BalanceController.Instance.GetSquadGlobalData(squadData.Id).Icon;
-			SquadLocalData = squadData;
-			SquadLocalData.Wound = BalanceController.Instance.GetSquadGlobalData(squadData.Id).W;
-		}
-
-		public void Attack(SquadObject enemySquadObject)
-		{
-		}
-		*/
 
 		private void ShowMissAnimation()
 		{
@@ -161,18 +124,12 @@ namespace LocalBattle3d
 
 		private void Wound(int attackerBalanceD)
 		{
-			SquadLocalData.Wound -= attackerBalanceD;
+			W -= attackerBalanceD;
 		}
 
 		public bool IsDead()
 		{
-			return SquadLocalData.Wound <= 0;
-		}
-
-		private bool Roll(int targetRoll)
-		{
-			var rollValue = Random.Range(0, 7);
-			return rollValue >= targetRoll;
+			return W <= 0;
 		}
 	}
 }
