@@ -19612,6 +19612,7 @@ GameObject:
   - component: {fileID: 9214145098425467140}
   - component: {fileID: 4284262472031369945}
   - component: {fileID: 5679898025918984597}
+  - component: {fileID: -8202994132548789113}
   m_Layer: 0
   m_Name: Wound
   m_TagString: Untagged
@@ -24628,3 +24629,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8202994132548789113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9112659653928649774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e816b60da0806c43a5d114b95d1ea1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delayTime: 1.2

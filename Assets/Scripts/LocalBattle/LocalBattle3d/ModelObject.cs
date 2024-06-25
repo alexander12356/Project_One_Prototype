@@ -2,6 +2,7 @@
 using System.Linq;
 using Data;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace LocalBattle3d
 {
@@ -10,11 +11,7 @@ namespace LocalBattle3d
 		public MechBalance MechBalance;
 		public SpriteRenderer Icon;
 		public Transform AnimationHolder;
-		public GameObject AttackAnimationPrefab;
-		public GameObject ToughnessDefendAnimationPrefab;
-		public GameObject SaveDefendAnimationPrefab;
-		public GameObject WoundAnimationPrefab;
-		public GameObject MissAnimationPrefab;
+
 		public float AnimationLifeTime;
 		public float SpawnTimeRandom;
 		public int GettedExp;
@@ -80,46 +77,27 @@ namespace LocalBattle3d
 
 		private void ShowMissAnimation()
 		{
-			CreateEffect(MissAnimationPrefab);
+			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.MissAnimationPool, AnimationHolder.position);
 		}
 
 		private void ShowToughnessDefenseAnimation()
 		{
-			CreateEffect(ToughnessDefendAnimationPrefab);
+			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.ToughnessDefendAnimationPool, AnimationHolder.position);
 		}
 
 		private void ShowSaveDefenseAnimation()
 		{
-			CreateEffect(SaveDefendAnimationPrefab);
+			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.SaveDefendAnimationPool, AnimationHolder.position);
 		}
 
 		private void ShowWoundAnimation()
 		{
-			CreateEffect(WoundAnimationPrefab);
+			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.WoundAnimationPool, AnimationHolder.position);
 		}
 
 		private void ShowAttackAnimation()
 		{
-			CreateEffect(AttackAnimationPrefab);
-		}
-
-		private void CreateEffect(GameObject prefab, bool withRandom = true)
-		{
-			StartCoroutine(CreateEffectCoroutine());
-
-			IEnumerator CreateEffectCoroutine()
-			{
-				var spawnTime = Random.Range(0f, SpawnTimeRandom);
-				yield return new WaitForSeconds(spawnTime);
-
-				var effect = Instantiate(prefab, AnimationHolder);
-				if (withRandom)
-				{
-					effect.transform.localPosition = Random.insideUnitCircle * 0.2f;
-				}
-
-				Destroy(effect, AnimationLifeTime);
-			}
+			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.AttackAnimationPool, AnimationHolder.position);
 		}
 
 		private void Wound(int attackerBalanceD)
