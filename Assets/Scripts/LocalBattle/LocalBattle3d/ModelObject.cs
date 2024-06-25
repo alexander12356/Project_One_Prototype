@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using Data;
+using Pathfinding;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -16,8 +18,22 @@ namespace LocalBattle3d
 		public float SpawnTimeRandom;
 		public int GettedExp;
 		public ModelType ModelType;
+		public float CommonSpeed;
+		public float ChargeSpeed;
 
 		private int W;
+		private IAstarAI _astarAI;
+		private Vector3 _startPositions;
+
+		private void Awake()
+		{
+			_astarAI = GetComponent<IAstarAI>();
+		}
+
+		private void Start()
+		{
+			_startPositions = transform.position;
+		}
 
 		public void SetPosition(float columnOffset, float rowOffset)
 		{
@@ -32,7 +48,7 @@ namespace LocalBattle3d
 			W = balance.W;
 		}
 
-		public void Attack(ModelObject defenderModel)
+		public void RangeAttack(ModelObject defenderModel)
 		{
 			var attackerBalance = MechBalance.GetMechBalance(ModelType);
 			var defenderBalance = MechBalance.GetMechBalance(defenderModel.ModelType);
@@ -108,6 +124,22 @@ namespace LocalBattle3d
 		public bool IsDead()
 		{
 			return W <= 0;
+		}
+
+		public void Move(float moveForwardDistance)
+		{
+			_astarAI.maxSpeed = CommonSpeed;
+			_astarAI.destination = transform.position + transform.forward * moveForwardDistance;
+		}
+
+		public void Charge()
+		{
+			_astarAI.maxSpeed = ChargeSpeed;
+		}
+
+		public void ReturnToStartPositions()
+		{
+			_astarAI.Teleport(_startPositions);
 		}
 	}
 }

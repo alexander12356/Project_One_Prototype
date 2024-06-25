@@ -11,7 +11,7 @@ namespace LocalBattle3d
 		{
 			for (int i = 0; i < armyGlobalData.SquadList.Count; i++)
 			{
-				SquadObjectList[i].SetData(armyGlobalData.SquadList[i]);
+				SquadObjectList[i].CreateModels(armyGlobalData.SquadList[i]);
 			}
 		}
 	}

@@ -9,7 +9,7 @@ namespace LocalBattle3d
 		private ModelType[,] modelsHolders = new ModelType[4, 25];
 		public List<ModelObject> ModelList;
 
-		public void SetData(SquadGlobalData squadGlobalData)
+		public void CreateModels(SquadGlobalData squadGlobalData)
 		{
 			var modelCount = squadGlobalData.ModelList.Count;
 
@@ -50,6 +50,30 @@ namespace LocalBattle3d
 		public void SetTransform(Transform squadTransform)
 		{
 			transform.SetParent(squadTransform, false);
+		}
+
+		public void ModelsMove(float moveForwardDistance)
+		{
+			foreach (var modelObject in ModelList)
+			{
+				modelObject.Move(moveForwardDistance);
+			}
+		}
+
+		public void Charge()
+		{
+			foreach (var modelObject in ModelList)
+			{
+				modelObject.Charge();
+			}
+		}
+
+		public void ReturnToStartPositions()
+		{
+			foreach (var modelObject in ModelList)
+			{
+				modelObject.ReturnToStartPositions();
+			}
 		}
 	}
 }

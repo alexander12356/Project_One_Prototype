@@ -9,6 +9,10 @@ namespace LocalBattle3d
 		public float BeforeTurnDelay;
 		public float AnimationDelay;
 		public float BeforeResultDelay;
+		public float ModelsMoveForwardDistance;
+		public float DelayBeforeRangeAttack;
+		public float DelayBeforeCharge;
+		public float DelayBeforeMeleeAttack;
 		public FreeFlyCamera FreeFlyCamera;
 
 		public IEnumerator StartBattleCoroutine(ArmyObject playerArmy, ArmyObject enemyArmy)
@@ -20,13 +24,29 @@ namespace LocalBattle3d
 
 				var playerSquadsTargets = GetSquadTargetList(playerArmy, enemyArmy);
 				var enemySquadsTargets = GetSquadTargetList(enemyArmy, playerArmy);
-				SquadAttack(playerSquadsTargets, playerArmy.SquadObjectList, enemyArmy.SquadObjectList);
-				SquadAttack(enemySquadsTargets, enemyArmy.SquadObjectList, playerArmy.SquadObjectList);
+
+				SquadMove(playerArmy.SquadObjectList, ModelsMoveForwardDistance);
+				SquadMove(enemyArmy.SquadObjectList, ModelsMoveForwardDistance);
+
+				yield return new WaitForSeconds(DelayBeforeRangeAttack);
+
+				SquadRangeAttack(playerSquadsTargets, playerArmy.SquadObjectList, enemyArmy.SquadObjectList);
+				SquadRangeAttack(enemySquadsTargets, enemyArmy.SquadObjectList, playerArmy.SquadObjectList);
+
+				yield return new WaitForSeconds(AnimationDelay);
 
 				RemoveDeadModels(playerArmy);
 				RemoveDeadModels(enemyArmy);
 
-				yield return new WaitForSeconds(AnimationDelay);
+				yield return new WaitForSeconds(DelayBeforeCharge);
+
+				SquadCharge(playerArmy.SquadObjectList);
+				SquadCharge(enemyArmy.SquadObjectList);
+
+				yield return new WaitForSeconds(DelayBeforeMeleeAttack);
+
+				SquadReturnToStartPositions(playerArmy.SquadObjectList);
+				SquadReturnToStartPositions(enemyArmy.SquadObjectList);
 			}
 
 			yield return new WaitForSeconds(BeforeResultDelay);
@@ -111,22 +131,22 @@ namespace LocalBattle3d
 			}
 		}
 
-		private void SquadAttack(List<(int, int)> squadsTargets, List<SquadObject> attackerSquadList, List<SquadObject> defenderSquadList)
+		private void SquadRangeAttack(List<(int, int)> squadsTargets, List<SquadObject> attackerSquadList, List<SquadObject> defenderSquadList)
 		{
 			foreach (var squadsTarget in squadsTargets)
 			{
 				var attackerModelsCount = attackerSquadList[squadsTarget.Item1].ModelList.Count;
 				var defenderModelsCount = defenderSquadList[squadsTarget.Item2].ModelList.Count;
 				var targets = GetTargets(attackerModelsCount, defenderModelsCount);
-				ModelsAttack(targets, attackerSquadList[squadsTarget.Item1].ModelList, defenderSquadList[squadsTarget.Item2].ModelList);
+				ModelsRangeAttack(targets, attackerSquadList[squadsTarget.Item1].ModelList, defenderSquadList[squadsTarget.Item2].ModelList);
 			}
 		}
 
-		private void ModelsAttack(List<(int, int)> targets, List<ModelObject> attackerModelList, List<ModelObject> defenderModelList)
+		private void ModelsRangeAttack(List<(int, int)> targets, List<ModelObject> attackerModelList, List<ModelObject> defenderModelList)
 		{
 			foreach (var target in targets)
 			{
-				attackerModelList[target.Item1].Attack(defenderModelList[target.Item2]);
+				attackerModelList[target.Item1].RangeAttack(defenderModelList[target.Item2]);
 			}
 		}
 
@@ -153,6 +173,30 @@ namespace LocalBattle3d
 			}
 
 			return targets;
+		}
+
+		private void SquadMove(List<SquadObject> squadObjectList, float modelsMoveForwardDistance)
+		{
+			foreach (var squadObject in squadObjectList)
+			{
+				squadObject.ModelsMove(modelsMoveForwardDistance);
+			}
+		}
+
+		private void SquadCharge(List<SquadObject> squadObjectList)
+		{
+			foreach (var squadObject in squadObjectList)
+			{
+				squadObject.Charge();
+			}
+		}
+
+		private void SquadReturnToStartPositions(List<SquadObject> squadObjectList)
+		{
+			foreach (var squadObject in squadObjectList)
+			{
+				squadObject.ReturnToStartPositions();
+			}
 		}
 	}
 }
