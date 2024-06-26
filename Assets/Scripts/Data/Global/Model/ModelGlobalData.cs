@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Mech.Data.Global
 {
@@ -15,6 +16,7 @@ namespace Mech.Data.Global
 		public int W;
 
 		public ModelRangeWeaponData ModelRangeWeaponData;
+		public ModelMeleeWeaponData ModelMeleeWeaponData;
 		
 		public int NeedMoney;
 	}

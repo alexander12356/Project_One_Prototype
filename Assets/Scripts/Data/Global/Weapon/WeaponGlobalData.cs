@@ -3,7 +3,7 @@
 namespace Mech.Data.Global
 {
 	[Serializable]
-	public struct RangeWeaponGlobalData
+	public struct WeaponGlobalData
 	{
 		public int S;
 		public int D;

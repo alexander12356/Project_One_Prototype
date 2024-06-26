@@ -12,7 +12,7 @@ namespace LocalBattle3d
 	public class ModelObject : MonoBehaviour
 	{
 		public ModelGlobalDataList _modelGlobalDataList;
-		public RangeWeaponGlobalDataList _rangeWeaponGlobalDataList;
+		[FormerlySerializedAs("_rangeWeaponGlobalDataList")] public WeaponGlobalDataList _weaponGlobalDataList;
 		public SpriteRenderer Icon;
 		public Transform AnimationHolder;
 
@@ -67,7 +67,7 @@ namespace LocalBattle3d
 					return;
 				}
 
-				var weaponData = _rangeWeaponGlobalDataList.GetWeaponData(attackerRangeWeaponData.Type);
+				var weaponData = _weaponGlobalDataList.GetRangeWeaponData(attackerRangeWeaponData.Type);
 				var isWound = BattleRollHelper.WoundRoll(weaponData.S, defenderBalance.T);
 				if (!isWound)
 				{

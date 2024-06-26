@@ -3,7 +3,7 @@
 namespace Mech.Data.Global
 {
 	[Serializable]
-	public enum RangeWeaponModelType
+	public enum RangeWeaponType
 	{
 		None = 0, 
 		RestoredKineticGun = 1,

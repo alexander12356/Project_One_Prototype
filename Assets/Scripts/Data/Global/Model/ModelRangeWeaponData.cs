@@ -5,7 +5,7 @@ namespace Mech.Data.Global
 	[Serializable]
 	public struct ModelRangeWeaponData
 	{
-		public RangeWeaponModelType Type;
+		public RangeWeaponType Type;
 		public int A;
 		public int BS;
 	}

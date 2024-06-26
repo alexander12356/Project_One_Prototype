@@ -23,6 +23,10 @@ MonoBehaviour:
       Type: 1
       A: 1
       BS: 4
+    ModelMeleeWeaponData:
+      Type: 1
+      A: 1
+      WS: 4
     NeedMoney: 50
   - ModelType: 2
     Icon: {fileID: 21300000, guid: a18c3a07bb0952c42953f6b06e6d3b2b, type: 3}
@@ -34,6 +38,10 @@ MonoBehaviour:
       Type: 1
       A: 1
       BS: 3
+    ModelMeleeWeaponData:
+      Type: 1
+      A: 1
+      WS: 4
     NeedMoney: 100
   - ModelType: 3
     Icon: {fileID: 21300000, guid: 89cb40b1ff04a5c4baa966594301acf8, type: 3}
@@ -45,6 +53,10 @@ MonoBehaviour:
       Type: 2
       A: 1
       BS: 3
+    ModelMeleeWeaponData:
+      Type: 1
+      A: 1
+      WS: 3
     NeedMoney: 150
   - ModelType: 4
     Icon: {fileID: 21300000, guid: 5549867522a079d4f92124d01a3c04b4, type: 3}
@@ -56,6 +68,10 @@ MonoBehaviour:
       Type: 3
       A: 3
       BS: 4
+    ModelMeleeWeaponData:
+      Type: 1
+      A: 1
+      WS: 3
     NeedMoney: 200
   - ModelType: 5
     Icon: {fileID: 21300000, guid: 6c864c6a045b7ba4e91ec63aae8fb798, type: 3}
@@ -67,6 +83,10 @@ MonoBehaviour:
       Type: 3
       A: 3
       BS: 4
+    ModelMeleeWeaponData:
+      Type: 1
+      A: 1
+      WS: 3
     NeedMoney: 250
   - ModelType: 6
     Icon: {fileID: 21300000, guid: 9ac9f56c60b39864a99dd82c96c93ac1, type: 3}
@@ -78,6 +98,10 @@ MonoBehaviour:
       Type: 2
       A: 1
       BS: 3
+    ModelMeleeWeaponData:
+      Type: 2
+      A: 1
+      WS: 3
     NeedMoney: 200
   - ModelType: 7
     Icon: {fileID: 21300000, guid: 7a4b9f63bcf148345870d68587730144, type: 3}
@@ -89,6 +113,10 @@ MonoBehaviour:
       Type: 4
       A: 1
       BS: 3
+    ModelMeleeWeaponData:
+      Type: 2
+      A: 2
+      WS: 3
     NeedMoney: 250
   - ModelType: 8
     Icon: {fileID: 21300000, guid: 4528adb28d85232409bc6f31605e00fa, type: 3}
@@ -100,6 +128,10 @@ MonoBehaviour:
       Type: 2
       A: 1
       BS: 3
+    ModelMeleeWeaponData:
+      Type: 1
+      A: 1
+      WS: 4
     NeedMoney: 200
   - ModelType: 9
     Icon: {fileID: 21300000, guid: bd8a80317275a3b41808e9597f9b5f4c, type: 3}
@@ -111,6 +143,10 @@ MonoBehaviour:
       Type: 3
       A: 2
       BS: 3
+    ModelMeleeWeaponData:
+      Type: 1
+      A: 1
+      WS: 3
     NeedMoney: 250
   - ModelType: 10
     Icon: {fileID: 21300000, guid: d95ee9209312d93469084b71e35e4273, type: 3}
@@ -122,6 +158,10 @@ MonoBehaviour:
       Type: 3
       A: 2
       BS: 2
+    ModelMeleeWeaponData:
+      Type: 2
+      A: 2
+      WS: 3
     NeedMoney: 300
   GettedExps:
   - ModelType: 1

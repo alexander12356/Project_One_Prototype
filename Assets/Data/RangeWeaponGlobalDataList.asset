@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f4e260bc2424c7d99dd4f9c0f267237, type: 3}
   m_Name: RangeWeaponGlobalDataList
   m_EditorClassIdentifier: 
-  _weaponDataList:
+  _rangeWeaponDataList:
     m_Keys: 01000000020000000300000004000000
     m_Values:
     - S: 3
@@ -22,4 +22,11 @@ MonoBehaviour:
     - S: 5
       D: 2
     - S: 7
+      D: 1
+  _meleeWeaponDataList:
+    m_Keys: 0100000002000000
+    m_Values:
+    - S: 3
+      D: 1
+    - S: 4
       D: 1
