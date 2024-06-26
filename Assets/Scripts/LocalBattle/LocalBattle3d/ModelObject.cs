@@ -52,23 +52,34 @@ namespace LocalBattle3d
 
 		public void RangeAttack(ModelObject defenderModel)
 		{
-			var attackerBalance = _modelGlobalDataList.GetModelData(ModelType);
-			var defenderBalance = _modelGlobalDataList.GetModelData(defenderModel.ModelType);
 			var attackerRangeWeaponData = _modelGlobalDataList.GetModelRangeWeaponData(ModelType);
+			var weaponData = _weaponGlobalDataList.GetRangeWeaponData(attackerRangeWeaponData.Type);
+			WeaponAttack(defenderModel, attackerRangeWeaponData.A, attackerRangeWeaponData.BS, weaponData);
+		}
 
-			for (var i = 0; i < attackerRangeWeaponData.A; i++)
+		public void MeleeAttack(ModelObject defenderModel)
+		{
+			var attackerRangeWeaponData = _modelGlobalDataList.GetModelMeleeWeaponData(ModelType);
+			var weaponData = _weaponGlobalDataList.GetMeleeWeaponData(attackerRangeWeaponData.Type);
+			WeaponAttack(defenderModel, attackerRangeWeaponData.A, attackerRangeWeaponData.WS, weaponData);
+		}
+
+		private void WeaponAttack(ModelObject defenderModel, int attackCount, int skill, WeaponGlobalData attackerWeaponGlobalData)
+		{
+			var defenderBalance = _modelGlobalDataList.GetModelData(defenderModel.ModelType);
+
+			for (var i = 0; i < attackCount; i++)
 			{
 				ShowAttackAnimation();
 
-				var isHit = BattleRollHelper.Roll(attackerRangeWeaponData.BS);
+				var isHit = BattleRollHelper.Roll(skill);
 				if (!isHit)
 				{
 					defenderModel.ShowMissAnimation();
 					return;
 				}
 
-				var weaponData = _weaponGlobalDataList.GetRangeWeaponData(attackerRangeWeaponData.Type);
-				var isWound = BattleRollHelper.WoundRoll(weaponData.S, defenderBalance.T);
+				var isWound = BattleRollHelper.WoundRoll(attackerWeaponGlobalData.S, defenderBalance.T);
 				if (!isWound)
 				{
 					defenderModel.ShowToughnessDefenseAnimation();
@@ -85,7 +96,7 @@ namespace LocalBattle3d
 				defenderModel.ShowWoundAnimation();
 				if (!defenderModel.IsDead())
 				{
-					defenderModel.Wound(weaponData.D);
+					defenderModel.Wound(attackerWeaponGlobalData.D);
 				}
 
 				if (defenderModel.IsDead())
@@ -93,10 +104,6 @@ namespace LocalBattle3d
 					GettedExp += _modelGlobalDataList.GetExpFrom(defenderModel.ModelType);
 				}
 			}
-		}
-
-		public void MeleeAttack(ModelObject defenderModel)
-		{
 		}
 
 		private void ShowMissAnimation()

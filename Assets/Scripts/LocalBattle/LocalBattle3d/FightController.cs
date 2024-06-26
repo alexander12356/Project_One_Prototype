@@ -51,6 +51,13 @@ namespace LocalBattle3d
 				SquadMeleeAttack(playerSquadsTargets, playerArmy.SquadObjectList, enemyArmy.SquadObjectList);
 				SquadMeleeAttack(enemySquadsTargets, enemyArmy.SquadObjectList, playerArmy.SquadObjectList);
 
+				yield return new WaitForSeconds(AnimationDelay);
+
+				RemoveDeadModels(playerArmy);
+				RemoveDeadModels(enemyArmy);
+
+				yield return new WaitForSeconds(DelayBeforeCharge);
+
 				SquadReturnToStartPositions(playerArmy.SquadObjectList);
 				SquadReturnToStartPositions(enemyArmy.SquadObjectList);
 			}

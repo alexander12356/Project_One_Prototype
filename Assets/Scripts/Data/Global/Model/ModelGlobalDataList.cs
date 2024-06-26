@@ -25,5 +25,10 @@ namespace Mech.Data.Global
 		{
 			return Balances.FirstOrDefault(x => x.ModelType == type).ModelRangeWeaponData;
 		}
+
+		public ModelMeleeWeaponData GetModelMeleeWeaponData(ModelType type)
+		{
+			return Balances.FirstOrDefault(x => x.ModelType == type).ModelMeleeWeaponData;
+		}
 	}
 }

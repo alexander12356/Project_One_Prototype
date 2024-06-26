@@ -1125,7 +1125,7 @@ MonoBehaviour:
   ModelsMoveForwardDistance: 25
   DelayBeforeRangeAttack: 2
   DelayBeforeCharge: 0.5
-  DelayBeforeMeleeAttack: 5
+  DelayBeforeMeleeAttack: 2.7
   FreeFlyCamera: {fileID: 1615339416}
 --- !u!114 &846405328
 MonoBehaviour:
