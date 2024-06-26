@@ -54,46 +54,46 @@ namespace LocalBattle3d
 		{
 			var attackerRangeWeaponData = _modelGlobalDataList.GetModelRangeWeaponData(ModelType);
 			var weaponData = _weaponGlobalDataList.GetRangeWeaponData(attackerRangeWeaponData.Type);
-			WeaponAttack(defenderModel, attackerRangeWeaponData.A, attackerRangeWeaponData.BS, weaponData);
+			WeaponAttack(defenderModel, attackerRangeWeaponData.A, attackerRangeWeaponData.BS, weaponData, VfxType.RangeAttack);
 		}
 
 		public void MeleeAttack(ModelObject defenderModel)
 		{
 			var attackerRangeWeaponData = _modelGlobalDataList.GetModelMeleeWeaponData(ModelType);
 			var weaponData = _weaponGlobalDataList.GetMeleeWeaponData(attackerRangeWeaponData.Type);
-			WeaponAttack(defenderModel, attackerRangeWeaponData.A, attackerRangeWeaponData.WS, weaponData);
+			WeaponAttack(defenderModel, attackerRangeWeaponData.A, attackerRangeWeaponData.WS, weaponData, VfxType.MeleeAttack);
 		}
 
-		private void WeaponAttack(ModelObject defenderModel, int attackCount, int skill, WeaponGlobalData attackerWeaponGlobalData)
+		private void WeaponAttack(ModelObject defenderModel, int attackCount, int skill, WeaponGlobalData attackerWeaponGlobalData, VfxType attackVfx)
 		{
 			var defenderBalance = _modelGlobalDataList.GetModelData(defenderModel.ModelType);
 
 			for (var i = 0; i < attackCount; i++)
 			{
-				ShowAttackAnimation();
+				ShowEffect(attackVfx);
 
 				var isHit = BattleRollHelper.Roll(skill);
 				if (!isHit)
 				{
-					defenderModel.ShowMissAnimation();
+					ShowEffect(VfxType.Miss);
 					return;
 				}
 
 				var isWound = BattleRollHelper.WoundRoll(attackerWeaponGlobalData.S, defenderBalance.T);
 				if (!isWound)
 				{
-					defenderModel.ShowToughnessDefenseAnimation();
+					ShowEffect(VfxType.ToughnessDefense);
 					return;
 				}
 
 				var isSave = BattleRollHelper.Roll(defenderBalance.Sv);
 				if (isSave)
 				{
-					defenderModel.ShowSaveDefenseAnimation();
+					ShowEffect(VfxType.SaveDefense);
 					return;
 				}
 
-				defenderModel.ShowWoundAnimation();
+				ShowEffect(VfxType.Wound);
 				if (!defenderModel.IsDead())
 				{
 					defenderModel.Wound(attackerWeaponGlobalData.D);
@@ -106,29 +106,9 @@ namespace LocalBattle3d
 			}
 		}
 
-		private void ShowMissAnimation()
+		private void ShowEffect(VfxType type)
 		{
-			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.MissAnimationPool, AnimationHolder.position);
-		}
-
-		private void ShowToughnessDefenseAnimation()
-		{
-			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.ToughnessDefendAnimationPool, AnimationHolder.position);
-		}
-
-		private void ShowSaveDefenseAnimation()
-		{
-			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.SaveDefendAnimationPool, AnimationHolder.position);
-		}
-
-		private void ShowWoundAnimation()
-		{
-			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.WoundAnimationPool, AnimationHolder.position);
-		}
-
-		private void ShowAttackAnimation()
-		{
-			LocalBattleEffectController.Instance.ShowEffect(LocalBattleEffectController.Instance.AttackAnimationPool, AnimationHolder.position);
+			LocalBattleEffectController.Instance.ShowEffect(type, AnimationHolder.position);
 		}
 
 		private void Wound(int attackerBalanceD)
