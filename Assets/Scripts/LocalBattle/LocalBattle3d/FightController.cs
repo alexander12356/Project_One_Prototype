@@ -45,6 +45,12 @@ namespace LocalBattle3d
 
 				yield return new WaitForSeconds(DelayBeforeMeleeAttack);
 
+				playerSquadsTargets = GetSquadTargetList(playerArmy, enemyArmy);
+				enemySquadsTargets = GetSquadTargetList(enemyArmy, playerArmy);
+
+				SquadMeleeAttack(playerSquadsTargets, playerArmy.SquadObjectList, enemyArmy.SquadObjectList);
+				SquadMeleeAttack(enemySquadsTargets, enemyArmy.SquadObjectList, playerArmy.SquadObjectList);
+
 				SquadReturnToStartPositions(playerArmy.SquadObjectList);
 				SquadReturnToStartPositions(enemyArmy.SquadObjectList);
 			}
@@ -196,6 +202,25 @@ namespace LocalBattle3d
 			foreach (var squadObject in squadObjectList)
 			{
 				squadObject.ReturnToStartPositions();
+			}
+		}
+
+		private void SquadMeleeAttack(List<(int, int)> squadsTargets, List<SquadObject> attackerSquadList, List<SquadObject> defenderSquadList)
+		{
+			foreach (var squadsTarget in squadsTargets)
+			{
+				var attackerModelsCount = attackerSquadList[squadsTarget.Item1].ModelList.Count;
+				var defenderModelsCount = defenderSquadList[squadsTarget.Item2].ModelList.Count;
+				var targets = GetTargets(attackerModelsCount, defenderModelsCount);
+				ModelsMeleeAttack(targets, attackerSquadList[squadsTarget.Item1].ModelList, defenderSquadList[squadsTarget.Item2].ModelList);
+			}
+		}
+
+		private void ModelsMeleeAttack(List<(int, int)> targets, List<ModelObject> attackerModelList, List<ModelObject> defenderModelList)
+		{
+			foreach (var target in targets)
+			{
+				attackerModelList[target.Item1].MeleeAttack(defenderModelList[target.Item2]);
 			}
 		}
 	}

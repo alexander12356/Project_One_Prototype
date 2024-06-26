@@ -14,7 +14,7 @@ public class HireSquadItemUi : MonoBehaviour
 	{
 		Data = data;
 		TryHireAction = onTryHire;
-		_iconImage.sprite = BalanceController.Instance.Balances.FirstOrDefault(x => x.Id == data.SquadId).Icon;
+		_iconImage.sprite = BalanceController.Instance.Balances.Balances.FirstOrDefault(x => x.Id == data.SquadId).Icon;
 	}
 
 	public void HireButtonPress()

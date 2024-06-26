@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
-using LocalBattle3d;
 using UnityEngine;
 
-namespace Data
+namespace Mech.Data.Global
 {
-	[CreateAssetMenu(fileName = nameof(MechBalance), menuName = "Data/MechBalance")]
-	public class MechBalance : ScriptableObject
+	[CreateAssetMenu(fileName = nameof(ModelGlobalDataList), menuName = "Data/MechBalance")]
+	public class ModelGlobalDataList : ScriptableObject
 	{
-		public List<BalanceController.SquadGlobalData> Balances;
+		public List<ModelGlobalData> Balances;
 		public List<BalanceController.GettedExp> GettedExps;
 
-		public BalanceController.SquadGlobalData GetMechBalance(ModelType type)
+		public ModelGlobalData GetMechBalance(ModelType type)
 		{
 			return Balances.FirstOrDefault(x => x.ModelType == type);
 		}

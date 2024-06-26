@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using Data;
+using Mech.Data.Global;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 namespace LocalBattle3d
 {
 	public class ModelObject : MonoBehaviour
 	{
-		public MechBalance MechBalance;
+		[FormerlySerializedAs("MechBalance")] public ModelGlobalDataList _modelGlobalDataList;
 		public SpriteRenderer Icon;
 		public Transform AnimationHolder;
 
@@ -43,15 +44,15 @@ namespace LocalBattle3d
 		public void SetType(ModelType modelType)
 		{
 			ModelType = modelType;
-			var balance = MechBalance.Balances.FirstOrDefault(x => x.ModelType == modelType);
+			var balance = _modelGlobalDataList.Balances.FirstOrDefault(x => x.ModelType == modelType);
 			Icon.sprite = balance.Icon;
 			W = balance.W;
 		}
 
 		public void RangeAttack(ModelObject defenderModel)
 		{
-			var attackerBalance = MechBalance.GetMechBalance(ModelType);
-			var defenderBalance = MechBalance.GetMechBalance(defenderModel.ModelType);
+			var attackerBalance = _modelGlobalDataList.GetMechBalance(ModelType);
+			var defenderBalance = _modelGlobalDataList.GetMechBalance(defenderModel.ModelType);
 
 			for (var i = 0; i < attackerBalance.A; i++)
 			{
@@ -86,9 +87,13 @@ namespace LocalBattle3d
 
 				if (defenderModel.IsDead())
 				{
-					GettedExp += MechBalance.GetExpFrom(defenderModel.ModelType);
+					GettedExp += _modelGlobalDataList.GetExpFrom(defenderModel.ModelType);
 				}
 			}
+		}
+
+		public void MeleeAttack(ModelObject defenderModel)
+		{
 		}
 
 		private void ShowMissAnimation()

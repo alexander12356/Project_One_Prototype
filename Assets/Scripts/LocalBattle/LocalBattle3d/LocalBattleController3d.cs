@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using Mech.Data.Global;
 using UnityEngine;
 
 namespace LocalBattle3d
@@ -26,22 +26,6 @@ namespace LocalBattle3d
 		{
 			armyObject.CreateSquads(armyGlobalData);
 		}
-	}
-
-	[Serializable]
-	public enum ModelType
-	{
-		None = 0,
-		RestoredLineMech = 1,
-		BaseLineMech,
-		VeteranLineMech,
-		BaseHeavySupportMech,
-		VeteranHeavySupportMech,
-		BaseTerminatorMech,
-		VeteranTerminatorMech,
-		RestoredChampionMech,
-		BaseChampionMech,
-		VeteranChampionMech
 	}
 
 	[Serializable]

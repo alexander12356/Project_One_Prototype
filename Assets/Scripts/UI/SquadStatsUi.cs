@@ -1,4 +1,5 @@
 ﻿using DefaultNamespace;
+using Mech.Data.Global;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +26,7 @@ public class SquadStatsUi : MonoBehaviour
 
 	private PlayerData.SquadLocalData _squadLocalData;
 
-	public void SetStats(BalanceController.SquadGlobalData globalData, PlayerData.SquadLocalData squadLocalData)
+	public void SetStats(ModelGlobalData globalData, PlayerData.SquadLocalData squadLocalData)
 	{
 		Icon.sprite = globalData.Icon;
 		Bs.text = string.Format(BsFormat, globalData.BS);
