@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace Mech.Data.Global
 {
-	[CreateAssetMenu(fileName = nameof(ModelGlobalDataList), menuName = "Data/MechBalance")]
+	[CreateAssetMenu(fileName = nameof(ModelGlobalDataList), menuName = "Mech/Data/ModelGlobalDataList")]
 	public class ModelGlobalDataList : ScriptableObject
 	{
 		public List<ModelGlobalData> Balances;
 		public List<BalanceController.GettedExp> GettedExps;
 
-		public ModelGlobalData GetMechBalance(ModelType type)
+		public ModelGlobalData GetModelData(ModelType type)
 		{
 			return Balances.FirstOrDefault(x => x.ModelType == type);
 		}
@@ -19,6 +19,11 @@ namespace Mech.Data.Global
 		public int GetExpFrom(ModelType type)
 		{
 			return GettedExps.FirstOrDefault(x => x.ModelType == type).Exp;
+		}
+
+		public ModelRangeWeaponData GetModelRangeWeaponData(ModelType type)
+		{
+			return Balances.FirstOrDefault(x => x.ModelType == type).ModelRangeWeaponData;
 		}
 	}
 }

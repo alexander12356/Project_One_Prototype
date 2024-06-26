@@ -30,6 +30,7 @@ public class SquadObject : MonoBehaviour
 
 	public void Attack(SquadObject enemySquadObject)
 	{
+		/*
 		var attackerBalance = BalanceController.Instance.GetSquadGlobalData(SquadLocalData.Id);
 		var defenderBalance = BalanceController.Instance.GetSquadGlobalData(enemySquadObject.SquadLocalData.Id);
 
@@ -95,6 +96,7 @@ public class SquadObject : MonoBehaviour
 				enemySquadObject.ShowMissAnimation();
 			}
 		}
+		*/
 	}
 
 	private void ShowMissAnimation()

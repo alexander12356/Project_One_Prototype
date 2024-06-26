@@ -29,12 +29,12 @@ public class SquadStatsUi : MonoBehaviour
 	public void SetStats(ModelGlobalData globalData, PlayerData.SquadLocalData squadLocalData)
 	{
 		Icon.sprite = globalData.Icon;
-		Bs.text = string.Format(BsFormat, globalData.BS);
-		S.text = string.Format(SFormat, globalData.S);
+		//Bs.text = string.Format(BsFormat, globalData.BS);
+		//S.text = string.Format(SFormat, globalData.S);
 		T.text = string.Format(TFormat, globalData.T);
 		W.text = string.Format(WFormat, globalData.W);
-		A.text = string.Format(AFormat, globalData.A);
-		D.text = string.Format(DFormat, globalData.D);
+		//A.text = string.Format(AFormat, globalData.A);
+		//D.text = string.Format(DFormat, globalData.D);
 		Sv.text = string.Format(SvFormat, globalData.Sv);
 
 		var maxXp = BalanceController.Instance.ExpForLevelUp(squadLocalData.Id);

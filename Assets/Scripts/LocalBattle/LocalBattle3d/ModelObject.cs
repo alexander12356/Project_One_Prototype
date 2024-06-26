@@ -11,7 +11,8 @@ namespace LocalBattle3d
 {
 	public class ModelObject : MonoBehaviour
 	{
-		[FormerlySerializedAs("MechBalance")] public ModelGlobalDataList _modelGlobalDataList;
+		public ModelGlobalDataList _modelGlobalDataList;
+		public RangeWeaponGlobalDataList _rangeWeaponGlobalDataList;
 		public SpriteRenderer Icon;
 		public Transform AnimationHolder;
 
@@ -44,28 +45,30 @@ namespace LocalBattle3d
 		public void SetType(ModelType modelType)
 		{
 			ModelType = modelType;
-			var balance = _modelGlobalDataList.Balances.FirstOrDefault(x => x.ModelType == modelType);
+			var balance = _modelGlobalDataList.GetModelData(modelType);
 			Icon.sprite = balance.Icon;
 			W = balance.W;
 		}
 
 		public void RangeAttack(ModelObject defenderModel)
 		{
-			var attackerBalance = _modelGlobalDataList.GetMechBalance(ModelType);
-			var defenderBalance = _modelGlobalDataList.GetMechBalance(defenderModel.ModelType);
+			var attackerBalance = _modelGlobalDataList.GetModelData(ModelType);
+			var defenderBalance = _modelGlobalDataList.GetModelData(defenderModel.ModelType);
+			var attackerRangeWeaponData = _modelGlobalDataList.GetModelRangeWeaponData(ModelType);
 
-			for (var i = 0; i < attackerBalance.A; i++)
+			for (var i = 0; i < attackerRangeWeaponData.A; i++)
 			{
 				ShowAttackAnimation();
 
-				var isHit = BattleRollHelper.Roll(attackerBalance.BS);
+				var isHit = BattleRollHelper.Roll(attackerRangeWeaponData.BS);
 				if (!isHit)
 				{
 					defenderModel.ShowMissAnimation();
 					return;
 				}
 
-				var isWound = BattleRollHelper.WoundRoll(attackerBalance.S, defenderBalance.T);
+				var weaponData = _rangeWeaponGlobalDataList.GetWeaponData(attackerRangeWeaponData.Type);
+				var isWound = BattleRollHelper.WoundRoll(weaponData.S, defenderBalance.T);
 				if (!isWound)
 				{
 					defenderModel.ShowToughnessDefenseAnimation();
@@ -82,7 +85,7 @@ namespace LocalBattle3d
 				defenderModel.ShowWoundAnimation();
 				if (!defenderModel.IsDead())
 				{
-					defenderModel.Wound(attackerBalance.D);
+					defenderModel.Wound(weaponData.D);
 				}
 
 				if (defenderModel.IsDead())

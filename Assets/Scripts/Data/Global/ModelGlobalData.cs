@@ -9,13 +9,13 @@ namespace Mech.Data.Global
 		public ModelType ModelType;
 		public Sprite Icon;
 		public string Id;
-		public int BS;
-		public int S;
+
 		public int T;
-		public int W;
-		public int A;
-		public int D;
 		public int Sv;
+		public int W;
+
+		public ModelRangeWeaponData ModelRangeWeaponData;
+		
 		public int NeedMoney;
 	}
 }
