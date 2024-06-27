@@ -13,6 +13,7 @@ namespace LocalBattle3d
 	public class ModelObject : MonoBehaviour
 	{
 		public ModelGlobalDataList _modelGlobalDataList;
+		public GainedXpGlobalData _gainedXpGlobalData;
 		[FormerlySerializedAs("_rangeWeaponGlobalDataList")] public WeaponGlobalDataList _weaponGlobalDataList;
 		public SpriteRenderer Icon;
 		public Transform AnimationHolder;
@@ -28,6 +29,7 @@ namespace LocalBattle3d
 		private int W;
 		private IAstarAI _astarAI;
 		private Vector3 _startPositions;
+		private ModelLocalData _modelLocalData;
 
 		private void Awake()
 		{
@@ -46,6 +48,7 @@ namespace LocalBattle3d
 
 		public void SetData(ModelLocalData modelLocalData)
 		{
+			_modelLocalData = modelLocalData;
 			Guid = modelLocalData.Guid;
 			ModelType = modelLocalData.Type;
 			var balance = _modelGlobalDataList.GetModelData(modelLocalData.Type);
@@ -58,6 +61,7 @@ namespace LocalBattle3d
 			var attackerRangeWeaponData = _modelGlobalDataList.GetModelRangeWeaponData(ModelType);
 			var weaponData = _weaponGlobalDataList.GetRangeWeaponData(attackerRangeWeaponData.Type);
 			WeaponAttack(defenderModel, attackerRangeWeaponData.A, attackerRangeWeaponData.BS, weaponData, VfxType.RangeAttack);
+			CheckKill(defenderModel);
 		}
 
 		public void MeleeAttack(ModelObject defenderModel)
@@ -65,6 +69,7 @@ namespace LocalBattle3d
 			var attackerRangeWeaponData = _modelGlobalDataList.GetModelMeleeWeaponData(ModelType);
 			var weaponData = _weaponGlobalDataList.GetMeleeWeaponData(attackerRangeWeaponData.Type);
 			WeaponAttack(defenderModel, attackerRangeWeaponData.A, attackerRangeWeaponData.WS, weaponData, VfxType.MeleeAttack);
+			CheckKill(defenderModel);
 		}
 
 		private void WeaponAttack(ModelObject defenderModel, int attackCount, int skill, WeaponGlobalData attackerWeaponGlobalData, VfxType attackVfx)
@@ -140,6 +145,14 @@ namespace LocalBattle3d
 		{
 			_astarAI.isStopped = true;
 			_astarAI.Teleport(_startPositions);
+		}
+
+		private void CheckKill(ModelObject defenderModel)
+		{
+			if (defenderModel.IsDead())
+			{
+				_modelLocalData.Xp += _gainedXpGlobalData.GetXpFor(defenderModel.ModelType);
+			}
 		}
 	}
 }

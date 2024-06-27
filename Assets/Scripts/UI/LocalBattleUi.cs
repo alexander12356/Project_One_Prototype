@@ -1,10 +1,18 @@
 ﻿using System.Collections.Generic;
 using DefaultNamespace;
 using LocalBattle3d;
+using Mech.Data.Global;
+using Mech.Data.LocalData;
 using UnityEngine;
 
 public class LocalBattleUi : MonoBehaviour
 {
+	public class ModelStat
+	{
+		public int Count;
+		public int LevelUpCount;
+	}
+
 	public static LocalBattleUi Instance;
 	public SquadLevelUp SquadLevelUpPrefab;
 	public Transform LevelUpHolder;
@@ -25,21 +33,37 @@ public class LocalBattleUi : MonoBehaviour
 	public void ShowWinWindow()
 	{
 		WinUi.SetActive(true);
-		/*
-		foreach (var squadObject in playerSquadObjects)
+
+		var playerArmyLocalData = PlayerData.Instance.ArmyLocalData;
+		var modelStatList = new Dictionary<ModelType, ModelStat>();
+		foreach (var squadLocalData in playerArmyLocalData.SquadLocalDataList)
 		{
-			var levelUp = Instantiate(SquadLevelUpPrefab, LevelUpHolder);
-			var maxExp = BalanceController.Instance.ExpForLevelUp(squadObject.SquadLocalData.Id);
-			levelUp.SetExp(squadObject.SquadLocalData.Exp, squadObject.GettedExp, maxExp);
-			levelUp.SetIcon(BalanceController.Instance.GetSquadGlobalData(squadObject.SquadLocalData.Id).Icon);
-			squadObject.SquadLocalData.Exp += squadObject.GettedExp;
-			if (squadObject.SquadLocalData.Exp >= maxExp)
+			foreach (var modelLocalData in squadLocalData.ModelLocalDataList)
 			{
-				levelUp.SetLevelUp(true);
-				squadObject.SquadLocalData.IsLevelUp = true;
+				var modelType = modelLocalData.Type;
+				var isLevelUp = modelLocalData.IsLevelUp;
+				if (modelStatList.ContainsKey(modelType))
+				{
+					modelStatList[modelType].Count++;
+					if (isLevelUp)
+					{
+						modelStatList[modelType].LevelUpCount++;
+					}
+					continue;
+				}
+				modelStatList.Add(modelType, new ModelStat
+				{
+					Count = 1,
+					LevelUpCount = isLevelUp ? 1 : 0
+				});
 			}
 		}
-		*/
+
+		foreach (var modelStat in modelStatList)
+		{
+			var levelUp = Instantiate(SquadLevelUpPrefab, LevelUpHolder);
+			levelUp.SetStat(modelStat);
+		}
 	}
 
 	public void ShowLoseWindow()
@@ -54,6 +78,7 @@ public class LocalBattleUi : MonoBehaviour
 			var child = LevelUpHolder.GetChild(i);
 			Destroy(child.gameObject);
 		}
+
 		WinUi.SetActive(false);
 		LoseUi.SetActive(false);
 

@@ -401,7 +401,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modelGlobalDataList: {fileID: 11400000, guid: 921fe45a9d4473248bdf62c383d3bc74, type: 2}
-  _rangeWeaponGlobalDataList: {fileID: 11400000, guid: ee0852c73c4016d46a0d8437ed99b7f2, type: 2}
+  _gainedXpGlobalData: {fileID: 11400000, guid: 04429f7da6ffc524398cd95d6753eecb, type: 2}
+  _weaponGlobalDataList: {fileID: 11400000, guid: ee0852c73c4016d46a0d8437ed99b7f2, type: 2}
   Icon: {fileID: 574253666983799258}
   AnimationHolder: {fileID: 2406320371056431421}
   AnimationLifeTime: 3
@@ -410,6 +411,7 @@ MonoBehaviour:
   ModelType: 0
   CommonSpeed: 3
   ChargeSpeed: 6
+  Guid: 
 --- !u!1 &4664245889344876174
 GameObject:
   m_ObjectHideFlags: 0

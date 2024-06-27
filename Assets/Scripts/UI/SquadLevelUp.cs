@@ -1,34 +1,26 @@
-﻿using DG.Tweening;
+﻿using System.Collections.Generic;
+using Mech.Data.Global;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SquadLevelUp : MonoBehaviour
 {
-	public Image ExpBar;
-	public float ExpBarFillDuration;
+	public ModelGlobalDataList ModelGlobalDataList;
 	public Image Icon;
-	public GameObject LevelUpView;
+	public TMP_Text _modelNameText;
+	public TMP_Text _modelCountText;
+	public TMP_Text _levelUpModelCountText;
+	public string _modelCountTextFormat;
+	public string _levelUpModelCountTextFormat;
 
 	private bool _isLevelUp;
-	
-	public void SetExp(int currentExp, int squadObjectGettedExp, int maxExp)
-	{
-		ExpBar.fillAmount = (float)currentExp / maxExp;
-		ExpBar
-			.DOFillAmount((float)(squadObjectGettedExp + currentExp) / maxExp, ExpBarFillDuration)
-			.OnComplete(() =>
-			{
-				if (_isLevelUp) LevelUpView.SetActive(true);
-			});
-	}
 
-	public void SetIcon(Sprite icon)
+	public void SetStat(KeyValuePair<ModelType, LocalBattleUi.ModelStat> modelStat)
 	{
-		Icon.sprite = icon;
-	}
-
-	public void SetLevelUp(bool value)
-	{
-		_isLevelUp = true;
+		Icon.sprite = ModelGlobalDataList.GetModelData(modelStat.Key).Icon;
+		_modelNameText.text = modelStat.Key.ToString();
+		_modelCountText.text = string.Format(_modelCountTextFormat, modelStat.Value.Count);
+		_levelUpModelCountText.text = string.Format(_levelUpModelCountTextFormat, modelStat.Value.LevelUpCount);
 	}
 }
