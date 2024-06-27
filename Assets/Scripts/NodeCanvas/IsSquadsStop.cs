@@ -1,7 +1,6 @@
 using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 
-
 namespace NodeCanvas.Tasks.Conditions
 {
 	[Category("World/Squads")]
