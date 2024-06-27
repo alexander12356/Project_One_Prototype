@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Mech.Data.Global;
 using Mech.Data.LocalData;
 using UnityEngine;
 
@@ -8,12 +7,13 @@ namespace LocalBattle3d
 	public class SquadObject : MonoBehaviour
 	{
 		public ModelObject ModelPrefab;
-		private ModelType[,] modelsHolders = new ModelType[4, 25];
+		private ModelLocalData[,] modelsHolders;
 		public List<ModelObject> ModelList;
 
 		public void CreateModels(SquadLocalData squadLocalData)
 		{
 			var modelCount = squadLocalData.ModelLocalDataList.Count;
+			modelsHolders = new ModelLocalData[4, 25];
 
 			var createdModelCount = 0;
 			for (var i = 0; i < 4; i++)
@@ -25,7 +25,7 @@ namespace LocalBattle3d
 						break;
 					}
 
-					modelsHolders[i, j] = squadLocalData.ModelLocalDataList[createdModelCount].Type;
+					modelsHolders[i, j] = squadLocalData.ModelLocalDataList[createdModelCount];
 					createdModelCount++;
 				}
 			}
@@ -36,14 +36,14 @@ namespace LocalBattle3d
 			{
 				for (var j = 0; j < 25; j++)
 				{
-					if (modelsHolders[i, j] == ModelType.None)
+					if (modelsHolders[i, j] == null)
 					{
 						continue;
 					}
 
 					var modelObject = Instantiate(ModelPrefab, transform);
 					modelObject.SetPosition(j * LocalBattleControllerData.Instance.ColumnOffset, i * LocalBattleControllerData.Instance.RowOffset);
-					modelObject.SetType(modelsHolders[i, j]);
+					modelObject.SetData(modelsHolders[i, j]);
 					ModelList.Add(modelObject);
 				}
 			}

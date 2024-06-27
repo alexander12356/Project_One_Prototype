@@ -12,6 +12,8 @@ namespace LocalBattle3d
 		public ArmyObject EnemyArmyObject;
 		public FightController FightController;
 
+		private ArmyLocalData _playerArmyLocalData;
+
 		private void Awake()
 		{
 			Instance = this;
@@ -21,13 +23,14 @@ namespace LocalBattle3d
 		{
 			CreateArmy(playerLocalArmy, PlayerArmyObject);
 			CreateArmy(enemyLocalArmy, EnemyArmyObject);
+			_playerArmyLocalData = playerLocalArmy;
+			LocalBattleUi.Instance.ShowChooseTacticWindow();
+			return;
 
 			void CreateArmy(ArmyLocalData armyLocalData, ArmyObject armyObject)
 			{
 				armyObject.CreateSquads(armyLocalData);
 			}
-
-			LocalBattleUi.Instance.ShowChooseTacticWindow();
 		}
 
 		public void StartBattle()
@@ -38,6 +41,8 @@ namespace LocalBattle3d
 			{
 				yield return FightController.StartBattleCoroutine(PlayerArmyObject, EnemyArmyObject);
 
+				UpdatePlayerLocalData();
+
 				if (FightController.IsWin())
 				{
 					LocalBattleUi.Instance.ShowWinWindow();
@@ -45,6 +50,22 @@ namespace LocalBattle3d
 				else
 				{
 					LocalBattleUi.Instance.ShowLoseWindow();
+				}
+			}
+		}
+
+		private void UpdatePlayerLocalData()
+		{
+			for (var i = 0; i < _playerArmyLocalData.SquadLocalDataList.Count; i++)
+			{
+				var squadLocalData = _playerArmyLocalData.SquadLocalDataList[i];
+				for (var j = squadLocalData.GetModelCount() - 1; j >= 0; j--)
+				{
+					var playerModelLocalData = squadLocalData.ModelLocalDataList[j];
+					if (!PlayerArmyObject.SquadObjectList[i].ModelList.Exists(x => x.Guid == playerModelLocalData.Guid))
+					{
+						squadLocalData.ModelLocalDataList.RemoveAt(j);
+					}
 				}
 			}
 		}

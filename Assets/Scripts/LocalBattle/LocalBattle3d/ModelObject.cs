@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using Mech.Data.Global;
+using Mech.Data.LocalData;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -22,6 +23,7 @@ namespace LocalBattle3d
 		public ModelType ModelType;
 		public float CommonSpeed;
 		public float ChargeSpeed;
+		public string Guid;
 
 		private int W;
 		private IAstarAI _astarAI;
@@ -42,10 +44,11 @@ namespace LocalBattle3d
 			transform.localPosition = new Vector3(columnOffset, 0f, rowOffset);
 		}
 
-		public void SetType(ModelType modelType)
+		public void SetData(ModelLocalData modelLocalData)
 		{
-			ModelType = modelType;
-			var balance = _modelGlobalDataList.GetModelData(modelType);
+			Guid = modelLocalData.Guid;
+			ModelType = modelLocalData.Type;
+			var balance = _modelGlobalDataList.GetModelData(modelLocalData.Type);
 			Icon.sprite = balance.Icon;
 			W = balance.W;
 		}
