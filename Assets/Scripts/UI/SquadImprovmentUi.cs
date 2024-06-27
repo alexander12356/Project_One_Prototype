@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DefaultNamespace;
+using Mech.Data.LocalData;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -30,7 +31,7 @@ public class SquadImprovmentUi : MonoBehaviour
 	public List<ImprovmentList> ImprovmentLists;
 	public List<ImprovmentView> ImprovmentViews;
 
-	private PlayerData.SquadLocalData _squadLocalData;
+	private ArmyLocalData _armyLocalData;
 	private ImprovmentList _improvmentList;
 	private bool _isInit = false;
 	private string _newId;
@@ -40,14 +41,15 @@ public class SquadImprovmentUi : MonoBehaviour
 		Instance = this;
 	}
 
-	public void Open(PlayerData.SquadLocalData squadLocalData)
+	public void Open(ArmyLocalData armyLocalData)
 	{
+		/*
 		_isInit = false;
 		
 		CanvasGroup.alpha = 1f;
 		CanvasGroup.blocksRaycasts = true;
 
-		_squadLocalData = squadLocalData;
+		_armyLocalData = armyLocalData;
 
 		foreach (var view in ImprovmentViews)
 		{
@@ -56,13 +58,13 @@ public class SquadImprovmentUi : MonoBehaviour
 			view.Toggle.isOn = false;
 		}
 
-		_improvmentList = ImprovmentLists.FirstOrDefault(x => x.Id == squadLocalData.Id);
+		_improvmentList = ImprovmentLists.FirstOrDefault(x => x.Id == armyLocalData.Id);
 		foreach (var id in _improvmentList.PrevIds)
 		{
 			ImprovmentViews.FirstOrDefault(x => x.Id == id).Toggle.isOn = true;
 		}
 
-		if (squadLocalData.IsLevelUp)
+		if (armyLocalData.IsLevelUp)
 		{
 			foreach (var nextId in _improvmentList.NextIds)
 			{
@@ -71,6 +73,7 @@ public class SquadImprovmentUi : MonoBehaviour
 		}
 
 		_isInit = true;
+		*/
 	}
 
 	public void Accept()
@@ -89,9 +92,11 @@ public class SquadImprovmentUi : MonoBehaviour
 			}
 		}
 
-		_squadLocalData.Id = newId;
-		_squadLocalData.IsLevelUp = false;
-		_squadLocalData.Exp = 0;
+		/*
+		_armyLocalData.Id = newId;
+		_armyLocalData.IsLevelUp = false;
+		_armyLocalData.Exp = 0;
+		*/
 
 		Close();
 	}

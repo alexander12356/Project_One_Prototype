@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,9 +15,11 @@ namespace LocalBattle3d
 		public float DelayBeforeCharge;
 		public float DelayBeforeMeleeAttack;
 		public FreeFlyCamera FreeFlyCamera;
+		private ArmyObject _playerArmyObject;
 
 		public IEnumerator StartBattleCoroutine(ArmyObject playerArmy, ArmyObject enemyArmy)
 		{
+			_playerArmyObject = playerArmy;
 			FreeFlyCamera.Activate(true);
 			while (!IsFightEnd())
 			{
@@ -69,22 +72,6 @@ namespace LocalBattle3d
 
 			yield break;
 
-			bool IsArmyDestroyed(ArmyObject armyObject)
-			{
-				foreach (var squadObject in armyObject.SquadObjectList)
-				{
-					foreach (var modelObject in squadObject.ModelList)
-					{
-						if (!modelObject.IsDead())
-						{
-							return false;
-						}
-					}
-				}
-
-				return true;
-			}
-
 			bool IsFightEnd()
 			{
 				var isPlayerArmyDestroyed = IsArmyDestroyed(playerArmy);
@@ -106,6 +93,35 @@ namespace LocalBattle3d
 						}
 					}
 				}
+			}
+		}
+
+		public bool IsWin()
+		{
+			return !IsArmyDestroyed(_playerArmyObject);
+		}
+
+		private bool IsArmyDestroyed(ArmyObject armyObject)
+		{
+			try
+			{
+				foreach (var squadObject in armyObject.SquadObjectList)
+				{
+					foreach (var modelObject in squadObject.ModelList)
+					{
+						if (!modelObject.IsDead())
+						{
+							return false;
+						}
+					}
+				}
+
+				return true;
+			}
+			catch (Exception e)
+			{
+				Debug.LogException(e);
+				return true;
 			}
 		}
 

@@ -16,6 +16,7 @@ public class SquadManagementWindow : MonoBehaviour
 
 	public void Open()
 	{
+		/*
 		CanvasGroup.alpha = 1f;
 		CanvasGroup.blocksRaycasts = true;
 		for (int i = 0; i < SquadsHolder.childCount; i++)
@@ -27,6 +28,7 @@ public class SquadManagementWindow : MonoBehaviour
 			var statsUi = Instantiate(SquadStatsUiPrefab, SquadsHolder);
 			statsUi.SetStats(BalanceController.Instance.GetSquadGlobalData(squad.Id), squad);
 		}
+		*/
 	}
 
 	public void Close()

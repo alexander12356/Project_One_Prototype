@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class SquadObject : MonoBehaviour
 {
+	/*
 	public SpriteRenderer Icon;
 	public Transform AnimationHolder;
 	public GameObject AttackAnimationPrefab;
@@ -27,6 +28,7 @@ public class SquadObject : MonoBehaviour
 		SquadLocalData = squadData;
 		SquadLocalData.Wound = BalanceController.Instance.GetSquadGlobalData(squadData.Id).W;
 	}
+	*/
 
 	public void Attack(SquadObject enemySquadObject)
 	{
@@ -99,6 +101,7 @@ public class SquadObject : MonoBehaviour
 		*/
 	}
 
+	/*
 	private void ShowMissAnimation()
 	{
 		CreateEffect(MissAnimationPrefab);
@@ -158,4 +161,5 @@ public class SquadObject : MonoBehaviour
 		var rollValue = Random.Range(0, 7);
 		return rollValue >= targetRoll;
 	}
+	*/
 }

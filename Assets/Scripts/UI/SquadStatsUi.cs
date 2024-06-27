@@ -1,5 +1,6 @@
 ﻿using DefaultNamespace;
 using Mech.Data.Global;
+using Mech.Data.LocalData;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,10 +25,11 @@ public class SquadStatsUi : MonoBehaviour
 	public Image XpBar;
 	public GameObject LevelUp;
 
-	private PlayerData.SquadLocalData _squadLocalData;
+	private ArmyLocalData _armyLocalData;
 
-	public void SetStats(ModelGlobalData globalData, PlayerData.SquadLocalData squadLocalData)
+	public void SetStats(ModelGlobalData globalData, ArmyLocalData armyLocalData)
 	{
+		/*
 		Icon.sprite = globalData.Icon;
 		//Bs.text = string.Format(BsFormat, globalData.BS);
 		//S.text = string.Format(SFormat, globalData.S);
@@ -37,19 +39,20 @@ public class SquadStatsUi : MonoBehaviour
 		//D.text = string.Format(DFormat, globalData.D);
 		Sv.text = string.Format(SvFormat, globalData.Sv);
 
-		var maxXp = BalanceController.Instance.ExpForLevelUp(squadLocalData.Id);
-		XpBar.fillAmount = (float)squadLocalData.Exp / maxXp;
+		var maxXp = BalanceController.Instance.ExpForLevelUp(armyLocalData.Id);
+		XpBar.fillAmount = (float)armyLocalData.Exp / maxXp;
 
-		if (squadLocalData.IsLevelUp)
+		if (armyLocalData.IsLevelUp)
 		{
 			LevelUp.gameObject.SetActive(true);
 		}
 
-		_squadLocalData = squadLocalData;
+		_armyLocalData = armyLocalData;
+		*/
 	}
 
 	public void OpenSquadImprovmentWindow()
 	{
-		SquadImprovmentUi.Instance.Open(_squadLocalData);
+		SquadImprovmentUi.Instance.Open(_armyLocalData);
 	}
 }

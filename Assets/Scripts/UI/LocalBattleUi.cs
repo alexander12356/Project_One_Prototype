@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using DefaultNamespace;
+using LocalBattle3d;
 using UnityEngine;
 
 public class LocalBattleUi : MonoBehaviour
@@ -9,15 +10,22 @@ public class LocalBattleUi : MonoBehaviour
 	public Transform LevelUpHolder;
 	public GameObject WinUi;
 	public GameObject LoseUi;
+	public GameObject ChooseTacticWindow;
 
 	private void Awake()
 	{
 		Instance = this;
 	}
 
-	public void ShowWinWindow(List<SquadObject> playerSquadObjects)
+	public void ShowChooseTacticWindow()
+	{
+		ChooseTacticWindow.gameObject.SetActive(true);
+	}
+
+	public void ShowWinWindow()
 	{
 		WinUi.SetActive(true);
+		/*
 		foreach (var squadObject in playerSquadObjects)
 		{
 			var levelUp = Instantiate(SquadLevelUpPrefab, LevelUpHolder);
@@ -31,6 +39,7 @@ public class LocalBattleUi : MonoBehaviour
 				squadObject.SquadLocalData.IsLevelUp = true;
 			}
 		}
+		*/
 	}
 
 	public void ShowLoseWindow()
@@ -49,5 +58,6 @@ public class LocalBattleUi : MonoBehaviour
 		LoseUi.SetActive(false);
 
 		GameController.Instance.CompleteLocalBattle();
+		LocalBattleController3d.Instance.Clear();
 	}
 }

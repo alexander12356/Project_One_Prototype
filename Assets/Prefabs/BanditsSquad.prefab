@@ -174,16 +174,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c63b102bd2743b47a470cdcf0a12f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Squad:
-  - Guid: 4a8a0d5fa5eb8e7b-a12057309f1f4575
-    Id: RestoredLineMech
-    Wound: 1
-  - Guid: dd491f5c236890fa-59a72a76d03617d9
-    Id: RestoredLineMech
-    Wound: 1
-  - Guid: b21c788982c41010-1781e99cf53a336f
-    Id: RestoredLineMech
-    Wound: 1
+  _armyLocalData:
+    SquadLocalDataList:
+    - ModelLocalDataList:
+      - Guid: 88dd9842-0a43-486a-9498-df9ca1b747c5
+        Type: 1
+        Xp: 0
+        IsLevelUp: 0
+      - Guid: 67bd4a3f-ac96-4835-9a68-53be7d332311
+        Type: 1
+        Xp: 0
+        IsLevelUp: 0
+      - Guid: 764edd35-14d9-4ffb-b2d3-e95db6bde279
+        Type: 1
+        Xp: 0
+        IsLevelUp: 0
+      - Guid: 51e96f32-d483-48a8-bc30-9b796b1d03fd
+        Type: 1
+        Xp: 0
+        IsLevelUp: 0
 --- !u!1 &2363109716739991120
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using EventBusSystem;
+using Mech.Data.LocalData;
 using TMPro;
 using UnityEngine;
 

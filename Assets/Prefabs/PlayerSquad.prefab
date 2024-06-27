@@ -134,37 +134,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7cf34721ef4da082828a227de5fbbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Squad:
-  - Guid: 5bb7b62f-4ce7-41b1-bb96-f25bd7af38df
-    Id: BaseLineMech
-    Wound: 1
-    Exp: 0
-    NeedMoneys: 0
-    IsLevelUp: 0
-  - Guid: c3610741-d6c1-4b98-87b8-01cab4ef4b04
-    Id: BaseLineMech
-    Wound: 1
-    Exp: 0
-    NeedMoneys: 0
-    IsLevelUp: 0
-  - Guid: d318e53d-c5db-401c-8f24-861f847ad142
-    Id: BaseLineMech
-    Wound: 1
-    Exp: 0
-    NeedMoneys: 0
-    IsLevelUp: 0
-  - Guid: 88ed8639-66be-4012-93c4-0620b1335e7f
-    Id: BaseLineMech
-    Wound: 1
-    Exp: 0
-    NeedMoneys: 0
-    IsLevelUp: 0
-  - Guid: 94db3b1b-fc22-46da-a67e-284d2eb6b3e0
-    Id: BaseLineMech
-    Wound: 1
-    Exp: 0
-    NeedMoneys: 0
-    IsLevelUp: 0
+  ArmyLocalData:
+    SquadLocalDataList:
+    - ModelLocalDataList:
+      - Guid: 0a535ab1-c482-4f9f-bc35-be84e238040d
+        Type: 2
+        Xp: 0
+        IsLevelUp: 0
+      - Guid: 67ebe09a-7182-4bf0-99e9-6d564ce26478
+        Type: 2
+        Xp: 0
+        IsLevelUp: 0
+      - Guid: ae857912-6c22-41c3-b872-b97091e2b10c
+        Type: 2
+        Xp: 0
+        IsLevelUp: 0
+      - Guid: adde20af-6278-483c-886f-7e469f67aa2a
+        Type: 2
+        Xp: 0
+        IsLevelUp: 0
+      - Guid: 1795692f-4bb2-4aee-917b-934252b5e193
+        Type: 2
+        Xp: 0
+        IsLevelUp: 0
+  ModelGlobalDataList: {fileID: 11400000, guid: 921fe45a9d4473248bdf62c383d3bc74, type: 2}
   Supplies: 20
   Moneys: 2000
 --- !u!1 &2528713877102515351

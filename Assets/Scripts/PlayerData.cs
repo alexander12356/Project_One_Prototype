@@ -1,58 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Mech.Data.Global;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class PlayerData : MonoBehaviour
+namespace Mech.Data.LocalData
 {
-	[Serializable]
-	public class SquadLocalData
+	public class PlayerData : MonoBehaviour
 	{
-		public string Guid;
-		public string Id;
-		[FormerlySerializedAs("Toughness")] public int Wound;
-		public int Exp;
-		public bool IsLevelUp;
+		public ArmyLocalData ArmyLocalData;
+		public ModelGlobalDataList ModelGlobalDataList;
 
-		public void SetGuid(string newGuid)
+		public static PlayerData Instance;
+
+		public int Supplies;
+		public int Moneys;
+
+		public void Awake()
 		{
-			Guid = newGuid;
+			Instance = this;
 		}
-	}
-	
-	public List<SquadLocalData> Squad;
 
-	public static PlayerData Instance;
-	public int Supplies;
-	public int Moneys;
-
-	public void Awake()
-	{
-		Instance = this;
-	}
-
-	public void AddNewSquad(string squadId)
-	{
-		Squad.Add(new SquadLocalData
+		public void AddNewModel(int squadId, ModelType modelType)
 		{
-			Guid = Guid.NewGuid().ToString(),
-			Id = squadId,
-			Exp = 0,
-			IsLevelUp = false,
-			Wound = 1
-		});
-	}
+			ArmyLocalData.AddModel(squadId, modelType);
+		}
 
-	[ContextMenu("Init")]
-	public void SetGuids()
-	{
-		for (int i = 0; i < Squad.Count; i++)
+		[Button]
+		public void InitGuids()
 		{
-			Squad[i] = new SquadLocalData()
-			{
-				Guid = Guid.NewGuid().ToString(),
-				Id = Squad[i].Id
-			};
+			ArmyLocalData.InitGuid();
+		}
+
+		public int GetModelCount()
+		{
+			return ArmyLocalData.GetModelCount();
+		}
+
+		public int GetSalary()
+		{
+			return ArmyLocalData.GetSalary(ModelGlobalDataList);
 		}
 	}
 }

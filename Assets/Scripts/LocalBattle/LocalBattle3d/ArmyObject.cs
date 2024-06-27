@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Mech.Data.LocalData;
 using UnityEngine;
 
 namespace LocalBattle3d
@@ -7,11 +8,19 @@ namespace LocalBattle3d
 	{
 		public List<SquadObject> SquadObjectList;
 
-		public void CreateSquads(ArmyGlobalData armyGlobalData)
+		public void CreateSquads(ArmyLocalData armyLocalData)
 		{
-			for (int i = 0; i < armyGlobalData.SquadList.Count; i++)
+			for (int i = 0; i < armyLocalData.SquadLocalDataList.Count; i++)
 			{
-				SquadObjectList[i].CreateModels(armyGlobalData.SquadList[i]);
+				SquadObjectList[i].CreateModels(armyLocalData.SquadLocalDataList[i]);
+			}
+		}
+
+		public void Clear()
+		{
+			for (int i = 0; i < SquadObjectList.Count; i++)
+			{
+				SquadObjectList[i].Clear();
 			}
 		}
 	}

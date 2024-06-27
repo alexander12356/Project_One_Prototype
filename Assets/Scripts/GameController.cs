@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Globalization;
 using EventBusSystem;
+using LocalBattle3d;
+using Mech.Data.LocalData;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -14,10 +16,12 @@ public class GameController : MonoBehaviour, IGameController
 	public string TimerDeltaTime;
 	public float TimerEndValue;
 	public bool IsNight;
+	public GameObject WorldCamera;
+	public GameObject BattleCamera;
 
 	public static GameController Instance;
 
-	private EnemySquad BattleSquad;
+	private EnemyArmy _battleArmy;
 	public DateTime CurrentDateTime;
 	private TimeSpan _deltaTimeSpan;
 	private float _timer;
@@ -85,34 +89,25 @@ public class GameController : MonoBehaviour, IGameController
 	public void StartLocalBattle(GameObject squad)
 	{
 		IsWorldControl = false;
-		BattleSquad = squad.GetComponent<EnemySquad>();
+		_battleArmy = squad.GetComponent<EnemyArmy>();
 
 		IsPause = true;
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
 
-		var op = SceneManager.LoadSceneAsync("LocalBattle", LoadSceneMode.Additive);
-		StartCoroutine(ShowLocalBattleCoroutine(op));
-	}
-
-	private IEnumerator ShowLocalBattleCoroutine(AsyncOperation operation)
-	{
-		while (!operation.isDone)
-		{
-			yield return null;
-		}
-
+		WorldCamera.gameObject.SetActive(false);
+		BattleCamera.gameObject.SetActive(true);
 		WindowController.Instance.SetLocalBattleUi();
-		LocalBattleController.Instance.SetEnemySquad(BattleSquad.GetLocalSquadData());
-		LocalBattleController.Instance.StartBattle();
+		LocalBattleController3d.Instance.Init(PlayerData.Instance.ArmyLocalData, _battleArmy.GetLocalArmyData);
 	}
 
 	public void CompleteLocalBattle()
 	{
 		IsWorldControl = true;
-		Destroy(BattleSquad.gameObject);
-		BattleSquad = null;
-		SceneManager.UnloadSceneAsync("LocalBattle");
+		Destroy(_battleArmy.gameObject);
+		_battleArmy = null;
 		WindowController.Instance.SetWorldUi();
+		WorldCamera.gameObject.SetActive(true);
+		BattleCamera.gameObject.SetActive(false);
 
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(false));
 		IsPause = false;

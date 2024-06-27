@@ -1,42 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using Mech.Data.Global;
+﻿using System.Collections;
+using Mech.Data.LocalData;
 using UnityEngine;
 
 namespace LocalBattle3d
 {
 	public class LocalBattleController3d : MonoBehaviour
 	{
+		public static LocalBattleController3d Instance;
+
 		public ArmyObject PlayerArmyObject;
 		public ArmyObject EnemyArmyObject;
 		public FightController FightController;
 
-		public void Init(ArmyGlobalData playerGlobalArmy, ArmyGlobalData enemyGlobalArmy)
+		private void Awake()
 		{
-			CreateArmy(playerGlobalArmy, PlayerArmyObject);
-			CreateArmy(enemyGlobalArmy, EnemyArmyObject);
+			Instance = this;
+		}
+
+		public void Init(ArmyLocalData playerLocalArmy, ArmyLocalData enemyLocalArmy)
+		{
+			CreateArmy(playerLocalArmy, PlayerArmyObject);
+			CreateArmy(enemyLocalArmy, EnemyArmyObject);
+
+			void CreateArmy(ArmyLocalData armyLocalData, ArmyObject armyObject)
+			{
+				armyObject.CreateSquads(armyLocalData);
+			}
+
+			LocalBattleUi.Instance.ShowChooseTacticWindow();
 		}
 
 		public void StartBattle()
 		{
-			StartCoroutine(FightController.StartBattleCoroutine(PlayerArmyObject, EnemyArmyObject));
+			StartCoroutine(StartBattleCoroutine());
+
+			IEnumerator StartBattleCoroutine()
+			{
+				yield return FightController.StartBattleCoroutine(PlayerArmyObject, EnemyArmyObject);
+
+				if (FightController.IsWin())
+				{
+					LocalBattleUi.Instance.ShowWinWindow();
+				}
+				else
+				{
+					LocalBattleUi.Instance.ShowLoseWindow();
+				}
+			}
 		}
 
-		private void CreateArmy(ArmyGlobalData armyGlobalData, ArmyObject armyObject)
+		public void Clear()
 		{
-			armyObject.CreateSquads(armyGlobalData);
+			PlayerArmyObject.Clear();
+			EnemyArmyObject.Clear();
 		}
-	}
-
-	[Serializable]
-	public struct ArmyGlobalData
-	{
-		public List<SquadGlobalData> SquadList;
-	}
-
-	[Serializable]
-	public struct SquadGlobalData
-	{
-		public List<ModelType> ModelList;
 	}
 }

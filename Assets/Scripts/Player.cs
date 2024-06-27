@@ -1,5 +1,6 @@
 using DefaultNamespace;
 using EventBusSystem;
+using Mech.Data.LocalData;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -77,7 +78,7 @@ public class Player : MonoBehaviour
 	public void Eat()
 	{
 		var playerSupplies = PlayerData.Instance.Supplies;
-		var squadNeedSupplies = PlayerData.Instance.Squad.Count;
+		var squadNeedSupplies = PlayerData.Instance.GetModelCount();
 		playerSupplies = Mathf.Max(0, playerSupplies - squadNeedSupplies);
 		PlayerData.Instance.Supplies = playerSupplies;
 		EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
@@ -87,16 +88,11 @@ public class Player : MonoBehaviour
 	public void Pay()
 	{
 		var playerMoneys = PlayerData.Instance.Moneys;
-		var squadNeedMoneys = 0;
-		foreach (var squad in PlayerData.Instance.Squad)
-		{
-			var needMoneys = BalanceController.Instance.GetNeedMoneys(squad.Id);
-			squadNeedMoneys += needMoneys;
-		}
+		var salary = PlayerData.Instance.GetSalary();
 
-		playerMoneys = Mathf.Max(0, playerMoneys - squadNeedMoneys);
+		playerMoneys = Mathf.Max(0, playerMoneys - salary);
 		PlayerData.Instance.Moneys = playerMoneys;
 		EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));
-		EventBus.RaiseEvent<IWorldUi>(x => x.ShowPayedMoneys(squadNeedMoneys));
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowPayedMoneys(salary));
 	}
 }

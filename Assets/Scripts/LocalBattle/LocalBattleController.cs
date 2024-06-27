@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class LocalBattleController : MonoBehaviour
 {
+	/*
 	public Transform PlayerSquadsHolder;
 	public Transform EnemySquadsHolder;
 	public SquadObject SquadObjectPrefab;
@@ -145,4 +146,5 @@ public class LocalBattleController : MonoBehaviour
 	{
 		LocalBattleUi.Instance.ShowLoseWindow();
 	}
+	*/
 }

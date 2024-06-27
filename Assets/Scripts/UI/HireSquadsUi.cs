@@ -1,5 +1,6 @@
 using System.Linq;
 using EventBusSystem;
+using Mech.Data.LocalData;
 using UnityEngine;
 
 public class HireSquadsUi : MonoBehaviour
@@ -42,7 +43,7 @@ public class HireSquadsUi : MonoBehaviour
 		if (PlayerData.Instance.Moneys >= squadCost)
 		{
 			PlayerData.Instance.Moneys -= squadCost;
-			PlayerData.Instance.AddNewSquad(hireSquadItemUi.Data.SquadId);
+			//PlayerData.Instance.AddNewSquad(hireSquadItemUi.Data.SquadId);
 			_city.SquadsLocalData.Remove(hireSquadItemUi.Data);
 			hireSquadItemUi.Dispose();
 			EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));

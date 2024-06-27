@@ -123,6 +123,7 @@ namespace LocalBattle3d
 
 		public void Move(float moveForwardDistance)
 		{
+			_astarAI.isStopped = false;
 			_astarAI.maxSpeed = CommonSpeed;
 			_astarAI.destination = transform.position + transform.forward * moveForwardDistance;
 		}
@@ -134,6 +135,7 @@ namespace LocalBattle3d
 
 		public void ReturnToStartPositions()
 		{
+			_astarAI.isStopped = true;
 			_astarAI.Teleport(_startPositions);
 		}
 	}

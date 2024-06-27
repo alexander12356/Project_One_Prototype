@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Mech.Data.Global;
+using Mech.Data.LocalData;
 using UnityEngine;
 
 namespace LocalBattle3d
@@ -10,9 +11,9 @@ namespace LocalBattle3d
 		private ModelType[,] modelsHolders = new ModelType[4, 25];
 		public List<ModelObject> ModelList;
 
-		public void CreateModels(SquadGlobalData squadGlobalData)
+		public void CreateModels(SquadLocalData squadLocalData)
 		{
-			var modelCount = squadGlobalData.ModelList.Count;
+			var modelCount = squadLocalData.ModelLocalDataList.Count;
 
 			var createdModelCount = 0;
 			for (var i = 0; i < 4; i++)
@@ -24,7 +25,7 @@ namespace LocalBattle3d
 						break;
 					}
 
-					modelsHolders[i, j] = squadGlobalData.ModelList[createdModelCount];
+					modelsHolders[i, j] = squadLocalData.ModelLocalDataList[createdModelCount].Type;
 					createdModelCount++;
 				}
 			}
@@ -48,11 +49,6 @@ namespace LocalBattle3d
 			}
 		}
 
-		public void SetTransform(Transform squadTransform)
-		{
-			transform.SetParent(squadTransform, false);
-		}
-
 		public void ModelsMove(float moveForwardDistance)
 		{
 			foreach (var modelObject in ModelList)
@@ -74,6 +70,14 @@ namespace LocalBattle3d
 			foreach (var modelObject in ModelList)
 			{
 				modelObject.ReturnToStartPositions();
+			}
+		}
+
+		public void Clear()
+		{
+			foreach (var modelObject in ModelList)
+			{
+				Destroy(modelObject.gameObject);
 			}
 		}
 	}
