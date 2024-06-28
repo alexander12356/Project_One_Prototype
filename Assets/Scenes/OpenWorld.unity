@@ -24731,6 +24731,14 @@ PrefabInstance:
       propertyPath: _focusType
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3129036126625720762, guid: ec241a5c91f610f43a75e1a78266e6cc, type: 3}
+      propertyPath: _allFocusList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3129036126625720762, guid: ec241a5c91f610f43a75e1a78266e6cc, type: 3}
+      propertyPath: _allFocusList.Array.data[0]
+      value: 
+      objectReference: {fileID: 1958404499}
     - target: {fileID: 5581030618426952818, guid: ec241a5c91f610f43a75e1a78266e6cc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

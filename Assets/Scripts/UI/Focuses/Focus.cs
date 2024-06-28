@@ -35,6 +35,9 @@ namespace Mech.UI
 				return;
 			}
 
+			CanExplore = true;
+			_frameImage.color = _canExploreColor;
+
 			foreach (var focus in _xorFocusList)
 			{
 				if (focus.IsExplored)
@@ -45,23 +48,31 @@ namespace Mech.UI
 				}
 			}
 
-			foreach (var focus in _orFocusList)
+			if (_orFocusList.Count > 0)
 			{
-				if (focus.IsExplored)
+				CanExplore = false;
+				_frameImage.color = _blockedColor;
+				foreach (var focus in _orFocusList)
 				{
-					CanExplore = true;
-					_frameImage.color = _canExploreColor;
-					return;
+					if (focus.IsExplored)
+					{
+						CanExplore = true;
+						_frameImage.color = _canExploreColor;
+						return;
+					}
 				}
 			}
 
-			CanExplore = true;
-			foreach (var focus in _allFocusList)
+			if (_allFocusList.Count > 0)
 			{
-				CanExplore &= focus.IsExplored;
-			}
+				CanExplore = true;
+				foreach (var focus in _allFocusList)
+				{
+					CanExplore &= focus.IsExplored;
+				}
 
-			_frameImage.color = CanExplore ? _canExploreColor : _blockedColor;
+				_frameImage.color = CanExplore ? _canExploreColor : _blockedColor;
+			}
 		}
 
 		public void OpenFocus()

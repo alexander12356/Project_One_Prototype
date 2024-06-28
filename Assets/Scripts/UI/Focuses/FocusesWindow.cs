@@ -24,6 +24,7 @@ namespace Mech.UI
 		public void Open()
 		{
 			SetVisible(true);
+			RecheckFocuses();
 			GameController.Instance.ReturnFromSquadManagementWindow();
 			_gloryPointsText.text = string.Format(_gloryPointsTextFormat, PlayerData.Instance.GloryPoints);
 		}

@@ -44,9 +44,9 @@ namespace Mech.UI
 				PlayerData.Instance.GloryPoints -= _cost;
 				_exploreButton.interactable = false;
 				_reachedText.gameObject.SetActive(true);
-				FocusesWindow.Instance.RecheckFocuses();
 				_focus.IsExplored = true;
 				SetVisible(false);
+				FocusesWindow.Instance.RecheckFocuses();
 			}
 		}
 

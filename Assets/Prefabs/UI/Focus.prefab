@@ -175,7 +175,7 @@ MonoBehaviour:
   _exploredColor: {r: 0.04146609, g: 0, b: 0.85660374, a: 1}
   _blockedColor: {r: 0, g: 0, b: 0, a: 1}
   IsExplored: 0
-  CanExplore: 1
+  CanExplore: 0
 --- !u!114 &1969190553603637350
 MonoBehaviour:
   m_ObjectHideFlags: 0
