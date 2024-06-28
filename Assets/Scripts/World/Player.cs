@@ -55,7 +55,7 @@ namespace Mech.World
 		{
 			if (other.CompareTag("Enemy"))
 			{
-				GameController.Instance.StartLocalBattle(other.gameObject);
+				GameController.Instance.StartDialog(other.gameObject);
 				return;
 			}
 

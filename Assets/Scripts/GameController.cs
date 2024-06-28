@@ -4,6 +4,7 @@ using System.Globalization;
 using EventBusSystem;
 using LocalBattle3d;
 using Mech.Data.LocalData;
+using Mech.UI;
 using Mech.World;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -87,10 +88,21 @@ public class GameController : MonoBehaviour, IGameController
 		}
 	}
 
-	public void StartLocalBattle(GameObject squad)
+	public void StartDialog(GameObject squad)
 	{
 		IsWorldControl = false;
+		IsPause = true;
+		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
+
 		_battleArmy = squad.GetComponent<EnemyArmy>();
+		var dialogueType = _battleArmy.GetDialogueType();
+		DialogueWindow.Instance.Init(dialogueType);
+		DialogueWindow.Instance.StartDialogue();
+	}
+
+	public void StartLocalBattle()
+	{
+		IsWorldControl = false;
 
 		IsPause = true;
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
