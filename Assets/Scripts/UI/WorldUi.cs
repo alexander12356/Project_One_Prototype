@@ -34,6 +34,11 @@ public class WorldUi : MonoBehaviour, IWorldUi
 	{
 		GameController.Instance.OpenSquadManagementWindow();
 	}
+
+	public void OpenFocusWindow()
+	{
+		GameController.Instance.OpenFocusWindow();
+	}
 	
 	public void SetPause(bool value)
 	{

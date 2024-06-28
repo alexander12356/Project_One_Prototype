@@ -13,6 +13,7 @@ namespace Mech.Data.LocalData
 
 		public int Supplies;
 		public int Moneys;
+		public int GloryPoints;
 
 		public void Awake()
 		{

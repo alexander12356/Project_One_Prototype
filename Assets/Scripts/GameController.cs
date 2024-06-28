@@ -154,6 +154,12 @@ public class GameController : MonoBehaviour, IGameController
 		Player.Instance.SetPosition(city.GetComponent<City>().EnterPosition);
 	}
 
+	public void OpenFocusWindow()
+	{
+		IsWorldControl = false;
+		FocusesWindow.Instance.Open();
+	}
+
 	public void CloseCity(City city)
 	{
 		IsWorldControl = true;
