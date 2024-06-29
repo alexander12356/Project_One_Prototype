@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,6 +9,7 @@ namespace Mech.Data.Global
 	public struct ModelGlobalData
 	{
 		public ModelType ModelType;
+		public string Title;
 		public Sprite Icon;
 		public string Id;
 
