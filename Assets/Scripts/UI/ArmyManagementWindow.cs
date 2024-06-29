@@ -7,9 +7,9 @@ using UnityEngine;
 
 namespace Mech.UI
 {
-	public class SquadManagementWindow : MonoBehaviour
+	public class ArmyManagementWindow : MonoBehaviour
 	{
-		public static SquadManagementWindow Instance;
+		public static ArmyManagementWindow Instance;
 
 		[SerializeField] private CanvasGroup _canvasGroup;
 		[SerializeField] private ModelItemUi _modelItemUiPrefab;

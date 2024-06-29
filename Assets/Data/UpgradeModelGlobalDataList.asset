@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upgradeDataList:
     m_Keys: 0100000002000000
+    m_Values:
+    - List: 02000000
+    - List: 03000000

@@ -172,7 +172,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1416467306959526635}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5405321898844183890}
+        m_TargetAssemblyTypeName: Mech.UI.ModelUpgradeItem, Assembly-CSharp
+        m_MethodName: Upgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7626650760888668198
 GameObject:
   m_ObjectHideFlags: 0

@@ -129,7 +129,7 @@ public class GameController : MonoBehaviour, IGameController
 	public void OpenSquadManagementWindow()
 	{
 		IsWorldControl = false;
-		SquadManagementWindow.Instance.Open();
+		ArmyManagementWindow.Instance.Open();
 	}
 
 	public void ReturnFromSquadManagementWindow()

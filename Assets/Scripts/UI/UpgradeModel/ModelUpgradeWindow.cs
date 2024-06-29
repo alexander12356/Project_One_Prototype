@@ -53,17 +53,18 @@ namespace Mech.UI
 
 		public void Upgrade(ModelType modelType)
 		{
+			_readyToUpgradeCount--;
+			_newModels.Add(modelType);
+
 			if (_readyToUpgradeCount == 0)
 			{
 				_modelUpgradeItems.ForEach(x => x.SetActive(false));
 			}
-			_readyToUpgradeCount--;
-			_newModels.Add(modelType);
 		}
 
 		public void Accept()
 		{
-			SquadManagementWindow.Instance.UpgradeModel(_squadId, _currentModelType, _newModels);
+			ArmyManagementWindow.Instance.UpgradeModel(_squadId, _currentModelType, _newModels);
 			Close();
 		}
 

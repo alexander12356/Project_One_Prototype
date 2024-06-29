@@ -25,15 +25,18 @@ namespace Mech.UI
 		public void Init(int squadId, ModelType modelType, List<ModelLocalData> modelDataList)
 		{
 			var modelGlobalData = _modelGlobalDataList.GetModelData(modelType);
+
+			_modelType = modelType;
+			_squadId = squadId;
 			_modelLocalDataList = modelDataList;
+
 			_modelIcon.sprite = modelGlobalData.Icon;
 			_titleText.text = modelGlobalData.Title;
 			_countText.text = string.Format(_countTextFormat, modelDataList.Count);
-			_squadId = squadId;
 			_levelUpButton.SetActive(modelDataList.Any(x => x.IsLevelUp));
 		}
 
-		public void OpenModelUpgradeWindow()
+		public void Upgrade()
 		{
 			ModelUpgradeWindow.Instance.Open(_squadId, _modelType, _modelLocalDataList.Count(x => x.IsLevelUp));
 		}
