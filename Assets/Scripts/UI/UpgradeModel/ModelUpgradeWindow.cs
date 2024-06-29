@@ -54,6 +54,7 @@ namespace Mech.UI
 		public void Upgrade(ModelType modelType)
 		{
 			_readyToUpgradeCount--;
+			_upgradeCountText.text = string.Format(_upgradeCountTextFormat, _readyToUpgradeCount);
 			_newModels.Add(modelType);
 
 			if (_readyToUpgradeCount == 0)
