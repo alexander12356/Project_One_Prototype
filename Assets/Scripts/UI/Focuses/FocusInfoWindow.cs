@@ -29,7 +29,7 @@ namespace Mech.UI
 		{
 			SetVisible(true);
 			_focus = focusObject.GetComponent<Focus>();
-			_exploreButton.interactable = _focus.CanExplore;
+			_exploreButton.interactable = _focus.CanExplore && !_focus.IsExplored;
 			_titleText.text = _focus.Title;
 			_loreDescription.text = _focus.Lore;
 			_statDescription.text = _focus.Stat;

@@ -43,6 +43,7 @@ namespace Mech.UI
 		public void RecheckFocuses()
 		{
 			_focusList.ForEach(x => x.Check());
+			_gloryPointsText.text = string.Format(_gloryPointsTextFormat, PlayerData.Instance.GloryPoints);
 		}
 	}
 }

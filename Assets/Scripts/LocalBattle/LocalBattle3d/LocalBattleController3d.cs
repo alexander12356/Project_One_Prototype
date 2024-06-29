@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Mech.Data.Global;
 using Mech.Data.LocalData;
 using UnityEngine;
 
@@ -11,8 +12,10 @@ namespace LocalBattle3d
 		public ArmyObject PlayerArmyObject;
 		public ArmyObject EnemyArmyObject;
 		public FightController FightController;
+		public GloryPointsGlobalDataList GloryPointsGlobalDataList;
 
 		private ArmyLocalData _playerArmyLocalData;
+		private int _possibleGloryPoints;
 
 		private void Awake()
 		{
@@ -23,6 +26,8 @@ namespace LocalBattle3d
 		{
 			CreateArmy(playerLocalArmy, PlayerArmyObject);
 			CreateArmy(enemyLocalArmy, EnemyArmyObject);
+			_possibleGloryPoints = CalculateGloryPoints(enemyLocalArmy);
+
 			_playerArmyLocalData = playerLocalArmy;
 			LocalBattleUi.Instance.ShowChooseTacticWindow();
 			return;
@@ -30,6 +35,20 @@ namespace LocalBattle3d
 			void CreateArmy(ArmyLocalData armyLocalData, ArmyObject armyObject)
 			{
 				armyObject.CreateSquads(armyLocalData);
+			}
+
+			int CalculateGloryPoints(ArmyLocalData armyLocalData)
+			{
+				var result = 0;
+				foreach (var squadLocalData in armyLocalData.SquadLocalDataList)
+				{
+					foreach (var modelLocalData in squadLocalData.ModelLocalDataList)
+					{
+						result += GloryPointsGlobalDataList.GetGloryPoints(modelLocalData.Type);
+					}
+				}
+
+				return result;
 			}
 		}
 
@@ -45,12 +64,14 @@ namespace LocalBattle3d
 
 				if (FightController.IsWin())
 				{
-					LocalBattleUi.Instance.ShowWinWindow();
+					LocalBattleUi.Instance.ShowWinWindow(_possibleGloryPoints);
 				}
 				else
 				{
 					LocalBattleUi.Instance.ShowLoseWindow();
 				}
+
+				PlayerData.Instance.GloryPoints += _possibleGloryPoints;
 			}
 		}
 

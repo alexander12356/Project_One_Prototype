@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using DefaultNamespace;
+using DG.Tweening;
 using LocalBattle3d;
 using Mech.Data.Global;
 using Mech.Data.LocalData;
+using TMPro;
 using UnityEngine;
 
 public class LocalBattleUi : MonoBehaviour
@@ -19,6 +21,9 @@ public class LocalBattleUi : MonoBehaviour
 	public GameObject WinUi;
 	public GameObject LoseUi;
 	public GameObject ChooseTacticWindow;
+	public TMP_Text GloryPointsText;
+	public string GloryPointsTextFormat;
+	public float GloryPointsAnimationDuration;
 
 	private void Awake()
 	{
@@ -30,9 +35,10 @@ public class LocalBattleUi : MonoBehaviour
 		ChooseTacticWindow.gameObject.SetActive(true);
 	}
 
-	public void ShowWinWindow()
+	public void ShowWinWindow(int possibleGloryPoints)
 	{
 		WinUi.SetActive(true);
+		SetPossibleGloryPoints(possibleGloryPoints);
 
 		var playerArmyLocalData = PlayerData.Instance.ArmyLocalData;
 		var modelStatList = new Dictionary<ModelType, ModelStat>();
@@ -63,6 +69,18 @@ public class LocalBattleUi : MonoBehaviour
 		{
 			var levelUp = Instantiate(SquadLevelUpPrefab, LevelUpHolder);
 			levelUp.SetStat(modelStat);
+		}
+		return;
+
+		void SetPossibleGloryPoints(int gloryPoints)
+		{
+			var currentGloryPoints = PlayerData.Instance.GloryPoints;
+			var newGloryPoints = currentGloryPoints + gloryPoints;
+			DOTween.To(() => currentGloryPoints, x =>
+			{
+				currentGloryPoints = x;
+				GloryPointsText.text = string.Format(GloryPointsTextFormat, currentGloryPoints);
+			}, newGloryPoints, GloryPointsAnimationDuration);
 		}
 	}
 
