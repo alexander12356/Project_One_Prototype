@@ -7225,9 +7225,10 @@ MonoBehaviour:
   _dateTimeText: {fileID: 957225852}
   IsNight: 0
   NightEffect: {fileID: 1275520095}
-  SuppliesTextFormat: 'Supplies: {0}'
   SuppliesText: {fileID: 1145039366}
   MoneysText: {fileID: 1544712067}
+  MoneysTextFormat: "\u0414\u0435\u043D\u044C\u0433\u0438: {0}"
+  SuppliesTextFormat: "\u041F\u0440\u0438\u043F\u0430\u0441\u044B: {0}"
   SubtractionEffectPrefab: {fileID: 7785272037973412261, guid: f60ab50216159c74a98043d426bfcacf, type: 3}
   _moneysEffectHolder: {fileID: 87121244}
   _suppliesEffectHolder: {fileID: 571461352}
@@ -16480,7 +16481,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Supplies: 20'
+  m_text: "\u041F\u0440\u0438\u043F\u0430\u0441\u044B: {0}"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -22663,7 +22664,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $
+  m_text: "\u0414\u0435\u043D\u044C\u0433\u0438: {0}"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -22690,7 +22691,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32.2
+  m_fontSize: 31.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1

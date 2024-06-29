@@ -121,6 +121,7 @@ public class GameController : MonoBehaviour, IGameController
 		WindowController.Instance.SetWorldUi();
 		WorldCamera.gameObject.SetActive(true);
 		BattleCamera.gameObject.SetActive(false);
+		Player.Instance.UpdateView();
 
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(false));
 		IsPause = false;

@@ -35,7 +35,7 @@ namespace Mech.Data.LocalData
 
 		public int GetAllModelCount()
 		{
-			return ArmyLocalData.GetModelCount();
+			return ArmyLocalData.GetAllModelCount();
 		}
 
 		public int GetSalary()

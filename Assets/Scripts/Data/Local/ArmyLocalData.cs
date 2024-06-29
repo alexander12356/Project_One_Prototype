@@ -22,7 +22,7 @@ namespace Mech.Data.LocalData
 			}
 		}
 
-		public int GetModelCount()
+		public int GetAllModelCount()
 		{
 			var result = 0;
 			foreach (var squadLocalData in SquadLocalDataList)

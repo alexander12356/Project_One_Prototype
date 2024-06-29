@@ -13,9 +13,10 @@ public class WorldUi : MonoBehaviour, IWorldUi
 	public TMP_Text _dateTimeText;
 	public bool IsNight;
 	public Image NightEffect;
-	public string SuppliesTextFormat;
 	public TMP_Text SuppliesText;
 	public TMP_Text MoneysText;
+	public string MoneysTextFormat;
+	public string SuppliesTextFormat;
 	public SubtractionEffect SubtractionEffectPrefab;
 	public Transform _moneysEffectHolder;
 	public Transform _suppliesEffectHolder;
@@ -102,7 +103,7 @@ public class WorldUi : MonoBehaviour, IWorldUi
 
 	public void ShowMoneys(int instanceMoneys)
 	{
-		MoneysText.text = $"${instanceMoneys}";
+		MoneysText.text = string.Format(MoneysTextFormat, instanceMoneys);
 	}
 
 	public void ShowPayedMoneys(int squadNeedMoneys)

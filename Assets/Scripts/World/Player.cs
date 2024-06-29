@@ -1,16 +1,20 @@
 using DefaultNamespace;
 using EventBusSystem;
 using Mech.Data.LocalData;
+using TMPro;
 using UnityEngine;
 
 namespace Mech.World
 {
 	public class Player : MonoBehaviour
 	{
-		public float MoveSpeed;
 		public static Vector3 PositionInstance { get; private set; }
-
 		public static Player Instance;
+
+		[SerializeField] private TMP_Text _squadTitleText;
+		[SerializeField] private string _squadTitleTextFormat;
+
+		public float MoveSpeed;
 		public GameObject Renderer;
 
 		private bool _isPrevMove = false;
@@ -25,6 +29,12 @@ namespace Mech.World
 			PositionInstance = transform.position;
 			EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
 			EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));
+			UpdateView();
+		}
+
+		public void UpdateView()
+		{
+			_squadTitleText.text = string.Format(_squadTitleTextFormat, PlayerData.Instance.GetAllModelCount());
 		}
 
 		void Update()
