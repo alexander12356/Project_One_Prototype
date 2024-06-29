@@ -157,9 +157,13 @@ MonoBehaviour:
         Type: 2
         Xp: 0
         IsLevelUp: 0
+    - ModelLocalDataList: []
+    - ModelLocalDataList: []
   ModelGlobalDataList: {fileID: 11400000, guid: 921fe45a9d4473248bdf62c383d3bc74, type: 2}
   Supplies: 20
   Moneys: 2000
+  GloryPoints: 0
+  SquadMaxCapacity: 20
 --- !u!1 &2528713877102515351
 GameObject:
   m_ObjectHideFlags: 0

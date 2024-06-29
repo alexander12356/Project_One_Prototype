@@ -13,7 +13,8 @@ namespace Mech.UI
 
 		[SerializeField] private CanvasGroup _canvasGroup;
 		[SerializeField] private ModelItemUi _modelItemUiPrefab;
-		[SerializeField] private List<RectTransform> _squadHolderList;
+		[SerializeField] private List<SquadItemUi> _squadItemUiList;
+		public RectTransform DragItemHolder;
 
 		public void Awake()
 		{
@@ -36,8 +37,9 @@ namespace Mech.UI
 
 				foreach (var modelType in squadModels.Keys)
 				{
-					var modelItem = Instantiate(_modelItemUiPrefab, _squadHolderList[i]);
+					var modelItem = Instantiate(_modelItemUiPrefab);
 					modelItem.Init(i, modelType, squadModels[modelType]);
+					_squadItemUiList[i].AddModel(modelItem);
 				}
 			}
 
@@ -63,12 +65,9 @@ namespace Mech.UI
 
 		private void ClearSquads()
 		{
-			foreach (var squadHolder in _squadHolderList)
+			foreach (var squadItemUi in _squadItemUiList)
 			{
-				for (int i = 0; i < squadHolder.childCount; i++)
-				{
-					Destroy(squadHolder.GetChild(i).gameObject);
-				}
+				squadItemUi.Clear();
 			}
 		}
 
@@ -107,6 +106,32 @@ namespace Mech.UI
 
 			ClearSquads();
 			CreateSquads();
+		}
+
+		public void MoveModelsTo(int squadId, ModelType modelType, int newSquadId)
+		{
+			MoveModelToNewSquadWindow.Instance.Open(squadId, modelType, newSquadId);
+		}
+
+		public void DataMoveModelsTo(int fromSquadId, int toSquad, ModelType modelType, int count)
+		{
+			for (int i = 0; i < count; i++)
+			{
+				var fromSquadModelList = PlayerData.Instance.ArmyLocalData.SquadLocalDataList[fromSquadId].ModelLocalDataList;
+				var toSquadModelList = PlayerData.Instance.ArmyLocalData.SquadLocalDataList[toSquad].ModelLocalDataList;
+
+				var moveModelData = fromSquadModelList.FirstOrDefault(x => x.Type == modelType);
+				toSquadModelList.Add(moveModelData);
+				fromSquadModelList.Remove(moveModelData);
+			}
+
+			ClearSquads();
+			CreateSquads();
+		}
+
+		public SquadItemUi GetSquadUiItem(int squadId)
+		{
+			return _squadItemUiList[squadId];
 		}
 	}
 }

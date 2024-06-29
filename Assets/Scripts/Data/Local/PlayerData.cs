@@ -1,4 +1,5 @@
-﻿using Mech.Data.Global;
+﻿using System.Linq;
+using Mech.Data.Global;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Mech.Data.LocalData
 		public int Supplies;
 		public int Moneys;
 		public int GloryPoints;
+		public int SquadMaxCapacity;
 
 		public void Awake()
 		{
@@ -31,7 +33,7 @@ namespace Mech.Data.LocalData
 			ArmyLocalData.InitGuid();
 		}
 
-		public int GetModelCount()
+		public int GetAllModelCount()
 		{
 			return ArmyLocalData.GetModelCount();
 		}
@@ -39,6 +41,16 @@ namespace Mech.Data.LocalData
 		public int GetSalary()
 		{
 			return ArmyLocalData.GetSalary(ModelGlobalDataList);
+		}
+
+		public int GetModelsCount(int squadId, ModelType modelType)
+		{
+			return ArmyLocalData.SquadLocalDataList[squadId].ModelLocalDataList.Count(x => x.Type == modelType);
+		}
+
+		public int GetModelsCount(int squadId)
+		{
+			return ArmyLocalData.SquadLocalDataList[squadId].ModelLocalDataList.Count;
 		}
 	}
 }

@@ -80,7 +80,7 @@ namespace Mech.World
 		public void Eat()
 		{
 			var playerSupplies = PlayerData.Instance.Supplies;
-			var squadNeedSupplies = PlayerData.Instance.GetModelCount();
+			var squadNeedSupplies = PlayerData.Instance.GetAllModelCount();
 			playerSupplies = Mathf.Max(0, playerSupplies - squadNeedSupplies);
 			PlayerData.Instance.Supplies = playerSupplies;
 			EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
