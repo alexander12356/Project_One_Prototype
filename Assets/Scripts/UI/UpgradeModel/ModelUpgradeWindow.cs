@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Mech.Data.Global;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Mech.UI
 {
@@ -14,7 +15,7 @@ namespace Mech.UI
 		[SerializeField] private ModelUpgradeItem _currentUpgradeModel;
 		[SerializeField] private ModelUpgradeItem _modelUpgradeIconPrefab;
 		[SerializeField] private ModelGlobalDataList _modelGlobalDataList;
-		[SerializeField] private UpgradeModelGlobalDataList _upgradeModelGlobalDataList;
+		[FormerlySerializedAs("_upgradeModelGlobalDataList")] [SerializeField] private FractionGlobalDataList _fractionGlobalDataList;
 		[SerializeField] private TMP_Text _upgradeCountText;
 		[SerializeField] private string _upgradeCountTextFormat;
 
@@ -43,12 +44,14 @@ namespace Mech.UI
 			_currentUpgradeModel.Init(_modelGlobalDataList.GetModelData(currentModelType));
 			_currentUpgradeModel.SetActive(false);
 
+			/*
 			foreach (var modelType in _upgradeModelGlobalDataList.GetUpgrades(currentModelType))
 			{
 				var upgradeModel = Instantiate(_modelUpgradeIconPrefab, _upgradeModelListHolder);
 				upgradeModel.Init(_modelGlobalDataList.GetModelData(modelType));
 				_modelUpgradeItems.Add(upgradeModel);
 			}
+			*/
 		}
 
 		public void Upgrade(ModelType modelType)
