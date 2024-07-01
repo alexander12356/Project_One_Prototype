@@ -1,14 +1,12 @@
-﻿using System;
-using EventBusSystem;
-using TMPro;
+﻿using EventBusSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CityUi : MonoBehaviour, ICityUI
 {
 	public CanvasGroup CanvasGroup;
-	public TMP_Text Caption;
 	public StoreUi StoreUi;
-	public HireSquadsUi HireSquadsUi;
+	[FormerlySerializedAs("HireSquadsUi")] public GuildUi _guildUi;
 
 	private City _city;
 
@@ -26,9 +24,7 @@ public class CityUi : MonoBehaviour, ICityUI
 	{
 		_city = city;
 		
-		CanvasGroup.blocksRaycasts = true;
-		CanvasGroup.alpha = 1f;
-		Caption.text = city.CityName;
+		SetVisible(true);
 	}
 
 	public void OpenStore()
@@ -36,17 +32,22 @@ public class CityUi : MonoBehaviour, ICityUI
 		StoreUi.Open(_city);
 	}
 
-	public void OpenSquads()
+	public void OpenGuild()
 	{
-		HireSquadsUi.Open(_city);
+		_guildUi.Open(_city);
 	}
 
 	public void Close()
 	{
-		CanvasGroup.blocksRaycasts = false;
-		CanvasGroup.alpha = 0f;
-		EventBus.RaiseEvent<IGameController>(x => x.CloseCity(_city));
-		HireSquadsUi.Close();
+		SetVisible(false);
+		_guildUi.Close();
+		_city.Leave();
+	}
+
+	private void SetVisible(bool value)
+	{
+		CanvasGroup.alpha = value ? 1f : 0f;
+		CanvasGroup.blocksRaycasts = value;
 	}
 }
 

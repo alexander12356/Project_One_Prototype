@@ -17,7 +17,7 @@ public class StoreUi : MonoBehaviour
 	public void Open(City city)
 	{
 		_city = city;
-		city.UpdateStore();
+		//city.UpdateStore();
 		StoreSuppliesItem.SetCount(city.SuppliesCount);
 		PlayerSuppliesItem.SetCount(PlayerData.Instance.Supplies);
 		StoreMoneyText.text = $"${city.StoreMoneys}";
@@ -35,6 +35,7 @@ public class StoreUi : MonoBehaviour
 
 	public void OnSuppliesBuy()
 	{
+		/*
 		if (PlayerData.Instance.Moneys >= _city.SuppliesBuyCost)
 		{
 			StoreSuppliesItem.SetCount(_city.SuppliesCount - 1);
@@ -54,10 +55,12 @@ public class StoreUi : MonoBehaviour
 		}
 
 		UpdateItemView();
+		*/
 	}
 
 	public void OnSuppliesSell()
 	{
+		/*
 		if (_city.StoreMoneys >= _city.SuppliesSellCost)
 		{
 			StoreSuppliesItem.SetCount(_city.SuppliesCount + 1);
@@ -77,6 +80,7 @@ public class StoreUi : MonoBehaviour
 		}
 		
 		UpdateItemView();
+		*/
 	}
 
 	private void UpdateItemView()

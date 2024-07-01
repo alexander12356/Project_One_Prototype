@@ -1,52 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
+using Data.Global.City;
+using EventBusSystem;
+using Mech.Data.Global;
+using Mech.Data.LocalData;
+using Mech.World;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class City : MonoBehaviour
 {
-	[Serializable]
-	public class StoreGlobalData
-	{
-		public int StoreMoneys;
-		public int SuppliesCount;
-		public int SuppliesBuyCost;
-		public int SuppliesSellCost;
-	}
+	[SerializeField] private TMP_Text _cityNameText;
+	[SerializeField] private string _cityNameTextFormat;
+	[SerializeField] private Transform _enterPositionTransform;
+	[SerializeField] private Transform _exitPositionTransform;
+	[SerializeField] private CityGlobalData _cityGlobalData;
+	[SerializeField, ReadOnly] private CityLocalData _cityLocalData;
 
-	[Serializable]
-	public class StoreLocalData
-	{
-		public int StoreMoneys;
-		public int SuppliesCount;
-	}
-
-	[Serializable]
-	public class SquadGlobalData
-	{
-		public string Guid;
-		public string SquadId;
-		public int Cost;
-	}
-
-	[Serializable]
-	public class SquadLocalData
-	{
-		public string Guid;
-		public string SquadId;
-	}
-
-	public string CityName;
-	public TMP_Text CityCaption;
-	public Transform EnterPositionTransform;
-	public Transform ExitPositionTransform;
-	public StoreGlobalData CityStoreGlobalData;
-	public StoreLocalData CityStoreLocalData;
-
-	public Vector3 ExitPosition => ExitPositionTransform.position;
-	public Vector3 EnterPosition => EnterPositionTransform.position;
+	private StoreLocalData CityStoreLocalData;
 
 	public int SuppliesCount
 	{
@@ -60,63 +33,80 @@ public class City : MonoBehaviour
 		set => CityStoreLocalData.StoreMoneys = value;
 	}
 
-	public int SuppliesBuyCost => CityStoreGlobalData.SuppliesBuyCost;
-	public int SuppliesSellCost => CityStoreGlobalData.SuppliesSellCost;
-	public List<SquadGlobalData> SquadsGlobalData;
-	public List<SquadLocalData> SquadsLocalData;
+	[FormerlySerializedAs("DurationBeforeUpdate")]
+	public string DurationBeforeUpdateStore;
 
-	[FormerlySerializedAs("DurationBeforeUpdate")] public string DurationBeforeUpdateStore;
 	public string DurationBeforeUpdateSquads;
 
-	private DateTime PreviousStoreVisitTime;
-	private DateTime PreviousSquadsVisitTime;
+	private DateTime PreviousCityVisitTime;
 
 	public void Start()
 	{
-		CityCaption.text = CityName;
+		_cityNameText.text = string.Format(_cityNameTextFormat, _cityGlobalData.GetName());
 	}
 
-	public void UpdateStore()
+	public void Visit()
 	{
-		var durationBeforeUpdateTimeSpan = TimeSpan.Parse(DurationBeforeUpdateStore);
-		var updateDateTime = PreviousStoreVisitTime.Add(durationBeforeUpdateTimeSpan);
-		var currentTime = GameController.Instance.CurrentDateTime;
-		if (currentTime >= updateDateTime)
-		{
-			CityStoreLocalData.StoreMoneys = CityStoreGlobalData.StoreMoneys;
-			CityStoreLocalData.SuppliesCount = CityStoreGlobalData.SuppliesCount;
-		}
+		Player.Instance.SetVisible(false);
+		Player.Instance.SetPosition(_enterPositionTransform.position);
+		EventBus.RaiseEvent<IWorldUi>(x => x.OpenCityUi(gameObject));
 
-		PreviousStoreVisitTime = currentTime;
+		UpdateCity();
 	}
 
-	public void UpdateSquads()
+	public void Leave()
 	{
-		var durationBeforeUpdateTimeSpan = TimeSpan.ParseExact(DurationBeforeUpdateSquads, @"dd\:hh", CultureInfo.InvariantCulture);
-		var updateDateTime = PreviousSquadsVisitTime.Add(durationBeforeUpdateTimeSpan);
-		var currentTime = GameController.Instance.CurrentDateTime;
-		if (currentTime >= updateDateTime)
+		Player.Instance.SetVisible(true);
+		Player.Instance.SetPosition(_exitPositionTransform.position);
+		EventBus.RaiseEvent<IGameController>(x => x.CloseCity());
+	}
+
+	private void UpdateCity()
+	{
+		UpdateGuild();
+		UpdateStore();
+		PreviousCityVisitTime = GameController.Instance.CurrentDateTime;
+		return;
+
+		void UpdateGuild()
 		{
-			SquadsLocalData.Clear();
-			foreach (var squadData in SquadsGlobalData)
+			var durationBeforeUpdateTimeSpan = TimeSpan.ParseExact(DurationBeforeUpdateSquads, @"dd\:hh", CultureInfo.InvariantCulture);
+			var updateDateTime = PreviousCityVisitTime.Add(durationBeforeUpdateTimeSpan);
+			var currentTime = GameController.Instance.CurrentDateTime;
+			if (currentTime >= updateDateTime)
 			{
-				SquadsLocalData.Add(new SquadLocalData
+				_cityLocalData.GuildLocalData.Clear();
+				foreach (var guildItemGlobalData in _cityGlobalData.GetGuildGlobalData().GetGuildItemGlobalDataList())
 				{
-					Guid = squadData.Guid,
-					SquadId = squadData.SquadId
-				});
+					_cityLocalData.GuildLocalData.GetGuildItemLocalDataList().Add(guildItemGlobalData.ModelType, guildItemGlobalData.Count);
+				}
 			}
 		}
 
-		PreviousSquadsVisitTime = currentTime;
+		void UpdateStore()
+		{
+			/*
+			var durationBeforeUpdateTimeSpan = TimeSpan.Parse(DurationBeforeUpdateStore);
+			var updateDateTime = PreviousStoreVisitTime.Add(durationBeforeUpdateTimeSpan);
+			var currentTime = GameController.Instance.CurrentDateTime;
+			if (currentTime >= updateDateTime)
+			{
+				//CityStoreLocalData.StoreMoneys = CityStoreGlobalData.StoreMoneys;
+				//CityStoreLocalData.SuppliesCount = CityStoreGlobalData.SuppliesCount;
+			}
+
+			PreviousStoreVisitTime = currentTime;
+			*/
+		}
 	}
 
-	[ContextMenu("Update guids for squads global data")]
-	public void UpdateGuidsForGlobalData()
+	public CityLocalData GetCityLocalData()
 	{
-		foreach (var squadData in SquadsGlobalData)
-		{
-			squadData.Guid = Guid.NewGuid().ToString();
-		}
+		return _cityLocalData;
+	}
+
+	public CityGlobalData GetCityGlobalData()
+	{
+		return _cityGlobalData;
 	}
 }

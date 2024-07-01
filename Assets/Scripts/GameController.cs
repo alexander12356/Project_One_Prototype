@@ -143,16 +143,19 @@ public class GameController : MonoBehaviour, IGameController
 		IsPause = value;
 	}
 
-	public void StartCity(GameObject city)
+	public void StartCity(GameObject cityGameObject)
 	{
 		IsWorldControl = false;
-		EventBus.RaiseEvent<IWorldUi>(x => x.OpenCityUi(city));
-
 		IsPause = true;
 		EventBus.RaiseEvent<IWorldUi>(x => x.SetPause(true));
 
-		Player.Instance.SetVisible(false);
-		Player.Instance.SetPosition(city.GetComponent<City>().EnterPosition);
+		var city = cityGameObject.GetComponent<City>();
+		city.Visit();
+	}
+
+	public void CloseCity()
+	{
+		IsWorldControl = true;
 	}
 
 	public void OpenFocusWindow()
@@ -160,18 +163,10 @@ public class GameController : MonoBehaviour, IGameController
 		IsWorldControl = false;
 		FocusesWindow.Instance.Open();
 	}
-
-	public void CloseCity(City city)
-	{
-		IsWorldControl = true;
-
-		Player.Instance.SetVisible(true);
-		Player.Instance.SetPosition(city.ExitPosition);
-	}
 }
 
 public interface IGameController : IGlobalSubscriber
 {
 	void SetPause(bool value);
-	void CloseCity(City city);
+	void CloseCity();
 }

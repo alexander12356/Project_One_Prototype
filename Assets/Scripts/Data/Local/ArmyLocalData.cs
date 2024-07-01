@@ -46,5 +46,24 @@ namespace Mech.Data.LocalData
 
 			return result;
 		}
+
+		public void AddModel(ModelType modelType)
+		{
+			var squadId = -1;
+			for (int i = 0; i < SquadLocalDataList.Count; i++)
+			{
+				if (SquadLocalDataList[i].ModelLocalDataList.Count < PlayerData.Instance.SquadMaxCapacity)
+				{
+					squadId = i;
+					break;
+				}
+			}
+
+			if (squadId == -1)
+			{
+				return;
+			}
+			AddModel(squadId, modelType);
+		}
 	}
 }
