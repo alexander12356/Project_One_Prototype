@@ -7,5 +7,6 @@ namespace Mech.Data.Global
 	{
 		public int S;
 		public int D;
+		public string Title;
 	}
 }

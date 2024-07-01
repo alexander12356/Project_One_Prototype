@@ -9,7 +9,9 @@ namespace Mech.Data.Global
 	public struct ModelGlobalData
 	{
 		public ModelType ModelType;
+		public FractionType FractionType;
 		public string Title;
+		public string Description;
 		public Sprite Icon;
 		public string Id;
 

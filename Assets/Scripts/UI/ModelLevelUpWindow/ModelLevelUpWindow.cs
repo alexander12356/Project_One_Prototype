@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Mech.Data.Global;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
@@ -12,12 +13,23 @@ namespace Mech.UI
 		public static ModelLevelUpWindow Instance;
 
 		[SerializeField] private CanvasGroup _canvasGroup;
+		[SerializeField] private ModelGlobalDataList _modelGlobalDataList;
+		[SerializeField] private WeaponGlobalDataList _weaponGlobalDataList;
 		[SerializeField] private ModelLevelUpItem _modelLevelUpItem;
 		[SerializeField] private FractionGlobalDataList _fractionGlobalDataList;
 		[SerializeField] private RectTransform _treeHolder;
 		[SerializeField] private UILineConnector _uiLineConnectorPrefab;
 		[SerializeField] private LineConnectorTarget _lineConnectorTargetPrefab;
 		[SerializeField] private RectTransform _lineConnectorHolders;
+		[SerializeField] private Image _iconImage;
+		[SerializeField] private TMP_Text _nameText;
+		[SerializeField] private string _nameTextFormat;
+		[SerializeField] private TMP_Text _fractionNameText;
+		[SerializeField] private string _fractionNameTextFormat;
+		[SerializeField] private TMP_Text _descriptionText;
+		[SerializeField] private string _descriptionTextFormat;
+		[SerializeField] private TMP_Text _statsText;
+		[SerializeField, Multiline] private string _statsTextFormat;
 
 		private Dictionary<ModelType, ModelLevelUpItem> _models = new ();
 		private Dictionary<ModelType, LineConnectorTarget> _modelsLineConnectorTargets = new();
@@ -25,6 +37,12 @@ namespace Mech.UI
 		private void Awake()
 		{
 			Instance = this;
+		}
+
+		public void Open(FractionType fractionType, ModelType modelType)
+		{
+			Open(fractionType);
+			ModelSelectHandler(modelType);
 		}
 
 		[Button]
@@ -54,7 +72,7 @@ namespace Mech.UI
 			{
 				var parentRectTransform = _models.ContainsKey(parentModel) ? _models[parentModel].ChildTransform : _treeHolder;
 				var modelLevelUpItem = Instantiate(_modelLevelUpItem, parentRectTransform);
-				modelLevelUpItem.Init(childModel);
+				modelLevelUpItem.Init(childModel, ModelSelectHandler);
 				LayoutRebuilder.ForceRebuildLayoutImmediate(parentRectTransform);
 				_models.Add(childModel, modelLevelUpItem);
 
@@ -77,12 +95,41 @@ namespace Mech.UI
 		public void Close()
 		{
 			SetVisible(false);
+			_models.Clear();
+			_modelsLineConnectorTargets.Clear();
+			Destroy(_treeHolder.GetChild(0).gameObject);
 		}
 
 		private void SetVisible(bool value)
 		{
 			_canvasGroup.alpha = value ? 1f : 0f;
 			_canvasGroup.blocksRaycasts = value;
+		}
+
+		private void ModelSelectHandler(ModelType modelType)
+		{
+			var modelGlobalData = _modelGlobalDataList.GetModelData(modelType);
+			var modelMeleeWeaponData = _weaponGlobalDataList.GetMeleeWeaponData(modelGlobalData.ModelMeleeWeaponData.Type);
+			var modelRangeWeaponData = _weaponGlobalDataList.GetRangeWeaponData(modelGlobalData.ModelRangeWeaponData.Type);
+			_iconImage.sprite = modelGlobalData.Icon;
+			_nameText.text = string.Format(_nameTextFormat, modelGlobalData.Title);
+			_fractionNameText.text = string.Format(_fractionNameTextFormat, FractionType.Mercenary);
+			_descriptionText.text = string.Format(_descriptionTextFormat, modelGlobalData.Description);
+			_statsText.text = string.Format(_statsTextFormat,
+				modelGlobalData.T,
+				modelGlobalData.Sv,
+				modelGlobalData.W,
+				modelMeleeWeaponData.Title,
+				modelGlobalData.ModelMeleeWeaponData.WS,
+				modelGlobalData.ModelMeleeWeaponData.A,
+				modelMeleeWeaponData.S,
+				modelMeleeWeaponData.D,
+				modelRangeWeaponData.Title,
+				modelGlobalData.ModelRangeWeaponData.BS,
+				modelGlobalData.ModelRangeWeaponData.A,
+				modelRangeWeaponData.S,
+				modelRangeWeaponData.D
+			);
 		}
 	}
 }
