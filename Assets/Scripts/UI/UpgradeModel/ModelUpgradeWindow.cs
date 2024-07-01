@@ -15,7 +15,7 @@ namespace Mech.UI
 		[SerializeField] private ModelUpgradeItem _currentUpgradeModel;
 		[SerializeField] private ModelUpgradeItem _modelUpgradeIconPrefab;
 		[SerializeField] private ModelGlobalDataList _modelGlobalDataList;
-		[FormerlySerializedAs("_upgradeModelGlobalDataList")] [SerializeField] private FractionGlobalDataList _fractionGlobalDataList;
+		[SerializeField] private FractionGlobalDataList _fractionGlobalDataList;
 		[SerializeField] private TMP_Text _upgradeCountText;
 		[SerializeField] private string _upgradeCountTextFormat;
 
@@ -38,20 +38,20 @@ namespace Mech.UI
 			_squadId = squadId;
 			_readyToUpgradeCount = readyToUpgradeCount;
 			_currentModelType = currentModelType;
+			var fractionType = _modelGlobalDataList.GetModelData(currentModelType).FractionType;
+			var upgradeList = _fractionGlobalDataList.GetFractionGlobalData(fractionType).ModelLevelUpGlobalDataList.GetUpgrades(currentModelType);
 
 			_upgradeCountText.text = string.Format(_upgradeCountTextFormat, readyToUpgradeCount);
 
 			_currentUpgradeModel.Init(_modelGlobalDataList.GetModelData(currentModelType));
 			_currentUpgradeModel.SetActive(false);
 
-			/*
-			foreach (var modelType in _upgradeModelGlobalDataList.GetUpgrades(currentModelType))
+			foreach (var modelType in upgradeList)
 			{
 				var upgradeModel = Instantiate(_modelUpgradeIconPrefab, _upgradeModelListHolder);
 				upgradeModel.Init(_modelGlobalDataList.GetModelData(modelType));
 				_modelUpgradeItems.Add(upgradeModel);
 			}
-			*/
 		}
 
 		public void Upgrade(ModelType modelType)

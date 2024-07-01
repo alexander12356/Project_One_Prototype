@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Mech.UI
 {
-	public class ModelItemUi : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+	public class ModelItemUi : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 	{
 		[SerializeField] private CanvasGroup _canvasGroup;
 		[SerializeField] private Image _modelIcon;
@@ -75,6 +75,14 @@ namespace Mech.UI
 			}
 
 			ArmyManagementWindow.Instance.MoveModelsTo(_squadId, _modelType, newSquadId);
+		}
+
+		public void OnPointerClick(PointerEventData eventData)
+		{
+			if (eventData.button == PointerEventData.InputButton.Right)
+			{
+				ModelLevelUpWindow.Instance.Open(_modelGlobalDataList.GetModelData(_modelType).FractionType, _modelType);
+			}
 		}
 	}
 }
