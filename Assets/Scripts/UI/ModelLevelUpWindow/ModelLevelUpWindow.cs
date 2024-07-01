@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Mech.Data.Global;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 
 namespace Mech.UI
@@ -31,6 +32,7 @@ namespace Mech.UI
 		{
 			SetVisible(true);
 			CreateTree();
+			LayoutRebuilder.ForceRebuildLayoutImmediate(_treeHolder);
 			return;
 
 			void CreateTree()
@@ -53,10 +55,11 @@ namespace Mech.UI
 				var parentRectTransform = _models.ContainsKey(parentModel) ? _models[parentModel].ChildTransform : _treeHolder;
 				var modelLevelUpItem = Instantiate(_modelLevelUpItem, parentRectTransform);
 				modelLevelUpItem.Init(childModel);
+				LayoutRebuilder.ForceRebuildLayoutImmediate(parentRectTransform);
 				_models.Add(childModel, modelLevelUpItem);
 
 				var lineConnectorTarget = Instantiate(_lineConnectorTargetPrefab, _lineConnectorHolders);
-				lineConnectorTarget.SetTarget(_models[childModel].GetComponent<RectTransform>());
+				lineConnectorTarget.SetTarget(_models[childModel].GetLineConnectorTarget());
 				_modelsLineConnectorTargets.Add(childModel, lineConnectorTarget);
 
 				if (parentRectTransform != _treeHolder)
