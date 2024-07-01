@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using UnityEngine;
 
 namespace LocalBattle3d

@@ -3,16 +3,16 @@ using Mech.Data.Global;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Mech.Data.LocalData
+namespace Mech.Data.Local
 {
 	public class PlayerData : MonoBehaviour
 	{
-		public ArmyLocalData ArmyLocalData;
-		public ModelGlobalDataList ModelGlobalDataList;
-
 		public static PlayerData Instance;
 
-		public int Supplies;
+		public ArmyLocalData ArmyLocalData;
+		public InventoryLocalData InventoryLocalData;
+		public ModelGlobalDataList ModelGlobalDataList;
+
 		public int Moneys;
 		public int GloryPoints;
 		public int SquadMaxCapacity;

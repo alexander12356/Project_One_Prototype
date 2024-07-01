@@ -1,91 +1,153 @@
-﻿using EventBusSystem;
-using Mech.Data.LocalData;
+﻿using System.Collections.Generic;
+using EventBusSystem;
+using Mech.Data.Global;
+using Mech.Data.Local;
+using Sirenix.Utilities;
 using TMPro;
 using UnityEngine;
 
 public class StoreUi : MonoBehaviour
 {
-	public Item StoreSuppliesItem;
-	public Item PlayerSuppliesItem;
-	public TextEffect TextEffectPrefab;
-	public Transform TextEffectHolder;
-	public TMP_Text StoreMoneyText;
-	public CanvasGroup CanvasGroup;
+	[SerializeField] private CanvasGroup _canvasGroup;
+	[SerializeField] private TMP_Text _storeMoneysText;
+	[SerializeField] private string _storeMoneysTextFormat;
+	[SerializeField] private StoreItem _storeStoreItemPrefab;
+	[SerializeField] private RectTransform _storeItemsHolder;
+	[SerializeField] private RectTransform _playerItemsHolder;
+	[SerializeField] private TextEffect _textEffectPrefab;
+	[SerializeField] private Transform _textEffectHolder;
 
-	private City _city;
+	private StoreLocalData _storeLocalData;
+	private StoreGlobalData _storeGlobalData;
+	private Dictionary<ItemType, StoreItem> _storeItemList = new ();
+	private Dictionary<ItemType, StoreItem> _playerItemList = new ();
 
 	public void Open(City city)
 	{
-		_city = city;
-		//city.UpdateStore();
-		StoreSuppliesItem.SetCount(city.SuppliesCount);
-		PlayerSuppliesItem.SetCount(PlayerData.Instance.Supplies);
-		StoreMoneyText.text = $"${city.StoreMoneys}";
-		CanvasGroup.alpha = 1f;
-		CanvasGroup.blocksRaycasts = true;
+		SetVisible(true);
 
-		UpdateItemView();
+		_storeLocalData = city.GetCityLocalData().StoreLocalData;
+		_storeGlobalData = city.GetCityGlobalData().GetStoreGlobalData();
+
+		UpdateStoreMoneys();
+		CreateStoreItems(_storeLocalData);
+		CreatePlayerItems();
+
+		return;
+
+		void CreateStoreItems(StoreLocalData storeLocalData)
+		{
+			foreach (var itemType in storeLocalData.Items.Keys)
+			{
+				if (storeLocalData.Items[itemType] <= 0)
+				{
+					continue;
+				}
+
+				var storeItem = Instantiate(_storeStoreItemPrefab, _storeItemsHolder);
+				storeItem.Init(itemType, storeLocalData.Items[itemType], OnTryBuy);
+				_storeItemList.Add(itemType, storeItem);
+			}
+		}
+
+		void CreatePlayerItems()
+		{
+			foreach (var itemLocalData in PlayerData.Instance.InventoryLocalData.Items)
+			{
+				if (itemLocalData.Count <= 0)
+				{
+					continue;
+				}
+
+				var storeItem = Instantiate(_storeStoreItemPrefab, _playerItemsHolder);
+				storeItem.Init(itemLocalData.ItemType, itemLocalData.Count, OnTrySell);
+				_playerItemList.Add(itemLocalData.ItemType, storeItem);
+			}
+		}
 	}
 
 	public void Close()
 	{
-		CanvasGroup.alpha = 0f;
-		CanvasGroup.blocksRaycasts = false;
+		_storeItemList.ForEach(x => Destroy(x.Value.gameObject));
+		_playerItemList.ForEach(x => Destroy(x.Value.gameObject));
+		_storeItemList.Clear();
+		_playerItemList.Clear();
+		SetVisible(false);
 	}
 
-	public void OnSuppliesBuy()
+	private void SetVisible(bool value)
 	{
-		/*
-		if (PlayerData.Instance.Moneys >= _city.SuppliesBuyCost)
+		_canvasGroup.alpha = value ? 1f : 0f;
+		_canvasGroup.blocksRaycasts = value;
+	}
+
+	private void UpdateStoreMoneys()
+	{
+		_storeMoneysText.text = string.Format(_storeMoneysTextFormat, _storeLocalData.StoreMoneys);
+	}
+
+	private void OnTryBuy(StoreItem storeItem)
+	{
+		var itemType = storeItem.GetItemType();
+		var itemBuyCost = _storeGlobalData.GetItemBuyCost(itemType);
+		if (PlayerData.Instance.Moneys >= itemBuyCost)
 		{
-			StoreSuppliesItem.SetCount(_city.SuppliesCount - 1);
-			PlayerSuppliesItem.SetCount(PlayerData.Instance.Supplies + 1);
-			_city.StoreMoneys += _city.SuppliesBuyCost;
-			_city.SuppliesCount--;
-			PlayerData.Instance.Moneys -= _city.SuppliesBuyCost;
-			PlayerData.Instance.Supplies++;
-			EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));
-			EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
-			StoreMoneyText.text = $"${_city.StoreMoneys}";
+			PlayerData.Instance.Moneys -= itemBuyCost;
+			PlayerData.Instance.InventoryLocalData.AddItem(itemType, 1);
+			_storeLocalData.RemoveItem(itemType, 1);
+			if (_storeLocalData.Items[itemType] <= 0)
+			{
+				_storeItemList.Remove(itemType);
+				storeItem.Dispose();
+			}
+			else
+			{
+				storeItem.Init(itemType, _storeLocalData.Items[itemType], OnTryBuy);
+			}
+			_playerItemList[itemType].Init(itemType, PlayerData.Instance.InventoryLocalData.GetItemCount(itemType), OnTrySell);
+
+			UpdateWorldUi();
+			UpdateStoreMoneys();
 		}
 		else
 		{
-			var textEffect = Instantiate(TextEffectPrefab, TextEffectHolder);
-			textEffect.SetText("Need more money");
+			var textEffect = Instantiate(_textEffectPrefab, _textEffectHolder);
+			textEffect.SetText("Not enough moneys");
 		}
-
-		UpdateItemView();
-		*/
 	}
 
-	public void OnSuppliesSell()
+	private void OnTrySell(StoreItem storeItem)
 	{
-		/*
-		if (_city.StoreMoneys >= _city.SuppliesSellCost)
+		var itemType = storeItem.GetItemType();
+		var itemSellCost = _storeGlobalData.GetItemSellCost(itemType);
+		if (_storeLocalData.StoreMoneys >= itemSellCost)
 		{
-			StoreSuppliesItem.SetCount(_city.SuppliesCount + 1);
-			PlayerSuppliesItem.SetCount(PlayerData.Instance.Supplies - 1);
-			_city.StoreMoneys -= _city.SuppliesSellCost;
-			_city.SuppliesCount++;
-			PlayerData.Instance.Moneys += _city.SuppliesSellCost;
-			PlayerData.Instance.Supplies--;
-			EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));
-			EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
-			StoreMoneyText.text = $"${_city.StoreMoneys}";
+			_storeLocalData.StoreMoneys -= itemSellCost;
+			_storeLocalData.AddItem(itemType, 1);
+			PlayerData.Instance.InventoryLocalData.RemoveItem(itemType, 1);
+			if (PlayerData.Instance.InventoryLocalData.GetItemCount(itemType) <= 0)
+			{
+				storeItem.Dispose();
+			}
+			else
+			{
+				_playerItemList[itemType].Init(itemType, PlayerData.Instance.InventoryLocalData.GetItemCount(itemType), OnTrySell);
+			}
+			_storeItemList[itemType].Init(itemType, _storeLocalData.Items[itemType], OnTryBuy);
+
+			UpdateWorldUi();
+			UpdateStoreMoneys();
 		}
 		else
 		{
-			var textEffect = Instantiate(TextEffectPrefab, TextEffectHolder);
-			textEffect.SetText("Store not have a money");
+			var textEffect = Instantiate(_textEffectPrefab, _textEffectHolder);
+			textEffect.SetText("Not enough moneys");
 		}
-		
-		UpdateItemView();
-		*/
 	}
 
-	private void UpdateItemView()
+	private void UpdateWorldUi()
 	{
-		StoreSuppliesItem.gameObject.SetActive(_city.SuppliesCount > 0);
-		PlayerSuppliesItem.gameObject.SetActive(PlayerData.Instance.Supplies > 0);
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));
+		EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.InventoryLocalData.GetItemCount(ItemType.Supply)));
 	}
 }

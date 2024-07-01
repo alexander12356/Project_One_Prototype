@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Mech.Data.Global;
 using UnityEngine;
 
-namespace Mech.Data.LocalData
+namespace Mech.Data.Local
 {
 	[Serializable]
 	public class StoreGlobalData
@@ -25,6 +26,16 @@ namespace Mech.Data.LocalData
 		public List<StoreItemGlobalData> GetStoreItemGlobalDataList()
 		{
 			return _storeItemGlobalDataList;
+		}
+
+		public int GetItemBuyCost(ItemType itemType)
+		{
+			return _storeItemGlobalDataList.FirstOrDefault(x => x.ItemType == itemType).BuyCost;
+		}
+
+		public int GetItemSellCost(ItemType itemType)
+		{
+			return _storeItemGlobalDataList.FirstOrDefault(x => x.ItemType == itemType).SellCost;
 		}
 	}
 }

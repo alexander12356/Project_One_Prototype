@@ -3,7 +3,7 @@ using DefaultNamespace;
 using DG.Tweening;
 using LocalBattle3d;
 using Mech.Data.Global;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using TMPro;
 using UnityEngine;
 

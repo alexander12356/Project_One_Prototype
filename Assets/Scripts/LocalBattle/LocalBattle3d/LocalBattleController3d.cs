@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using Mech.Data.Global;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using UnityEngine;
 
 namespace LocalBattle3d

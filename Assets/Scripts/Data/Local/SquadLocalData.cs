@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Mech.Data.Global;
 
-namespace Mech.Data.LocalData
+namespace Mech.Data.Local
 {
 	[Serializable]
 	public class SquadLocalData

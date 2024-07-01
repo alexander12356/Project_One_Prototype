@@ -1,6 +1,7 @@
 using DefaultNamespace;
 using EventBusSystem;
-using Mech.Data.LocalData;
+using Mech.Data.Global;
+using Mech.Data.Local;
 using TMPro;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace Mech.World
 		private void Start()
 		{
 			PositionInstance = transform.position;
-			EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
+			EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.InventoryLocalData.GetItemCount(ItemType.Supply)));
 			EventBus.RaiseEvent<IWorldUi>(x => x.ShowMoneys(PlayerData.Instance.Moneys));
 			UpdateView();
 		}
@@ -89,11 +90,11 @@ namespace Mech.World
 
 		public void Eat()
 		{
-			var playerSupplies = PlayerData.Instance.Supplies;
+			var playerSupplies = PlayerData.Instance.InventoryLocalData.GetItemCount(ItemType.Supply);
 			var squadNeedSupplies = PlayerData.Instance.GetAllModelCount();
 			playerSupplies = Mathf.Max(0, playerSupplies - squadNeedSupplies);
-			PlayerData.Instance.Supplies = playerSupplies;
-			EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.Supplies));
+			PlayerData.Instance.InventoryLocalData.SetItemCount(ItemType.Supply, playerSupplies);
+			EventBus.RaiseEvent<IWorldUi>(x => x.ShowSupplies(PlayerData.Instance.InventoryLocalData.GetItemCount(ItemType.Supply)));
 			EventBus.RaiseEvent<IWorldUi>(x => x.ShowEatedSupplies(squadNeedSupplies));
 		}
 

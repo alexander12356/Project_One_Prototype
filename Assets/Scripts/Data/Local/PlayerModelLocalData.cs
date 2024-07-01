@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Mech.Data.Global;
 using UnityEngine;
 
-namespace Mech.Data.LocalData
+namespace Mech.Data.Local
 {
 	public class PlayerModelLocalData
 	{

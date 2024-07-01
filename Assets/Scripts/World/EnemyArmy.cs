@@ -1,5 +1,5 @@
 using Mech.Data.Global;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;

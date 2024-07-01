@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Data.Global.City;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using UnityEngine;
 
 namespace Mech.Data.Global
@@ -20,6 +20,11 @@ namespace Mech.Data.Global
 		public GuildGlobalData GetGuildGlobalData()
 		{
 			return _guildGlobalData;
+		}
+
+		public StoreGlobalData GetStoreGlobalData()
+		{
+			return _storeGlobalData;
 		}
 	}
 }

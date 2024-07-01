@@ -10,6 +10,7 @@ namespace Data.Global.City
 	public class GuildGlobalData
 	{
 		[SerializeField] private List<GuildItemGlobalData> _guildItemGlobalDataList;
+		[SerializeField] private string _guildUpdateDuration;
 
 		public List<GuildItemGlobalData> GetGuildItemGlobalDataList()
 		{
@@ -19,6 +20,11 @@ namespace Data.Global.City
 		public int GetItemCost(ModelType modelType)
 		{
 			return _guildItemGlobalDataList.FirstOrDefault(x => x.ModelType == modelType).Cost;
+		}
+
+		public string GetGuildUpdateDuration()
+		{
+			return _guildUpdateDuration;
 		}
 	}
 }

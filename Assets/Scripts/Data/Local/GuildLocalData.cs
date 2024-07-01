@@ -3,7 +3,7 @@ using Mech.Data.Global;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Mech.Data.LocalData
+namespace Mech.Data.Local
 {
 	[Serializable]
 	public class GuildLocalData

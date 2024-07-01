@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Globalization;
-using Data.Global.City;
 using EventBusSystem;
 using Mech.Data.Global;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using Mech.World;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class City : MonoBehaviour
 {
@@ -19,26 +17,8 @@ public class City : MonoBehaviour
 	[SerializeField] private CityGlobalData _cityGlobalData;
 	[SerializeField, ReadOnly] private CityLocalData _cityLocalData;
 
-	private StoreLocalData CityStoreLocalData;
-
-	public int SuppliesCount
-	{
-		get => CityStoreLocalData.SuppliesCount;
-		set => CityStoreLocalData.SuppliesCount = value;
-	}
-
-	public int StoreMoneys
-	{
-		get => CityStoreLocalData.StoreMoneys;
-		set => CityStoreLocalData.StoreMoneys = value;
-	}
-
-	[FormerlySerializedAs("DurationBeforeUpdate")]
-	public string DurationBeforeUpdateStore;
-
-	public string DurationBeforeUpdateSquads;
-
-	private DateTime PreviousCityVisitTime;
+	private DateTime PreviousGuildUpdateTime;
+	private DateTime PreviousStoreUpdateTime;
 
 	public void Start()
 	{
@@ -65,16 +45,16 @@ public class City : MonoBehaviour
 	{
 		UpdateGuild();
 		UpdateStore();
-		PreviousCityVisitTime = GameController.Instance.CurrentDateTime;
 		return;
 
 		void UpdateGuild()
 		{
-			var durationBeforeUpdateTimeSpan = TimeSpan.ParseExact(DurationBeforeUpdateSquads, @"dd\:hh", CultureInfo.InvariantCulture);
-			var updateDateTime = PreviousCityVisitTime.Add(durationBeforeUpdateTimeSpan);
+			var durationBeforeUpdateTimeSpan = TimeSpan.ParseExact(_cityGlobalData.GetGuildGlobalData().GetGuildUpdateDuration(), @"dd\:hh", CultureInfo.InvariantCulture);
+			var updateDateTime = PreviousGuildUpdateTime.Add(durationBeforeUpdateTimeSpan);
 			var currentTime = GameController.Instance.CurrentDateTime;
 			if (currentTime >= updateDateTime)
 			{
+				PreviousGuildUpdateTime = updateDateTime;
 				_cityLocalData.GuildLocalData.Clear();
 				foreach (var guildItemGlobalData in _cityGlobalData.GetGuildGlobalData().GetGuildItemGlobalDataList())
 				{
@@ -85,18 +65,18 @@ public class City : MonoBehaviour
 
 		void UpdateStore()
 		{
-			/*
-			var durationBeforeUpdateTimeSpan = TimeSpan.Parse(DurationBeforeUpdateStore);
-			var updateDateTime = PreviousStoreVisitTime.Add(durationBeforeUpdateTimeSpan);
+			var durationBeforeUpdateTimeSpan = TimeSpan.Parse(_cityGlobalData.GetStoreGlobalData().GetStoreUpdateDuration());
+			var updateDateTime = PreviousStoreUpdateTime.Add(durationBeforeUpdateTimeSpan);
 			var currentTime = GameController.Instance.CurrentDateTime;
 			if (currentTime >= updateDateTime)
 			{
-				//CityStoreLocalData.StoreMoneys = CityStoreGlobalData.StoreMoneys;
-				//CityStoreLocalData.SuppliesCount = CityStoreGlobalData.SuppliesCount;
+				PreviousStoreUpdateTime = updateDateTime;
+				_cityLocalData.StoreLocalData.Clear();
+				foreach (var storeItemGlobalData in _cityGlobalData.GetStoreGlobalData().GetStoreItemGlobalDataList())
+				{
+					_cityLocalData.StoreLocalData.Items.Add(storeItemGlobalData.ItemType, storeItemGlobalData.Count);
+				}
 			}
-
-			PreviousStoreVisitTime = currentTime;
-			*/
 		}
 	}
 

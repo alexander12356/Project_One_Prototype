@@ -1,7 +1,6 @@
 using Data.Global.City;
 using EventBusSystem;
-using Mech.Data.Global;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using UnityEngine;
 
 public class GuildUi : MonoBehaviour
@@ -26,6 +25,10 @@ public class GuildUi : MonoBehaviour
 
 	public void Close()
 	{
+		for (int i = 0; i < _itemsHolder.childCount; i++)
+		{
+			Destroy(_itemsHolder.GetChild(i).gameObject);
+		}
 		SetVisible(false);
 	}
 

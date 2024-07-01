@@ -3,7 +3,7 @@ using System.Collections;
 using System.Globalization;
 using EventBusSystem;
 using LocalBattle3d;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using Mech.UI;
 using Mech.World;
 using UnityEngine;

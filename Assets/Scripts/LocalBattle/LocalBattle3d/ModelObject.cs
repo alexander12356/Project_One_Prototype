@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Linq;
 using Mech.Data.Global;
-using Mech.Data.LocalData;
+using Mech.Data.Local;
 using Pathfinding;
 using UnityEngine;
 using UnityEngine.Pool;
